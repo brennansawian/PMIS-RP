@@ -1,0 +1,79 @@
+.nav-bg {
+    background-color: #fff !important;
+}
+.my-box-shadow {
+    -webkit-box-shadow: 6px 6px 20px -3px rgba(0,0,0,0.55);
+    -moz-box-shadow: 6px 6px 20px -3px rgba(0,0,0,0.55);
+    box-shadow: 6px 6px 20px -3px rgba(0,0,0,0.55);
+}
+.custom_bg {
+    background-color: #f1f1f1;
+    background-image: url('/lily/images/login/bg.png');
+}
+.text-dark-collpased {
+    font-weight: bold;
+}
+.btn-login-primary {
+    color: #1e1e4b;
+    background-color: #ABE6FF !important;
+    border-color: #ABE6FF !important;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+.btn-login-primary:hover {
+    background-color: #89d9ff !important;
+    border-color: #89d9ff !important;
+    color: #0e0e3a;
+}
+/* CAPTCHA STYLES */
+.captcha-wrapper {
+    display: flex;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    align-items: center;
+    overflow: hidden;
+    max-width: 280px;
+}
+.captcha-image-container {
+    flex-grow: 1;
+}
+#captchaImage {
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    display: block;
+}
+.captcha-refresh-container {
+    padding: 0 10px;
+    border-left: 1px solid #ced4da;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+}
+#captchaReloadBtn {
+    cursor: pointer;
+}
+.captcha-refresh-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.password-wrapper {
+    position: relative;
+}
+.toggle-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px;
+    cursor: pointer;
+}
+.eye-icon {
+    width: 20px;
+    height: 20px;
+    color: #6c757d;
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{${layoutPath}}"
+>
+    <div layout:fragment="static-files">
+        <!--   DataTables     -->
+        <script th:src="@{/lily/js/CustomDataTable/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/dataTables.buttons.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/pdfmake.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/vfs_fonts.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/jszip.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/buttons.html5.min.js}"></script>
+
+        <!-- Notiflix -->
+        <script th:src="@{/lily/js/notiflix/notiflix.js}"></script>
+        <link th:href="@{/lily/js/notiflix/notiflix.css}" type="text/css" rel="stylesheet" />
+
+        <script th:src="@{/lily/js/customajax.js}"></script>
+
+        <!-- New Statics -->
+        <!-- Style rules shared with close-programs -->
+        <script th:src="@{/js/reopenProgram.js}"></script>
+    </div>
+
+    <title layout:fragment="title">Reopen Program</title>
+
+    <main layout:fragment="content">
+        <br />
+        <div class="container">
+            <div class="card box-shadow-grey">
+                <div class="card-title titlecss"><h4><i class="fa fa-book">&nbsp;List of Closed Programs</i></h4></div>
+                <hr />
+                <div class="card-body margin-0">
+                    <div class="container bold">
+                        <div class="form-group row">
+                            <div class="col-md-3 col-form-label">
+                                <label>Financial Year:<span class="span">*</span></label>
+                            </div>
+                            <div class="col-md-5">
+                                <select name="fyclose" id="fyclose" class="form-control" required="true">
+                                    <option value="">Select</option>
+                                    <option th:each="o : ${FYofclosecourselist}" th:value="${o[4]}" th:text="${o[1]}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row table-responsive display-none" id="tablediv">
+                            <table class="table table-striped table-bordered center-sans-serif" id="closetable">
+                                <thead class="fs-15">
+                                    <tr>
+                                        <th>Sl No.</th>
+                                        <th>Program Name</th>
+                                        <th>Program ID</th>
+                                        <th>Program Description</th>
+                                        <th>No. Of Phases</th>
+                                        <th>View Phases</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fs-14">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <!-- Feedback Modal -->
+        <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-light text-dark">
+                        <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
+                        <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="feedbackModalBody">
+                        <!-- Message content inserted via JS -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modalOkButton" class="btn btn-primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</html>

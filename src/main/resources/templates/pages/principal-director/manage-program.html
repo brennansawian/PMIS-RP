@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{layouts/principal-director-layout}"
+>
+    <head>
+        <!-- page title -->
+        <title layout:fragment="title">Manage Programs</title>
+        
+        <div layout:fragment="static-files">
+            <!--   DataTables     -->
+            <script th:src="@{/lily/js/CustomDataTable/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/lily/js/CustomDataTable/dataTables.bootstrap4.min.js}"></script>
+            <script th:src="@{/lily/js/CustomDataTable/dataTables.responsive.min.js}"></script>
+            <script th:src="@{/lily/js/CustomDataTable/responsive.bootstrap4.min.js}"></script>
+            <script th:src="@{/lily/js/CustomDataTable/dataTables.buttons.min.js}"></script>
+            <script th:src="@{/lily/js/CustomDataTable/pdfmake.min.js}"></script>
+            <script th:src="@{/lily/js/CustomDataTable/vfs_fonts.js}"></script>
+            <script th:src="@{/lily/js/CustomDataTable/jszip.min.js}"></script>
+            <script th:src="@{/lily/js/CustomDataTable/buttons.html5.min.js}"></script>
+
+            <!-- Utilities -->
+            <script th:src="@{/js/utils/networkUtilities.js}"></script>
+        
+            <script th:src="@{/js/principalManageProgram.js}"></script>
+        </div>
+    </head>
+
+    <body>
+    <!-- Main Content Area -->
+        <main layout:fragment="content">
+            <!-- Program Table -->
+            <div class="container mt-4 mb-4">
+                <div class="card box-shadow-grey">
+                    <div class="card-title titlecss">
+                        <h4>
+                            <i class="fa fa-book">&nbsp;Approve/Reject/Delete Program</i>
+                        </h4>
+                    </div>  
+                    <hr />
+                    <div class="card-body margin-0">
+                        <div class="container bold">
+                            <div class="row table-responsive">
+                                <table class="table table-striped table-bordered center-sans-serif" id="approveprogram">
+                                    <thead class="fs-14">
+                                        <tr>
+                                            <th class="w-1">Sl No.</th>
+                                            <th>Program Category Name</th>
+                                            <th>Program Name</th>
+                                            <th>Program ID</th>
+                                            <th>Program Description</th>
+                                            <th>Phase No.</th>
+                                            <th>Phase Description</th>
+                                            <th>Last Date</th>
+                                            <th>Venues</th>
+                                            <th>Coordinators</th>
+                                            <th class="noExport">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fs-12">
+                                        <tr th:each="v, s : ${mprogramListForApproval}">
+                                            <td th:text="${s.count}">1</td>
+                                            <td th:text="${v[3]}">Program Category</td>
+                                            <td>
+                                                <span th:text="${v[0]}">Program Name</span>
+                                                <span th:if="${v[4] != null}">
+                                                    (<span th:text="${#dates.format(v[4], 'dd/MM/yyyy')}">start</span> to 
+                                                    <span th:text="${#dates.format(v[5], 'dd/MM/yyyy')}">end</span>)
+                                                </span>
+                                            </td>
+                                            <td th:text="${v[2]}">Program ID</td>
+                                            <td th:text="${v[1]}">Program Description</td>
+                                            <td th:text="${v[8]}">Phase No.</td>
+                                            <td th:text="${v[9] != null ? v[9] : 'No Phase Description!'}">Phase Description</td>
+                                            <td class="w-s-nowrap">
+                                                <span th:if="${v[6] != null}" th:text="${#dates.format(v[6], 'dd-MM-yyyy')}">Last Date</span>
+                                                <span thf="${v[6] == null}">Not Finalized!</span>
+                                            </td>
+                                            <td>
+                                                <span th:text="${v[10] != null ? v[10] : 'Not Finalized!'}">Venues</span>
+                                            </td>
+                                            <td th:text="${v[11]}">Coordinators</td>
+                                            <td class="w-s-nowrap">
+                                                <a class="clickme danger11 acceptbtn btn btn-sm btn-success text-white"
+                                                data-toggle="modal"
+                                                data-target="#modalaccept-modal"
+                                                data-dismiss="modal"
+                                                th:attr="data-program-id=${v[19]}, data-some-value=${v[0]}">
+                                                    Approve
+                                                </a>
+
+                                                <br/><br/>
+                                                
+                                                <a class="clickme danger11 rejectbtn btn btn-sm btn-warning text-black"
+                                                data-toggle="modal"
+                                                data-target="#modalreject-modal"
+                                                data-dismiss="modal"
+                                                th:attr="data-program-id=${v[19]}, data-some-value=${v[0]}">
+                                                    Reject
+                                                </a>
+                                                
+                                                <br/><br/>
+                                                
+                                                <a class="clickme danger11 detetebtn btn btn-sm btn-danger text-white"
+                                                th:attr="data-program-id=${v[16]}, data-some-value=${v[0]}">
+                                                    &nbsp;Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        
+            <!-- Accept Program Modal -->
+            <div class="container">
+                <div class="modal fade" id="modalaccept-modal">
+                    <div class="modal-dialog modal-dialog-centered m-w-50">
+                        <div class="modal-content">
+                            <!--Modal Header-->
+                            <div class="modal-header text-center d-block p-5 border-bottom-0">
+                                <h5 class="modal-title"><u>Accept Program</u></h5>
+                                <button type="button" class="close position-absolute r-15-t-8" data-dismiss="modal">&times;</button>
+                            </div>
+            
+                            <!--Modal body-->
+                            <div class="modal-body">
+                                <form method="POST" name="acceptprogramfn" id="acceptprogramfid" role="form" autocomplete="off" enctype="multipart/form-data">
+                                    <div class="form-group row">
+                                        <div class="col-md-1 col-form-label"></div>
+                                        <div class="col-md-4 col-form-label">
+                                            <label>Program Name<span class="span">*</span></label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="aprogramdetailid" name="aprogramdetailid" hidden />
+                                            <label id="acceptprogramname"></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-1 col-form-label"></div>
+                                        <div class="col-md-4 col-form-label">
+                                            <label for="file1">Upload Approval Letter(pdf/jpg/jpeg only)<span class="span">*</span></label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="file" name="file1" id="file1" class="form-control-file" required onchange="checkapprovedoctype()" />
+                                        </div>
+                                    </div>
+            
+                                    <div style="text-align: center;">
+                                        <input id="submit" type="submit" name="submit" value="SUBMIT" class="btn btn-info" />
+                                        <input type="button" value="CANCEL" class="btn btn-danger" data-dismiss="modal" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reject Program Modal -->
+            <div class="container">
+                <div class="modal fade" id="modalreject-modal">
+                    <div class="modal-dialog modal-dialog-centered m-w-50">
+                        <div class="modal-content">
+                            <!--Modal Header-->
+                            <div class="modal-header text-center d-block p-5 border-bottom-0">
+                                <h5 class="modal-title"><u>Reject Program</u></h5>
+                                <button type="button" class="close position-absolute r-15-t-8" data-dismiss="modal">&times;</button>
+                            </div>
+            
+                            <!--Modal body-->
+                            <div class="modal-body">
+                                <form method="POST" name="rejectprogramfn" id="rejectprogramfid" role="form" autocomplete="off" enctype="multipart/form-data">
+                                    <div class="form-group row">
+                                        <div class="col-md-1 col-form-label"></div>
+                                        <div class="col-md-4 col-form-label">
+                                            <label>Program Name<span class="span">*</span></label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="rejectprogramcode" name="rejectprogramcode" hidden />
+                                            <label id="rejectprogramname"></label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <div class="col-md-1 col-form-label"></div>
+                                        <div class="col-md-4 col-form-label">
+                                            <label>Rejection Remark<span class="span">*</span> </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="rprogramdetailid" name="rprogramdetailid" hidden />
+                                            <textarea class="form-control" id="rejectremark" name="rejectremark" required></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <div class="col-md-1 col-form-label"></div>
+                                        <div class="col-md-4 col-form-label">
+                                            <label>Upload Rejection Letter(pdf/jpg/jpeg only)<span class="span">*</span></label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="file" name="file2" id="file2" class="form-control-file" required onchange="checkrejectdoctype()" />
+                                        </div>
+                                    </div>
+            
+                                    <div style="text-align: center;">
+                                        <input id="submit" type="submit" name="submit" value="SUBMIT" class="btn btn-info" />
+                                        <input type="button" value="CANCEL" class="btn btn-danger" data-dismiss="modal" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{layouts/main-layout}"
+>
+    <!-- Dynamic Menu -->
+    <div id="dynamicmenu" layout:fragment="navigation"></div>
+
+    <!-- Dynamic Menu Script -->
+    <th:block layout:fragment="dynamic-menu">
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", () => {
+                fetch("/nerie/users/dynamic-menu")
+                    .then(res => res.text())
+                    .then(html => document.getElementById("dynamicmenu").innerHTML = html)
+            });
+        </script>
+
+        <script th:src="@{/js/auth.js}"></script>
+    </th:block>
+</html>

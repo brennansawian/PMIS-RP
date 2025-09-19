@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{layouts/landing-layout}"
+>
+<head>
+    <title>Login</title>
+    <div layout:fragment="styles">
+        <link th:href="@{/css/login.css}" rel="stylesheet">
+    </div>
+</head>
+
+<main layout:fragment="content">
+    <div layout:replace="~{fragments/lilypreloader :: preloader}"></div>
+    <div class="pt-2 section custom_bg">
+        <div class="container w-100">
+            <div class="row mt-5 d-flex justify-content-center">
+                <div class="d-none d-lg-block col-lg-5 col-sm-8 bg-gray my-box-shadow mx-3 py-5" style="border-radius:20px;">
+                    <div class="p-5">
+                        <h4 class="section-title text-center">Program Management and Information System</h4>
+                        <div class="text-center mb-3">
+                            <img th:src="@{/tempscripts/images/ncertlogo.png}" class="align-self-center b-emblem-image" style="width: 65px;height: 76px">
+                        </div>
+                        <p class="text-dark-collpased">
+                            The Program Management and Information System (PMIS) is a comprehensive
+                            platform designed to streamline the planning, execution, and monitoring of programs,
+                            participants and resource persons.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- LOGIN FORM -->
+                <div class="offset-lg-0 col-lg-6 col-sm-8 bg-gray my-box-shadow mx-3" style="border-radius:20px">
+                    <div class="p-5">
+                        <h4 class="section-title">Login using the credentials provided to you</h4>
+                        <form method="POST" th:action="@{/login}" name="userlogins" id="userloginsid" autocomplete="off">
+                            <input id="param-msg" type="text" th:value="${msg}" hidden readonly />
+                            
+                            <div class="form-group">
+                                <label for="userid"><b>User id:</b></label>
+                                <input type="text" class="form-control form-control-lg input " id="userid" placeholder="Enter User Id" name="username" required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="password"><b>Password:</b></label>
+                                <div class="password-wrapper">
+                                    <input type="password" class="form-control form-control-lg input zoom1" id="password" placeholder="Enter password" name="userpassword" required="true">
+                                    <div class="toggle-button"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="captcha-wrapper mb-2">
+                                    <div class="captcha-image-container">
+                                        <img id="captchaImage" th:src="${'data:image/jpg;base64,' + captchaPrincipal.realCaptcha}" title="Click To Reload New Captcha"/>
+                                    </div>
+                                    <div class="captcha-refresh-container">
+                                            <span id="captchaReloadBtn">
+                                                <img th:src="@{/tempscripts/assets/images/refresh.png}" class="captcha-refresh-icon" title="Click To Reload New Captcha"/>
+                                            </span>
+                                    </div>
+                                </div>
+                                <input id="hiddentCaptcha" type="hidden" th:field="${captchaPrincipal.hiddentCaptcha}" />
+                                <input type="text" name="captcha" id="userCaptcha" maxlength="6" placeholder="Enter the Captcha"  class="form-control form-control-lg input zoom1"  autocomplete="off" required="true"/>
+                            </div>
+                            <div class="form-group" style="text-align: center">
+                                <button type="submit" class="btn btn-login-primary">LOGIN</button>
+                            </div>
+                            <!-- Feedback text -->
+                            <div id="form-feedback" style="text-align: center; color: red; font-weight: bold; min-height: 1.5em; padding-top: 5px;"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div layout:fragment="scripts">
+        <script th:src="@{/js/login.js}"></script>
+    </div>
+</main>
+</html>

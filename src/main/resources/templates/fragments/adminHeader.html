@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+>
+<ul layout:fragment="admin-navlist" class="navbar-nav main-menu d-flex">
+  <li class="nav-item-menu d-block active">
+    <a class="nav-link-menu" th:href="@{/nerie/home}">Home</a>
+  </li>
+  <li class="nav-item-menu d-block">
+    <a href="#" class="nav-link-menu">Management<b class="caret"></b></a>
+    <ul class="sub-menu">
+      <li class="sub-sub-menu">
+        <a th:href="@{/nerie/offices/createoffice}" class="nav-link-menu">Create Office</a>
+      </li>
+      <hr/>
+      <li class="sub-sub-menu">
+        <a th:href="@{/nerie/users/manage}" class="nav-link-menu">Create Principal</a>
+      </li>
+      <hr/>
+      <li class="sub-sub-menu">
+        <a th:href="@{/nerie/designations/manage}" class="nav-link-menu">Add/Edit Designations</a>
+      </li>
+      <hr/>
+    </ul>
+  </li>
+  <li class="nav-item-menu d-block">
+    <a href="#" class="nav-link-menu">Report generation<b class="caret"></b></a>
+    <ul class="sub-menu">
+      <li class="sub-sub-menu"><a th:href="@{/nerie/reports/report-office-list}" class="nav-link-menu">Office List</a></li>
+      <li class="sub-sub-menu"><a th:href="@{/nerie/reports/report-coordinator-list}" class="nav-link-menu">Coodinator List</a></li>
+      <li class="sub-sub-menu"><a th:href="@{/nerie/reports/report-course-list}" class="nav-link-menu">Program List</a></li>
+    </ul>
+  </li>
+
+  <li class="nav-item-menu d-block">
+    <a href="#" class="nav-link-menu">Profile<b class="caret"></b></a>
+    <ul class="sub-menu">
+      <li class="sub-sub-menu"><a class="nav-link-menu" th:href="@{/nerie/admin/audittrail}">Audit Trail</a></li>
+      <li class="sub-sub-menu"><a class="nav-link-menu" th:href="@{/nerie/users/profile}">Edit Profile</a></li>
+      <li class="sub-sub-menu"><a class="nav-link-menu" th:href="@{/nerie/users/change-password}" >Change Password</a></li>
+      <li class="sub-sub-menu"><a id="logout-link" href="#" class="nav-link-menu">Logout</a></li>
+    </ul>
+  </li>
+  <script th:src="@{/js/logout.js}"></script>
+</ul>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/landing-layout}"
+>
+<head>
+  <title>CIET</title>
+  <div layout:fragment="styles">
+    <link rel="stylesheet" th:href="@{/css/blogs.css}">
+  </div>
+</head>
+<body>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+  <!--Pre Loader-->
+  <div layout:replace="~{fragments/lilypreloader :: preloader}"></div>
+  <!-- page title -->
+  <section id="about-hero" class="hero-section overlay bg-cover" data-background="tempscripts/images/aboutus/ncert_building.jpg">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <ul class="list-inline custom-breadcrumb mb-2">
+            <li class="list-inline-item"><a class="h2 text-primary font-secondary" th:href="@{/nerie/about}">NCERT Constituent Units</a></li>
+            <li class="list-inline-item text-white h3 font-secondary nasted">CIET</li>
+          </ul>
+          <p class="text-lighten mb-0">Central Institute Of Educational Technology (CIET)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- about -->
+  <section class="section-sm bg-gray adjust-section">
+    <div class="container">
+      <div class="row" >
+        <div class="col-12 mb-4">
+          <img th:src="@{/lily/images/aboutus/CIET_NCERT.jpg}" alt="blog-thumb" class="img-fluid w-100">
+        </div>
+
+        <!-- border -->
+        <div class="col-12 mt-4 pb-3">
+          <div class="border-bottom border-primary"></div>
+        </div>
+
+        <div class="col-12">
+          <ul class="list-inline">
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><span class="font-weight-bold mr-2">Joint Director</span>Dr. Amarendra P Behera</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>Central Institute Of Educational Technology (CIET)</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>National Council of Educational Research and Training</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="font-weight-bold mr-2"></i>Sri Aurobindo Marg, New Delhi 110016</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><a class="text-light" href="https://ciet.nic.in/" target="_blank"><i class="ti-link mr-2"></i>CIET website</a></li>
+          </ul>
+        </div>
+
+        <div class="col-12 mb-5">
+          <br>
+          <h2>CIET</h2>
+          <p align="justify" style="font-size: 15px">
+            Central Institute of Educational Technology(CIET), a constituent unit of NCERT, came into existence in the year 1984
+            with the merger of Center for Educational Technology(CET) and Department of Teaching Aids(DTA). CIET is a premiere
+            national institute of educational technology. Its major aim is to promote utilization of educational technologies viz.
+            radio,TV, films, Satellite communications and cyber media either separately or in combinations, The institute undertakes
+            activities to widen educational opportunities, promote equity and improve quality of educational processes at school level.
+            <br>The mission of Central Institute of Educational Technology (CIET) is to:
+            act as a nodal resource centre for school education media software acquired through national, regional and international sources for reference and research.
+            achieve excellence in design, research and production of educational software for children and teachers, including parents.
+            contribute to teacher education through the convergence of appropriate technologies.
+            build capacities of teachers/educators for quality improvement roles in school education.
+            constructively inform educational policy makers and to critically appraise educational technology (ICT related) policy in India.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+>
+    <ul layout:fragment="student-navlist" class="navbar-nav main-menu d-flex">
+        <li class="nav-item-menu d-block active">
+            <a class="nav-link-menu" th:href="@{/nerie/home}">Home</a>
+        </li>
+        <li class="nav-item-menu d-block">
+            <a href="#" class="nav-link-menu">My Department<b class="caret"></b></a>
+            <ul class="sub-menu">
+                <li class="sub-sub-menu">
+                    <a th:href="@{/nerie/subjects/viewsubjects}" class="nav-link-menu">Feedback</a>
+                </li>
+                <hr />
+                <li class="sub-sub-menu">
+                    <a th:href="@{/nerie/assignments/viewassignments}" class="nav-link-menu">Assignments</a>
+                </li>
+                <hr/>
+                <li class="sub-sub-menu">
+                    <a th:href="@{/nerie/subjects/viewstudymaterials}" class="nav-link-menu">Download Study Materials</a>
+                </li>
+                <hr/>
+                <li class="sub-sub-menu">
+                    <a th:href="@{/nerie/attendance/viewattendance}" class="nav-link-menu">View My Attendance</a>
+                </li>
+                <hr/>
+                <li class="sub-sub-menu">
+                    <a th:href="@{/nerie/student-leaves/application}" class="nav-link-menu">Apply For Leave</a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item-menu d-block"> <a href="#" class="nav-link-menu">Profile<b class="caret"></b></a>
+            <ul class="sub-menu">
+                <li class="sub-sub-menu"><a class="nav-link-menu" th:href="@{/nerie/students/profile}">View Profile</a></li>
+                <hr/>
+                <li class="sub-sub-menu"><a class="nav-link-menu" th:href="@{/nerie/users/change-password}" >Change Password</a></li>
+                <li class="sub-sub-menu"><a id="logout-link" href="#" class="nav-link-menu">Logout</a></li>
+            </ul>
+        </li>
+        <script th:src="@{/js/logout.js}"></script>
+    </ul>
+</html>

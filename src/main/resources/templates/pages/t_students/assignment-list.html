@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/student-layout}"
+        xmlns:th="http://thymeleaf.org"
+>
+    <div layout:fragment="static-files">
+        <!--   DataTables     -->
+        <script th:src="@{/lily/js/CustomDataTable/jquery.dataTables.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/dataTables.bootstrap4.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/dataTables.responsive.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/responsive.bootstrap4.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/dataTables.buttons.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/pdfmake.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/vfs_fonts.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/jszip.min.js}"></script>
+        <script th:src="@{/lily/js/CustomDataTable/buttons.html5.min.js}"></script>
+        <script th:src="@{/lily/js/notiflix/notiflix.js}"></script>
+        <link th:href="@{/lily/js/notiflix/notiflix.css}" type="text/css" rel="stylesheet" />
+        
+        <!-- Utilities -->
+        <script th:src="@{/js/utils/networkUtilities.js}"></script>
+
+        <link rel="stylesheet" th:href="@{/css/assignmentList.css}">
+        <script th:src="@{/js/assignmentList.js}"></script>
+    </div>
+    <title layout:fragment="title">Assignments</title>
+    <main layout:fragment="content">
+                <div class="container mt-4 mb-4">
+                    <div class="card box-shadow-grey">
+                        <div class="row table-responsive">
+                            <div class="col-md-12 p-5">
+                                <h4 class="card-title titlecss"><i class="fa fa-list"> &nbsp;Assignments List</i></h4>
+                                <hr />
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered center-sans-serif" id="assignmentlist">
+                                        <thead class="fs-14">
+                                            <tr>
+                                                <th class="w-20">Subject</th>
+                                                <th class="w-20">Assignment Name</th>
+                                                <th class="w-20">Assignment Description</th>
+                                                <th class="w-10">Assigned Date</th>
+                                                <th class="w-10">Last Date</th>
+                                                <th class="w-10">Action</th>
+                                                <th class="w-10">Marks Secured</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="fs-14" id="assignmenttabletbody">
+                                            <tr th:each="v, s : ${subs}">
+                                                <td th:if="${#strings.length(v[3]) > 0 and (v[11] == 'FILE' or v[11] == null)}">
+                                                    <span th:text="${v[2]}"></span>
+                                                    <input type="hidden" th:id="'subn-' + ${v[0]}" th:value="${v[2]}"/>
+                                                </td>
+                                                <td th:if="${#strings.length(v[3]) > 0 and (v[11] == 'FILE' or v[11] == null)}">
+                                                    <a th:href="@{'/nerie/assignments/viewAssignmentDocument?fid=' + ${v[0]}}" target="_blank" th:text="${v[4]}"></a>
+                                                    <input type="hidden" th:id="'testn-' + ${v[0]}" th:value="${v[4]}"/>
+                                                </td>
+                                                <td th:if="${#strings.length(v[3]) > 0 and v[11] == 'LINK'}">
+                                                    <span th:text="${v[2]}"></span>
+                                                    <input type="hidden" th:id="'subn-' + ${v[0]}" th:value="${v[2]}"/>
+                                                </td>
+                                                <td th:if="${#strings.length(v[3]) > 0 and v[11] == 'LINK'}">
+                                                    <a th:href="${v[3]}" target="_blank" th:text="${v[4]}"></a>
+                                                    <input type="hidden" th:id="'testn-' + ${v[0]}" th:value="${v[4]}"/>
+                                                </td>
+                                                <!-- ASSIGNMENT DESCRIPTION -->
+                                                <td>
+                                                    <input type="hidden" th:id="'desc-' + ${v[0]}" th:value="${v[9]}"/>
+                                                    <button th:id="${v[0]}" class="show-description-btn clickme danger11 officebtn btn btn-sm btn-info">
+                                                        <i class="fas fa-file-upload"></i>&nbsp;Show Description
+                                                    </button>
+                                                </td>
+                                                <!-- END OF ASSIGNMENT DESCRIPTION -->
+                                                <td th:text="${v[5]}"></td>
+                                                <td th:text="${v[6]}"></td>
+                                                <td>
+                                                    <th:block th:with="today=${#dates.format(new java.util.Date(), 'yyyy-MM-dd')}">
+                                                        <div th:if="${#dates.format(v[6], 'yyyy-MM-dd') >= today and (v[11] == 'FILE' or v[11] == null)}">
+                                                            <button th:if="${v[8] == null or v[8] == 0}" th:id="${v[0]}" class="this_is_upload_button_class">
+                                                                <i class="fas fa-file-upload"></i>&nbsp;Upload Assignment
+                                                            </button>
+                                                            <a th:if="${v[8] != null and v[8] != 0}" th:href="@{'/nerie/assignments/viewassignmentsubmission?studentassignmentid=' + ${v[8]}}" target="_blank"></a>
+                                                        </div>
+                                                        <div th:if="${#dates.format(v[6], 'yyyy-MM-dd') < today}">
+                                                            <div th:if="${(v[8] == null or v[8] == 0) and (v[11] == 'FILE' or v[11] == null)}">
+                                                                <p class="text-danger"><i class="fas fa-exclamation-triangle"></i>&nbsp;You have not submitted assignment.</p>
+                                                            </div>
+                                                            <div th:if="${#strings.length(v[3]) > 0 and v[11] == 'LINK'}">
+                                                                <p class=""><i class="fas fa-exclamation-triangle"></i>&nbsp;Reminder to Check The Given Link!</p>
+                                                            </div>
+                                                            <div th:if="${v[8] != null and v[8] != 0 and (v[11] == 'FILE' or v[11] == null)}">
+                                                                <div th:if="${v[7] != null and v[7] != 0}">
+                                                                    <a th:href="@{'/nerie/assignments/viewassignmentsubmission?studentassignmentid=' + ${v[8]}}" target="_blank">
+                                                                        <i class="far fa-eye"></i>&nbsp;View My Assignment
+                                                                    </a><br/><br/>
+                                                                </div>
+                                                                <div th:if="${v[7] == null or v[7] == 0}">
+                                                                    <a th:href="@{'/nerie/assignments/viewassignmentsubmission?studentassignmentid=' + ${v[8]}}" target="_blank"><i class="far fa-eye"></i>&nbsp;View My Assignment</a><br/><br/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" th:value="${v[0]}" id="asgntestid"/>
+                                                        <input type="hidden" th:value="${usercode}" id="usercode" class="usercode"/>
+                                                    </th:block>
+                                                </td>
+                                                <td>
+                                                    <div th:if="${v[7] > 0 or (v[7] != null and (v[11] == 'FILE' or v[11] == null))}">
+                                                        <p class="fs-15"><b th:text="${v[7]}"></b> / <b th:text="${v[10]}"></b></p>
+                                                    </div>
+                                                    <div th:if="${v[8] == null and (v[11] == 'FILE' or v[11] == null)}">
+                                                        <p class="text-danger"><strong>Assignment Yet to be submitted.</strong></p>
+                                                    </div>
+                                                    <div th:if="${v[8] == null and v[11] == 'LINK'}">
+                                                        <p class="text-primary"><strong>Marks will be Evaluated in the given platform</strong></p>
+                                                    </div>
+                                                    <div th:if="${v[8] != null and (v[11] == 'FILE' or v[11] == null)}">
+                                                        <p class="text-primary"><b>Yet to be evaluated by faculty.</b></p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description Modal -->
+                    <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="descriptionModalLabel">Assignment Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        <span id="descriptiontext"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END MODAL-->
+
+                    <!-- Never used -->
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Upload Assignment</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form:form method="POST" name="uploadform" id="uploadformid" role="form" autocomplete="off" enctype="multipart/form-data">
+                                    <div class="modal-body">
+                                        <p>You are about to submit assignment for<br/>
+                                            Subject Name:&nbsp;<span id="subname"></span><br/>
+                                            Assignment Title:&nbsp;<span id="assignmenttitle"></span>
+                                        </p>
+                                        <div class="mt-4">
+                                            <label for="afile">Upload the file:<span class="red-bold">(Only PDF allowed)</span></label>
+                                            <input type="file" accept=".pdf" class="form-control" name="assignmentfile" id="afile" required/>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="text" name="assignmentid" id="assignmentid" hidden />
+                                        <input type="text" value="${LOGIN.usercode}" id="usercode" name="usercode" hidden/>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel &amp; Close</button>
+                                        <button type="submit" class="btn btn-success" >Upload Assignment</button>
+                                    </div>
+                                </form:form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END MODAL-->
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="editAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="editAssignmentModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editAssignmentModalLabel">Edit Assignment</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="POST"  name="editform" id="editformid" role="form" autocomplete="off" enctype="multipart/form-data">
+                                    <div class="modal-body">
+                                        <p>You are about to submit assignment for<br/>
+                                            Subject Name:&nbsp;<span id="esubname"></span><br/>
+                                            Assignment Title:&nbsp;<span id="eassignmenttitle"></span>
+                                        </p>
+                                        <div class="mt-4">
+                                            <label for="eafile">Upload the file:<span class="red-bold">(Only PDF allowed)</span></label>
+                                            <input type="file" accept=".pdf" class="form-control" name="eassignmentfile" id="eafile" required/>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="text" name="assignmentid" id="eassignmentid" hidden />
+                                        <input type="text" th:value="${usercode}" id="eusercode" name="usercode" hidden/>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel &amp; Close</button>
+                                        <button type="submit" class="btn btn-success" >Save Assignment</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--END MODAL-->
+                </div>
+            </div>
+        </div>
+    </main>
+</html>

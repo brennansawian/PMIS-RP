@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+>
+  <div layout:fragment="form">
+    <input id="urole" th:value="${userrole}" hidden="true"/>
+    <form action="#" method="" name="userloginfn" id="userloginfid" autocomplete="off">
+      <div th:if="${userrole == 'S'}">
+        <div class="form-group row">
+          <div class="col-md-3 col-form-label">
+            <label>Office:<span class="span">*</span> </label>
+          </div>
+          <div class="col-md-5">
+            <select id="officecode" name="officecode" class="form-control" required="true">
+              <option value="" th:text="'Select'"></option>
+              <option th:each="o : ${officelist}" th:value="${o.officecode}" th:text="${o.officename}"></option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- usercode & userid -->
+      <div class="form-group row">
+        <div class="col-md-3 col-form-label">
+          <label>User Id:<span class="span">*</span></label>
+        </div>
+        <div class="col-md-5">
+          <input id="usercode" name="usercode" class="form-control" hidden="true" />
+          <input id="userid" name="userid" class="form-control space" required="true" />
+        </div>
+      </div>
+
+      <!-- password -->
+      <div id="pwddiv">
+        <div class="form-group row">
+          <div class="col-md-3 col-form-label">
+            <label>Password:<span class="span">*</span></label>
+          </div>
+          <div class="col-md-5">
+            <input id="userpassword" name="userpassword" type="password" class="form-control" required="true" maxlength="512" />
+            <span class="Msg" id="results"></span>
+            <br/><div class="colorbar" id="colorbar"></div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-3 col-form-label">
+            <label>Confirm Password:<span class="span">*</span></label>
+          </div>
+          <div class="col-md-5">
+            <input id="confirmpassword" name="confirmpassword" type="password" class="form-control" required="true" maxlength="512" />
+          </div>
+        </div>
+      </div>
+
+      <!-- username -->
+      <div class="form-group row">
+        <div class="col-md-3 col-form-label">
+          <label>Name:<span class="span">*</span></label>
+        </div>
+        <div class="col-md-5">
+          <input id="username" name="username" class="form-control alphabets" required="true" maxlength="100" />
+        </div>
+      </div>
+
+      <!-- description -->
+      <div class="form-group row">
+        <div class="col-md-3 col-form-label">
+          <label>Description:<span class="span">*</span></label>
+        </div>
+        <div class="col-md-5">
+          <textarea id="userdescription" name="userdescription" class="form-control" required="true" maxlength="300"></textarea>
+        </div>
+        <br/><span id="charactercount"></span>
+      </div>
+
+      <!-- designation code -->
+      <div class="form-group row">
+        <div class="col-md-3 col-form-label">
+          <label>Designation:<span class="span">*</span> </label>
+        </div>
+        <div class="col-md-5">
+          <select id="designationcode" name="designationcode" class="form-control selectpicker" data-live-search="true" title="Select Designation" required="true">
+            <option value="-1" th:text="'Select'"></option>
+            <option th:each="d : ${designationlist}" th:value="${d.designationcode}" th:text="${d.designationname}"></option>
+            <option value="others" id="other" th:text="'Others'"></option>
+          </select>
+        </div>
+      </div>
+
+      <!-- designation -->
+      <div class="form-group row" id="dlist">
+        <div class="col-md-3 col-form-label">
+          <label>Enter Designation: <span class="span">*</span></label>
+        </div>
+        <div class="col-md-5">
+          <input id="dinput" name="dinput" class="form-control alphabets" />
+        </div>
+      </div>
+
+      <!-- mobile number -->
+      <div class="form-group row mt-4">
+        <div class="col-md-3 col-form-label">
+          <label>Mobile No.:<span class="span">*</span></label>
+        </div>
+        <div class="col-md-5">
+          <input id="usermobile" name="usermobile" class="form-control numbers" required="true" maxlength="10"/>
+        </div>
+        <div class="col-md-3">
+          <span id="msg1" class="span"></span>
+        </div>
+      </div>
+
+      <!-- email -->
+      <div class="form-group row">
+        <div class="col-md-3 col-form-label">
+          <label>E-mail id:<span class="span">*</span></label>
+        </div>
+        <div class="col-md-5">
+          <input id="emailid" name="emailid" type="email" class="form-control" required="true" maxlength="50" />
+        </div>
+      </div>
+
+      <!-- Role Selection for users created by Role 'A' -->
+      <div th:if="${userrole == 'A'}">
+        <div class="form-group row">
+          <div class="col-md-3 col-form-label">
+            <label for="roleType">Role Type:<span class="span">*</span></label>
+          </div>
+          <div class="col-md-5">
+            <select id="roleType" name="roleType" class="form-control" required="true">
+              <option value="" th:text="'Select a Role'"></option>
+              <option value="1" th:text="'Faculty'"></option>
+              <option value="0" th:text="'Coordinator'"></option>
+              <option value="1" th:text="'Coordinator & Faculty'"></option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- processes  -->
+      <div class="row">
+        <div class="col-md-12 col-form-label">
+          <label>Processes:<span class="span">*</span> </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <th:block th:if="${userrole == 'A' || userrole == 'Z'}">
+          <div class="col-md-6">
+            <th:block th:each="p, iterStat : ${processlist}">
+              <div th:if="${iterStat.index <= plen / 2}">
+                <input type="checkbox" name="processes" th:id="${p[0]}" th:value="${p[0]}"/>
+                <label th:for="${p[0]}" th:text="${p[1]}"></label><br>
+              </div>
+            </th:block>
+          </div>
+          <div class="col-md-6">
+            <th:block th:each="p, iterStat : ${processlist}">
+              <div th:if="${iterStat.index > plen / 2}">
+                <input type="checkbox" name="processes" th:id="${p[0]}" th:value="${p[0]}"/>
+                <label th:for="${p[0]}" th:text="${p[1]}"></label><br>
+              </div>
+            </th:block>
+          </div>
+        </th:block>
+        <th:block th:if="${userrole == 'S'}">
+          <div class="col-md-6">
+            <th:block th:each="p, iterStat : ${processlistp}">
+              <div th:if="${iterStat.index <= plen / 2}">
+                <input type="checkbox" name="processes" th:id="${p[0]}" th:value="${p[0]}"/>
+                <label th:for="${p[0]}" th:text="${p[1]}"></label><br>
+              </div>
+            </th:block>
+          </div>
+          <div class="col-md-6">
+            <th:block th:each="p, iterStat : ${processlistp}">
+              <div th:if="${iterStat.index > plen / 2}">
+                <input type="checkbox" name="processes" th:id="${p[0]}" th:value="${p[0]}"/>
+                <label th:for="${p[0]}" th:text="${p[1]}"></label><br>
+              </div>
+            </th:block>
+          </div>
+        </th:block>
+      </div>
+      <div id="radio-container" class="mt-2 alert-info" style="display: none;">
+        <div class="d-flex justify-content-around p-3">
+          <h5 class="mr-2">Select Role For Student Leave Applications</h5>
+          <label class="mr-2">
+            <input type="radio" class="role-radio" name="leaveRole" value="1"> Male Warden
+          </label>
+          <label class="mr-2">
+            <input type="radio" class="role-radio" name="leaveRole" value="2"> Female Warden
+          </label>
+          <label class="mr-2">
+            <input type="radio" class="role-radio" name="leaveRole" value="4"> Chief Warden
+          </label>
+          <label class="mr-2">
+            <input type="radio" class="role-radio" name="leaveRole" value="3"> Dean
+          </label>
+        </div>
+      </div>
+      <div class="row mt-2 mb-5">
+        <div class="col-12 text-center">
+          <input id="submit" type="submit" name="submit" value="SUBMIT" class="btn btn-info" />
+          <input type="button" value="RESET" class="btn btn-danger" data-action="reset" />
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div layout:fragment="table" class="tab-pane fade show" id="displayuser" role="tabpanel" aria-labelledby="displayuser-tab">
+    <div class="row table-responsive">
+      <table class="table table-striped table-bordered center-sans-serif" id="usertable">
+        <thead class="fs-12">
+        <tr>
+          <th class="w-1">Sl No.</th>
+          <th>User Name</th>
+          <th>User Id</th>
+          <th>Description</th>
+          <th>Designation</th>
+          <th>Role</th>
+          <th>Office</th>
+          <th>Mobile No</th>
+          <th>Email</th>
+          <th class="noExport">Action</th>
+        </tr>
+        </thead>
+        <tbody class="fs-12">
+        <tr th:each="v, s : ${userlist}">
+          <td th:text="${s.index + 1}"></td>
+          <td th:text="${v[1]}"></td>
+          <td th:text="${v[3]}"></td>
+          <td>
+            <span th:if="${#strings.length(v[2]) > 10}" class="less" th:text="${#strings.substring(v[2], 0, 10)} + '...'"></span>
+            <span th:if="${#strings.length(v[2]) > 10}" class="more display-none" th:text="${v[2]}"></span>
+            <a th:if="${#strings.length(v[2]) > 10}" href="#more" class="showmore">show more</a>
+            <span th:if="${#strings.length(v[2]) <= 10}" th:text="${v[2]}"></span>
+          </td>
+          <td th:text="${v[13]}"></td>
+          <td th:switch="${v[6]}">
+            <span th:case="'A'">Admin</span>
+            <span th:case="'P'">Participant</span>
+            <span th:case="'U'">Backend User</span>
+            <span th:case="'Z'">Principal</span>
+            <span th:case="*">Unknown</span>
+          </td>
+          <td th:text="${v[11]}"></td>
+          <td th:text="${v[7]}"></td>
+          <td th:text="${v[9]}"></td>
+          <td class="w-s-nowrap">
+            <th:block th:if="${userrole == 'S' or userrole == 'Z'}">
+              <a class="btn-action btn-edit edit-link"
+                 th:attr="data-value0=${v[0]},
+                data-value1=${v[1]},
+                data-value2=${v[2]},
+                data-value3=${v[3]},
+                data-value4=${v[4]},
+                data-value6=${v[6]},
+                data-value7=${v[7]},
+                data-value9=${v[9]},
+                data-value10=${v[10]},
+                data-value12=${v[12]},
+                data-leaverole=${v[14]},
+                data-roletype=${null}">
+                <i class="fa fa-edit"></i> Edit
+              </a>
+            </th:block>
+
+            <th:block th:if="${userrole == 'A'}">
+              <a class="btn-action btn-edit edit-link"
+                 th:attr="data-value0=${v[0]},
+                data-value1=${v[1]},
+                data-value2=${v[2]},
+                data-value3=${v[3]},
+                data-value4=${v[4]},
+                data-value6=${v[6]},
+                data-value7=${v[7]},
+                data-value9=${v[8]},
+                data-value10=${v[9]},
+                data-value12=${v[11]},
+                data-leaverole=${v[14]},
+                data-roletype=${v[13]}">
+                <i class="fa fa-edit"></i> Edit
+              </a>
+            </th:block>
+
+            <a class="btn-action btn-reset reset-link"
+               th:attr="data-value0=${v[0]},
+                        data-value1=${v[1]},
+                        data-value3=${v[3]}">
+              <i class="fa fa-refresh"></i> Reset
+            </a>
+
+            <a class="btn-action disablebtn change-status-link"
+               th:if="${v[5] == 1}"
+               th:attr="data-value0=${v[0]},
+                        data-value1=${v[1]},
+                        data-value5=${v[5]}">
+              Disable
+            </a>
+
+            <a class="btn-action enablebtn change-status-link"
+               th:if="${v[5] == 0}"
+               th:attr="data-value0=${v[0]},
+                        data-value1=${v[1]},
+                        data-value5=${v[5]}">
+              Enable
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</html>

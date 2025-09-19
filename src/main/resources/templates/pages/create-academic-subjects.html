@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{${layoutPath}}"
+>
+<head>
+    <title>Add Academic Subject</title>
+    <div layout:fragment="static-files">
+        <style>
+            /*Toggle Switch*/
+            .switch {
+              position: relative;
+              display: inline-block;
+              width: 60px;
+              height: 34px;
+            }
+
+            .switch input {
+              opacity: 0;
+              width: 0;
+              height: 0;
+            }
+
+            .slider {
+              position: absolute;
+              cursor: pointer;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: #ccc;
+              -webkit-transition: .4s;
+              transition: .4s;
+            }
+
+            .slider:before {
+              position: absolute;
+              content: "";
+              height: 26px;
+              width: 26px;
+              left: 4px;
+              bottom: 4px;
+              background-color: white;
+              -webkit-transition: .4s;
+              transition: .4s;
+            }
+
+            input:checked + .slider {
+              background-color: #84deff; /* Green color for "Yes" */
+            }
+
+            input:focus + .slider {
+              box-shadow: 0 0 1px #84deff;
+            }
+
+            input:checked + .slider:before {
+              -webkit-transform: translateX(26px);
+              -ms-transform: translateX(26px);
+              transform: translateX(26px);
+            }
+
+            .slider.round {
+              border-radius: 34px;
+            }
+
+            .slider.round:before {
+              border-radius: 50%;
+            }
+        </style>
+    </div>
+
+</head>
+<body>
+
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+
+    <div class="container">
+        <div class="mt-4 pt-2 card box-shadow-grey">
+            <div class="card-title titlecss">
+                <div class="form-group row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <h4 align="center"><i class="fa fa-book">  Add New Subject</i></h4>
+                    </div>
+                    <div class="col-md-2 pr-4">
+                        <input type="button" class="btn btn-success float-sm-right" id="adddept" name="adddeptn" value="Add New Department" data-toggle="modal" data-target="#department-modal" />
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="card-body">
+                <div class="card-body margin-0" id="form_container">
+                    <form id="newsubjectform" class="bold">
+                        <input name="subjectcode" id="subjectcode" type="hidden"/>
+                        <div class="form-group row">
+                            <div class="col-md-3 col-form-label">
+                                <label>Department:<span class="span">*</span> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select name="departmentcode" id="departmentcode" class="form-control" placeholder="Select Department" required>
+                                    <option value="" selected="true" disabled="true">Select Department</option>
+                                    <th:block th:each="o : ${mdepartmentList}">
+                                        <option th:value="${o.departmentcode}" th:text="${o.departmentname}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-3 col-form-label">
+                                <label>Belongs to Short Term Course?<span class="span">*</span> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="hidden" id="isshortterm" name="isshortterm" value="0"/>
+
+                                <label class="switch">
+                                    <input type="checkbox" id="isshortterm_toggle"/>
+                                    <span class="slider round"></span>
+                                </label>
+
+                                <br/><small class="mt-2" id="isshortterm_label">No</small>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-3 col-form-label">
+                                <label>Course Name<span class="span">*</span> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select name="coursecode" id="coursecode" class="form-control" required>
+                                    <option value="">Select Course</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row" id="semesterdiv">
+                            <div class="col-md-3 col-form-label">
+                                <label>Semester:<span class="span">*</span> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select name="semestercode" id="semestercode" class="form-control">
+                                    <option value="" selected="true" disabled="true">Select</option>
+                                    <th:block th:each="o : ${semesterList}">
+                                        <option th:value="${o.semestercode}" th:text="${o.semestername}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row" id="phasediv" style="display:none;">
+                            <div class="col-md-3 col-form-label">
+                                <label>Phases: <span class="span">*</span> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select name="sphase" id="sphase" class="form-control">
+                                    <option value="">Select</option>
+                                    <th:block th:each="s : ${sphaseList}">
+                                        <option th:value="${s.sphaseid}" th:text="${s.sphasename}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3 col-form-label">
+                                <label>Subject Name:<span class="span">*</span></label>
+                            </div>
+                            <div class="col-md-6">
+                                <input name="subjectname" id="subjectname"  class="form-control alphabets" required="true" maxlength="200"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-3 col-form-label">
+                                <label>Is this Subject Optional?<span class="span">*</span></label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="isoptional" id="isoptionaly" value="1" required="true" />
+                                    <label class="form-check-label" for="isoptionaly">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="isoptional" id="isoptionaln" checked="true" value="0" required="true" />
+                                    <label class="form-check-label" for="isoptionaln">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-3">
+                                <div class="d-flex justify-content-center">
+                                    <input class="btn btn-info mx-1" type="submit" value="Submit" />
+                                    <input type="reset" value="Reset" class="btn btn-warning mx-1" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <hr/>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered center-sans-serif" id="s-table">
+                            <thead class="fs-14">
+                            <tr>
+                                <th>Sl. No</th>
+                                <th>Subject Name</th>
+                                <th>Department</th>
+                                <th>Course</th>
+                                <th>Semester/Phase</th>
+                                <th class="noExport">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody class="fs-12">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="modal fade" id="department-modal" tabindex="-1" role="dialog" aria-labelledby="departmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block p-3 p-md-4 border-bottom-0">
+                    <h5 class="modal-title" id="departmentModalLabel"><u>Add New Department</u></h5>
+                    <button type="button" class="close position-absolute r-15-t-8" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    <form name="departmentForm" id="departmentForm" action="/nerie/departments/saveDepartments" method="POST" role="form" autocomplete="off" novalidate>
+                        <div class="form-group row mb-3 justify-content-center">
+                            <label for="departmentname_modal" class="col-md-3 col-form-label text-md-right">Department Name:<span class="span">*</span></label>
+                            <div class="col-md-7">
+                                <input name="departmentcode" id="departmentcode_modal_hidden" type="hidden"/>
+                                <input name="departmentname" id="departmentname_modal" class="form-control alphabets" required maxlength="100"/>
+                                <div class="invalid-feedback">Department name is required and must be 1-100 characters.</div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button id="submitDepartmentForm" type="submit" class="btn btn-info">SUBMIT</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">CANCEL</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Feedback Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-light text-dark">
+                    <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
+                    <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="feedbackModalBody">
+                    <!-- Message content inserted via JS -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="modalOkButton" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/createAcademicSubjects.js}"></script>
+</th:block>
+</body>
+</html>

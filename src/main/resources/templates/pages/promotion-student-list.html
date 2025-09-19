@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{${layoutPath}}"
+>
+<head>
+    <title>Promotion Students List</title>
+    <th:block layout:fragment="static-files">
+        <link rel="stylesheet" th:href="@{/tempscripts/bootstrap-select/bootstrap-select.min.css}" />
+        <link rel="stylesheet" th:href="@{/lily/js/select2/select2.min.css}" />
+    </th:block>
+</head>
+<body>
+
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
+<main layout:fragment="content">
+
+    <div class="container pt-4 pb-4">
+        <div class="card box-shadow-grey">
+            <div class="card-title titlecss">
+                <div class="form-group row">
+                    <div class="col-md-12 text-center">
+                        <h4 align="center"><i class="fa fa-book">  Students List</i></h4>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="card-body margin-0">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label>Department<span class="span">*</span></label>
+                        <select name="departmentcode" id="departmentcode" class="form-control" required="required">
+                            <option value="">Select</option>
+                            <th:block th:if="${mdepartmentList != null}" th:each="o : ${mdepartmentList}">
+                                <option th:value="${o.departmentcode}" th:text="${o.departmentname}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label>Course<span class="span">*</span></label>
+                        <select name="coursecode" id="coursecode" class="form-control" required="required">
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                    <input id="isshortterm" type="hidden" readonly="readonly"/>
+                    <div class="col-sm-3">
+                        <label>Semester/Phase<span class="span">*</span></label>
+                        <select name="semphase" id="semphase" class="form-control" required="required">
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3 d-flex align-items-end">
+                        <button id="loadStudentsBTN" class="form-control btn btn-primary load-students-btn" data-function="loadStudents">Load Students</button>
+                    </div>
+                </div>
+                <div class="mt-2 mb-4 pt-2" id="space">
+                    <hr/>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered center-sans-serif" id="s-table">
+                        <thead class="fs-14">
+                        <tr>
+                            <th class="w-20">Sl. No</th>
+                            <th class="w-20">Roll No.</th>
+                            <th class="w-20">Student Name</th>
+                            <th class="w-20">Department</th>
+                            <th class="w-20">Course</th>
+                            <th class="w-20">Email-Id</th>
+                            <th class="noExport w-20">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div class="modal fade" id="promotionModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="promoteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="promoteModalLabel">Promote Student</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="modalBody">
+                                <div class="container">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="inputYearid">Academic Year:</label>
+                                            <input type="text" class="form-control" id="inputYearid" readonly="readonly"/>
+                                        </div>
+                                        <div class="form-group col-md-10">
+                                            <label for="inputStudentid">Roll No.:</label>
+                                            <input type="text" class="form-control" id="inputStudentid" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="inputFname">First Name:</label>
+                                            <input type="text" class="form-control" id="inputFname" readonly="readonly"/>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="inputMname">Middle Name:</label>
+                                            <input type="text" class="form-control" id="inputMname" readonly="readonly"/>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="inputLname">Last Name:</label>
+                                            <input type="text" class="form-control" id="inputLname" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputDepartment">Department:</label>
+                                            <input type="text" class="form-control" id="inputDepartment" readonly="readonly"/>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputCourse">Course:</label>
+                                            <input type="text" class="form-control" id="inputCourse" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputSP" id="inputSPLabel">Current Semester</label>
+                                            <input id="inputSP" readonly="readonly" class="form-control" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputNextSP" id="inputNextSPLabel">Next Semester</label>
+                                            <input type="text" class="form-control" id="inputNextSP" readonly="readonly"/>
+                                            <input type="hidden" class="form-control" id="optionalSubs" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="electiveSub" style="display: none;">
+                                        <label for="inputOptionalSP" id="inputOptionalSPLabel">Select Optional Subject</label>
+                                        <select name="optionalsubjects" id="inputOptionalSP" class="form-control multiselectDropdown selectpicker" multiple="multiple" data-live-search="true" data-selected-text-format="count" required="required">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-between">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button id="promoteBTN" type="button" class="btn btn-primary">Promote Student</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/tempscripts/bootstrap-select/bootstrap-select.min.js}"></script>
+    <script th:src="@{/lily/js/select2/select2.min.js}"></script>
+    <script th:src="@{/js/promotionStudentList.js}"></script>
+</th:block>
+</body>
+</html>

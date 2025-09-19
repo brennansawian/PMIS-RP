@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+>
+    <div layout:fragment="statics">
+        <script th:src="@{/js/ResourcePerson.js}"></script>
+        <script th:src="@{/lily/js/customajax.js}"></script>
+    </div>
+
+    <div layout:fragment="form">
+        <div class="container mt-4 mb-4">
+            <div class="card box-shadow-grey">
+                <div class="card-title titlecss" ><h4><i class="fa fa-book">&nbsp;Resource Person Details</i></h4></div>
+                <hr />
+                <div class="card-body margin-0">
+                    <div class="container bold">
+                        <form name="mtresourcepersonfn" id="mtresourcepersonfid" role="form" autocomplete="off">
+                            <div class="form-group row">
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpname">Name of the Resource Person:<span class="span">*</span></label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="rpname" id="rpname"  class="form-control" required="true" maxlength="100" />
+                                </div>
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpemailid">Email Id:<span class="span">*</span></label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="rpslno" id="rpslno"  class="form-control" hidden="true" />
+                                    <input name="rpemailid" id="rpemailid" type="email" class="form-control" required="true" maxlength="50"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpqualificationcategory">Qualification Category:<span class="span">*</span> </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="rpqualificationcategory" class="form-control" name="rpqualificationcategory" required="true">
+                                        <option value="-1">Select</option>
+                                        <option th:each="qc : ${qualificationcategorylist}" th:value="${qc.qualificationcategorycode}" th:text="${qc.qualificationcategoryname}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpqualification">Qualification:<span class="span">*</span> </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="rpqualification" class="form-control" name="rpqualification" required="true">
+                                        <option value="-1">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" id="qclist" >
+                                <div class="col-md-2 col-form-label">
+                                    <label for="qcinput">Enter Qualification:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input id="qcinput" class="form-control" name="qcinput"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2 col-form-label">
+                                    <label for="qualificationsubjectcode">Specialized Subject: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="qualificationsubjectcode" id="qualificationsubjectcode" class="form-control"  >
+                                        <option value="0">Not Applicable</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpspecialization">Any Other Specialization: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="rpspecialization" id="rpspecialization" class="form-control" maxlength="100"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" id="dlist" >
+                                <div class="col-md-3 col-form-label">
+                                    <label for="dinput">Enter Designation: <span class="span">*</span></label>
+                                </div>
+                                <div class="col-md-5">
+                                    <input id="dinput" class="form-control" name="dinput"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2 col-form-label">
+                                    <label for="designationcodess">Designation:<span class="span">*</span> </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="designationcodess" class="form-control selectpicker" data-live-search="true" name="designationcodess" required="true">
+                                        <option value="-1">Select</option>
+                                        <option th:each="d : ${designationlist}" th:value="${d.designationcode}" th:text="${d.designationname}"></option>
+                                        <option value="others">Others</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpinstitutename">Name of Institute:<span class="span">*</span></label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="rpinstitutename" id="rpinstitutename"  class="form-control" required="true" maxlength="100"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpofficeaddress">Office Address:<span class="span">*</span></label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="rpofficeaddress" id="rpofficeaddress"  class="form-control" required="true" maxlength="100"/>
+                                </div>
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpresidentialaddress">Residential Address:<span class="span">*</span></label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="rpresidentialaddress" id="rpresidentialaddress"  class="form-control" required="true" maxlength="100"/>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpofficephone">Office Telephone No.(With STD code):</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="rpofficephone" id="rpofficephone"  class="form-control numberspl"  maxlength="12"/>
+                                </div>
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpresidencephone">Residential Telephone No.(With STD code):</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="rpresidencephone" id="rpresidencephone"  maxlength="12" class="form-control numberspl" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpmobileno">Mobile No.<span class="span">*</span></label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="rpmobileno" id="rpmobileno"  class="form-control numbers" required="true" maxlength="10"/>
+                                    <span id="msg1" class="span"></span>
+                                </div>
+                                <div class="col-md-2 col-form-label">
+                                    <label for="rpfax">Fax No.:</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="rpfax" id="rpfax"  class="form-control numberspl"  maxlength="12"/>
+                                </div>
+                            </div>
+                            <div style="text-align: center">
+                                <input id="submit" type="submit" name="submit" value="SUBMIT" class="btn btn-info" />
+                                <input type="button" value="RESET" class="btn btn-danger" id="resetButton" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

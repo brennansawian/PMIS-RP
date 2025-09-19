@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/resource-person-layout}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <div layout:fragment="static-files">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  </div>
+  <title>Non-Local TA Form - NERIE Shillong</title>
+  <style>
+    .form-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      position: relative;
+    }
+
+    .section-title {
+      background-color: #f8f9fa;
+      padding: 0.5rem 1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid #198754;
+      font-weight: bold;
+    }
+
+    .language-selector {
+      position: absolute;
+      top: 20px;
+      right: 150px;
+      background-color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      z-index: 10;
+      text-align: end;
+    }
+
+    .table td, .table th {
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="form-wrapper position-relative">
+  <!-- Language Selector -->
+  <div class="language-selector position-absolute top-0 end-0 mt-3 me-4">
+    <input type="radio" id="english" name="language" value="english" checked />
+    <label for="english" class="me-2">English</label>
+    <input type="radio" id="hindi" name="language" value="hindi" />
+    <label for="hindi">हिंदी</label>
+  </div>
+
+  <div class="form-wrapper">
+    <div class="container bg-white shadow rounded p-4" style="max-width: 1100px;">
+      <h4 class="text-center en fw-bold text-dark">Travelling Allowance Bill (For Non-Local Participants)</h4>
+      <h4 class="text-center hi fw-bold text-dark">यात्रा भत्ता बिल (बाहरी प्रतिभागियों हेतु)</h4>
+
+      <form>
+        <!-- Programme Details -->
+        <div class="mb-3">
+          <label class="form-label en">Name of the Programme:</label>
+          <label class="form-label hi">कार्यक्रम का नाम:</label>
+          <textarea class="form-control"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label class="form-label en">Venue:</label>
+            <label class="form-label hi">स्थान:</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label en">From:</label>
+            <label class="form-label hi">से:</label>
+            <input type="date" class="form-control">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label en">To:</label>
+            <label class="form-label hi">तक:</label>
+            <input type="date" class="form-control">
+          </div>
+        </div>
+
+        <!-- Participant Details -->
+        <div class="mb-3">
+          <label class="form-label en">Name (as per bank, in CAPITAL):</label>
+          <label class="form-label hi">नाम (बैंक रिकॉर्ड अनुसार):</label>
+          <input type="text" class="form-control">
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label>Designation:</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label>Basic Pay / Pay Level:</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Official Address:</label>
+          <textarea class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label>City:</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="col">
+            <label>Pin Code:</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Residential Address:</label>
+          <textarea class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label>City:</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="col">
+            <label>Pin Code:</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+
+        <!-- Bank Details -->
+        <div class="section-title">
+          <span class="en">Bank Details</span>
+          <span class="hi">बैंक विवरण</span>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6"><label>Account No.:</label><input type="text" class="form-control"></div>
+          <div class="col-md-6"><label>Bank:</label><input type="text" class="form-control"></div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6"><label>Branch:</label><input type="text" class="form-control"></div>
+          <div class="col-md-6"><label>IFSC Code:</label><input type="text" class="form-control"></div>
+        </div>
+        <div class="mb-3"><label>PAN Card No.:</label><input type="text" class="form-control"></div>
+
+        <!-- Part 1: Rail/Air/Bus Allowance -->
+        <div class="section-title">Part 1: Rail / Air / Bus Allowance</div>
+        <table class="table table-bordered mb-4">
+          <thead class="table-light">
+            <tr>
+              <th>Date (Dep)</th><th>Station</th><th>Time</th>
+              <th>Date (Arr)</th><th>Station</th><th>Time</th>
+              <th>Mode/PNR No.</th><th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="date" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="date" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+            </tr>
+            <!-- Add more rows if needed -->
+          </tbody>
+        </table>
+
+        <!-- Part 2: Road Mileage -->
+        <div class="section-title">Part 2: Road Mileage Allowance</div>
+        <table class="table table-bordered mb-4">
+          <thead class="table-light">
+            <tr><th>From</th><th>To</th><th>Mode</th><th>Distance (km)</th><th>Amount</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Part 3: Daily Allowance -->
+        <div class="section-title">Part 3: Daily Allowance</div>
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label>Number of Days:</label>
+            <input type="number" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label>Rate per Day (Rs.):</label>
+            <input type="number" class="form-control">
+          </div>
+          <div class="col-md-4">
+            <label>Total (Rs.):</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label><strong>Grand Total (Rs.):</strong></label>
+          <input type="text" class="form-control">
+        </div>
+
+        <!-- Declaration -->
+        <div class="section-title">Declaration / प्रमाण पत्र</div>
+        <ol>
+          <li>I actually travelled by the class of accommodation for which T.A. has been claimed.</li>
+          <li>Places claimed for road mileage are not connected by train.</li>
+          <li>Distance and rates claimed are correct to the best of my knowledge.</li>
+          <li>No TA/DA has been claimed from any other source.</li>
+          <li>Govt. vehicle was not used for road mileage.</li>
+          <li>No lodging/boarding was provided at Govt. expense.</li>
+        </ol>
+
+        <p><strong>Signature of Participant:</strong></p>
+
+        <div class="text-muted mb-4">
+          <em>Note: Attach cancelled cheque or bank passbook copy for verification.</em>
+        </div>
+
+        <!-- Office Use -->
+        <div class="section-title">For Official Use Only</div>
+        <p>Attendance, TA particulars and entitlements checked and verified.</p>
+
+        <div class="mb-3">
+          <strong>Signature and Name (A.P.C / SO):</strong>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label>Pay ₹:</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label>In Words:</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-3"><strong>Programme Coordinator Signature:</strong></div>
+        <div class="mb-3"><strong>Account Officer Signature:</strong></div>
+        <div class="mb-3"><strong>Director / HOD Signature with Seal:</strong></div>
+
+        <div class="section-title">Acknowledgement</div>
+        <div class="row mb-3">
+          <div class="col-md-6"><label>Received ₹:</label><input type="text" class="form-control"></div>
+          <div class="col-md-6"><label>In Words:</label><input type="text" class="form-control"></div>
+        </div>
+
+        <div class="mb-3">
+          <strong>Asst. Cashier Signature:</strong><br>
+          <strong>Participant Signature with Revenue Stamp:</strong>
+        </div>
+
+        <div class="mt-4">
+          <button type="submit" class="btn btn-success w-100">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script nonce="${cspNonce}">
+    function changeLanguage() {
+      const language = document.querySelector('input[name="language"]:checked').value;
+      document.querySelectorAll('.en').forEach(el => el.style.display = language === 'hindi' ? 'none' : 'block');
+      document.querySelectorAll('.hi').forEach(el => el.style.display = language === 'hindi' ? 'block' : 'none');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById("english").addEventListener("change", changeLanguage);
+      document.getElementById("hindi").addEventListener("change", changeLanguage);
+      changeLanguage();
+    });
+  </script>
+</main>
+</body>
+</html>

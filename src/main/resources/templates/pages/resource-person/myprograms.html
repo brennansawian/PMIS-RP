@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/resource-person-layout}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Programs - NERIE Shillong</title>
+  <div layout:fragment="static-files">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </div>
+  <style>
+    .form-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 2rem 1rem;
+    }
+
+    .section-title {
+      background-color: #f8f9fa;
+      padding: 0.5rem 1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid #198754;
+      font-weight: bold;
+    }
+    .note {
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>  
+<main layout:fragment="content">
+   <h2 class="text-center mt-4 mb-4 fw-bold text-dark">My Programs</h2>
+<div class="card shadow rounded-4 p-3">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle mb-0">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th>Program Name</th>
+                    <th>Phase No</th>
+                    <th>Phase Description</th>
+                    <th>Program ID</th>
+                    <th>Program Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="row : ${programData}">
+                    <td th:text="${row[2]}"></td> <!-- programname -->
+                    <td th:text="${row[0]}"></td> <!-- phaseno -->
+                    <td th:text="${row[1]}"></td> <!-- phasedescription -->
+                    <td th:text="${row[3]}"></td> <!-- programid -->
+                    <td th:text="${row[4]}"></td> <!-- programdescription -->
+                    <td th:text="${#dates.format(row[5], 'dd-MM-yyyy')}"></td> <!-- startdate -->
+                    <td th:text="${#dates.format(row[6], 'dd-MM-yyyy')}"></td> <!-- enddate -->
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-success rounded-pill px-3">
+                            <i class="bi bi-file-earmark-text"></i> Generate
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</main>
+</body>
+</html>

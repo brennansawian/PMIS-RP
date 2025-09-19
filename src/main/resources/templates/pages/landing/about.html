@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{layouts/landing-layout}"
+>
+  <head>
+    <title>About</title>
+    <div layout:fragment="styles">
+      <link rel="stylesheet" th:href="@{/css/about.css}">
+    </div>
+  </head>
+  <!-- Main Content Area -->
+  <main layout:fragment="content">
+    <!--Pre Loader-->
+    <div layout:replace="~{fragments/lilypreloader :: preloader}"></div>
+    <!-- Hero Section -->
+    <section id="about-hero" class="hero-section overlay bg-cover">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <ul class="list-inline custom-breadcrumb mb-2">
+              <li class="list-inline-item"><a class="h2 text-primary font-secondary" th:href="@{/nerie/index}">Home</a></li>
+              <li class="list-inline-item text-white h3 font-secondary nasted">About Us</li>
+            </ul>
+            <p class="text-lighten mb-0">North East Regional Institute Of Education<br>
+              (NATIONAL COUNCIL OF EDUCATIONAL RESEARCH & TRAINING)<br>
+              (An Autonomous Organisation under Ministry of Education, Government Of India)<br>
+              Umiam, Shillong, 793103, Meghalaya
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- about -->
+    <section class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <img class="img-fluid w-100 mb-4 mt-4" th:src="@{/lily/images/about/nerie_front_view.jpg}" alt="about image">
+            <h2 class="section-title">ABOUT OUR JOURNEY</h2>
+            <h5><u><b>National Council of Educational Research and Training (NCERT):</b></u></h5>
+            <p style="font-size: 15px">
+              The National Council of Educational Research and Training (NCERT) is an autonomous organisation set up in
+              1961 by the Government of India to assist and advise the Central and State Governments on policies and
+              programmes for qualitative improvement in school education. The major objectives of NCERT and its constituent
+              units are to: undertake, promote and coordinate research in areas related to school education; prepare and
+              publish model textbooks, supplementary material, newsletters, journals and develops educational kits,
+              multimedia digital materials, etc. organise pre-service and in-service training of teachers; develop
+              and disseminate innovative educational techniques and practices;collaborate and network with state educational
+              departments, universities, NGOs and other educational institutions; act as a clearing house for ideas and
+              information in matters related to school education; and act as a nodal agency for achieving the goals of
+              Universalisation of Elementary Education. In addition to research, development, training, extension, publication
+              and dissemination activities, NCERT is an implementation agency for bilateral cultural exchange programmes with
+              other countries in the field of school education. The NCERT also interacts and works in collaboration with the
+              international organisations, visiting foreign delegations and offers various training facilities to educational
+              personnel from developing countries.
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">NCERT Constituent Units:</h2>
+        <div class="row">
+          <!-- CIET item -->
+          <div
+                  class="col-lg-4 col-sm-6 mb-4 windowOpenBtn"
+                  style="cursor: pointer;"
+                  data-arg="/nerie/about/blog1"
+          >
+            <div class="card rounded-0 hover-shadow border-top-0 border-left-0 border-right-0">
+              <img class="card-img-top rounded-0" th:src="@{/lily/images/aboutus/CIET_blog.jpg}" alt="research thumb">
+              <div class="card-body">
+                <h4 class="card-title">CIET</h4>
+                <p class="card-text">
+                  Central Institute of Educational Technology(CIET), a constituent unit of NCERT, came into existence in the year 1984...<a href="#more" class="showmore">show more</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- NERIE SHILLONG item -->
+          <div
+                  class="col-lg-4 col-sm-6 mb-4 windowOpenBtn"
+                  style="cursor: pointer;"
+                  data-arg="/nerie/about/blog2"
+          >
+            <div class="card rounded-0 hover-shadow border-top-0 border-left-0 border-right-0">
+              <img class="card-img-top rounded-0" th:src="@{/lily/images/aboutus/NERIE_blog.jpg}" alt="research thumb">
+              <div class="card-body">
+                <h4 class="card-title">North-East Regional Institute of Education (NERIE), Shillong</h4>
+                <p class="card-text">
+                  The North East Regional Institute of Education (NERIE) stands amidst the natural grandeur in Umiam village,..<a href="#more" class="showmore">show more</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- RIE AJMER item -->
+          <div
+                  class="col-lg-4 col-sm-6 mb-4 windowOpenBtn"
+                  style="cursor: pointer;"
+                  data-arg="/nerie/about/blog3"
+          >
+            <div class="card rounded-0 hover-shadow border-top-0 border-left-0 border-right-0">
+              <img class="card-img-top rounded-0" th:src="@{/lily/images/aboutus/RIE_AJMERblog.jpg}" alt="research thumb">
+              <div class="card-body">
+                <h4 class="card-title">RIE Ajmer</h4>
+                <p class="card-text">
+                  Ajmer was set up in the year 1963. Later it was renamed as Regional Institute of Education (RIE), Ajmer in the year 1995...<a href="#more" class="showmore">show more</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- RIE BHOPAL item -->
+          <div
+                  class="col-lg-4 col-sm-6 mb-4 windowOpenBtn"
+                  style="cursor: pointer;"
+                  data-arg="/nerie/about/blog4"
+          >
+            <div class="card rounded-0 hover-shadow border-top-0 border-left-0 border-right-0">
+              <img class="card-img-top rounded-0" th:src="@{/lily/images/aboutus/RIE_BHOPAL_blog.jpg}" alt="research thumb">
+              <div class="card-body">
+                <h4 class="card-title">RIE Bhopal</h4>
+                <p class="card-text">
+                  Regional Institute of Education (RIE), Bhopal is a constituent unit of NCERT, New Delhi. The Institute looks after teacher education and ...<a href="#more" class="showmore">show more</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- RIE BHUBANESHWAR item -->
+          <div
+                  class="col-lg-4 col-sm-6 mb-4 windowOpenBtn"
+                  style="cursor: pointer;"
+                  data-arg="/nerie/about/blog5"
+          >
+            <div class="card rounded-0 hover-shadow border-top-0 border-left-0 border-right-0">
+              <img class="card-img-top rounded-0" th:src="@{/lily/images/aboutus/RIE_Bhubaneswar_blog.jpg}" alt="research thumb">
+              <div class="card-body">
+                <h4 class="card-title">RIE Bhubaneshwar</h4>
+                <p class="card-text">
+                  The Regional Institute of Education, Bhubaneswar is a constituent unit of National Council of Educational Research and Training (NCERT), ...<a href="#more" class="showmore">show more</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- PSSCIVE item -->
+          <div
+                  class="col-lg-4 col-sm-6 mb-4 windowOpenBtn"
+                  style="cursor: pointer;"
+                  data-arg="/nerie/about/blog6"
+          >
+            <div class="card rounded-0 hover-shadow border-top-0 border-left-0 border-right-0">
+              <img class="card-img-top rounded-0" th:src="@{/lily/images/aboutus/PSSSCIVE_Bhopal_blog.jpg}" alt="research thumb">
+              <div class="card-body">
+                <h4 class="card-title">PSSCIVE</h4>
+                <p class="card-text">
+                  The Pandit Sundarlal Sharma Central Institute of Vocational Education (PSSCIVE) is an apex research and development organization...<a href="#more" class="showmore">show more</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- RIE Mysore item -->
+          <div
+                  class="col-lg-4 col-sm-6 mb-4 windowOpenBtn"
+                  style="cursor: pointer;"
+                  data-arg="/nerie/about/blog7"
+          >
+            <div class="card rounded-0 hover-shadow border-top-0 border-left-0 border-right-0">
+              <img class="card-img-top rounded-0" th:src="@{/lily/images/aboutus/RIE_Mysore_blog.jpg}" alt="research thumb">
+              <div class="card-body">
+                <h4 class="card-title">RIE Mysuru</h4>
+                <p class="card-text">
+                  The Regional Institute of Education Mysuru ( Formerly Regional College of Education )...<a href="#more" class="showmore">show more</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div layout:fragment="scripts">
+      <script th:src="@{/js/about.js}"></script>
+    </div>
+  </main>
+</html>

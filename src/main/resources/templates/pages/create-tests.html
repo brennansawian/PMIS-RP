@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/coordinator-faculty-layout}"
+>
+<head>
+  <title>Tests</title>
+  <div layout:fragment="static-files"></div>
+</head>
+<body>
+
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+  <div class="container-fluid bgcolor">
+    <br/>
+    <div class="container mb-3">
+      <div class="card box-shadow-grey" >
+        <div class="card-title titlecss" ><h4><i class="fa fa-book"> Test Details</i></h4></div>
+        <hr/>
+        <div class="card-body margin-0">
+          <div class="container mb-5 bold">
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="programdet" role="tabpanel" aria-labelledby="programdet-tab">
+                <div id="newprogramdiv">
+                  <form method="POST" th:object="${testdetails}" th:action="@{/nerie/tests/saveTestDetails}" name="testform" id="testsdetailsform" role="form" autocomplete="off">
+                    <input type="hidden" th:field="*{testid}" id="testid" readonly="readonly" class="form-control" />
+                    <div class="form-group row">
+                      <div class="col-md-3 col-form-label">
+                        <label for="subjectcode">Subject:<span class="span">*</span> </label>
+                      </div>
+                      <div class="col-md-5">
+                        <select th:field="*{subjectcode.subjectcode}" id="subjectcode" class="form-control" required="required">
+                          <option value="" th:text="Select"></option>
+                          <th:block th:each="o : ${subs}">
+                            <!-- FIXED: Using o[0] and o[1] for value and text -->
+                            <option th:value="${o[0]}" th:text="${o[0]} + ' - ' + ${o[1]}"></option>
+                          </th:block>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-3 col-form-label">
+                        <label for="testno">Test No.:<span class="span">*</span> </label>
+                      </div>
+                      <div class="col-md-5">
+                        <input type="text" th:field="*{testno}" id="testno" class="form-control" required="required" maxlength="3" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-3 col-form-label">
+                        <label for="testname">Test Name:<span class="span">*</span> </label>
+                      </div>
+                      <div class="col-md-5">
+                        <input type="text" th:field="*{testname}" id="testname" class="form-control" required="required" maxlength="200" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-3 col-form-label">
+                        <label for="testdate">Test Date:<span class="span">*</span> </label>
+                      </div>
+                      <div class="col-md-5">
+                        <input type="text" class="form-control datepicker" id="testdate" th:field="*{testdate}" required="required"/>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-3 col-form-label">
+                        <label for="passmark">Pass Mark:<span class="span">*</span> </label>
+                      </div>
+                      <div class="col-md-5">
+                        <input type="text" class="form-control" id="passmark" th:field="*{passmark}" required="required" maxlength="3"/>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-3 col-form-label">
+                        <label for="fullmark">Full Mark:<span class="span">*</span> </label>
+                      </div>
+                      <div class="col-md-5">
+                        <input type="text" class="form-control" id="fullmark" th:field="*{fullmark}" required="required" maxlength="3"/>
+                      </div>
+                    </div>
+
+                    <center>
+                      <input id="submit" type="submit" name="submit" value="SUBMIT" class="btn btn-info"/>
+                      <input type="button" value="RESET" id="customresetbutton" class="btn btn-danger"/>
+                    </center>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr/>
+          <div class="container">
+            <div class="row table-responsive">
+              <div class="col-md-12">
+                <h4 class="card-title titlecss"><i class="fa fa-book">  Created Tests</i></h4>
+                <hr>
+                <table class="table table-striped table-bordered center-sans-serif" id="usertable">
+                  <thead class="fs-14">
+                  <tr>
+                    <th class="w-1">Sl No.</th>
+                    <th>Test Name</th>
+                    <th>Test No.</th>
+                    <th>Subject</th>
+                    <th>Test Date</th>
+                    <th>Pass Mark</th>
+                    <th>Full Mark</th>
+                    <th class="noExport">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody class="fs-12">
+                  <tr th:each="v, iterStat : ${testlist}">
+                    <td th:text="${iterStat.count}"></td>
+                    <td th:text="${v[3]}"></td>
+                    <td th:text="${v[1]}"></td>
+                    <td th:text="${v[7]}"></td>
+                    <td th:text="${v[2] != null ? #dates.format(v[2], 'dd-MM-yyyy') : ''}"></td>
+                    <td th:text="${v[4]}"></td>
+                    <td th:text="${v[5]}"></td>
+                    <td>
+                      <!-- FIXED: Changed to a <button> with type="button" and removed href -->
+                      <button type="button" class="clickme danger11 editbtn btn btn-sm btn-info"
+                              th:attr="data-param1=${v[0]},
+                                       data-param2=${v[3]},
+                                       data-param3=${v[1]},
+                                       data-param4=${v[6]},
+                                       data-param5=${v[2] != null ? #dates.format(v[2], 'dd-MM-yyyy') : ''},
+                                       data-param6=${v[4]},
+                                       data-param7=${v[5]}">
+                        <i class="fa fa-edit">  Edit</i>
+                      </button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br/>
+    </div>
+  </div>
+  <!-- Feedback Modal -->
+  <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-light text-dark">
+          <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
+          <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body" id="feedbackModalBody">
+          <!-- Message content inserted via JS -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="modalOkButton" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block layout:fragment="scripts">
+  <script th:src="@{/js/createTests.js}"></script>
+</th:block>
+</body>
+</html>

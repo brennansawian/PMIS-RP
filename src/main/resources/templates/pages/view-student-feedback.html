@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/coordinator-faculty-layout}"
+>
+<head>
+  <title>Feedbacks</title>
+  <div layout:fragment="static-files">
+  </div>
+
+</head>
+<body>
+
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+    <div class="container pb-4">
+      <div class="card mt-4 box-shadow-grey">
+        <h4 class="card-title titlecss"><i class="fa fa-list">  Student Feedback</i></h4>
+        <hr>
+        <div class="card-body">
+          <p>Select the subject to view the Feedbacks</p>
+          <div class="row">
+            <div class="col-sm-5 col-md-5">
+              <label for="subjectcode">Select Subject:</label>
+              <select id="subjectcode" class="form-control">
+                <option value="-1">Select Subject</option>
+                <th:block th:if="${subjectlist != null}">
+                  <option th:each="i : ${subjectlist}" th:value="${i[0]}" th:text="${i[1]}"></option>
+                </th:block>
+              </select>
+            </div>
+
+            <div class="col-sm-2 col-md-2">
+              <label style="color:white;">a</label><br/>
+              <button type="button" class="btn btn-success" id="viewstudentfeedback">View Feedback</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card mt-4 box-shadow-grey" >
+        <div class="card-body">
+          <h4 class="card-title titlecss"><i class="fa fa-list"></i> Feedbacks</h4>
+          <hr/>
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered center-sans-serif" id="feedbacktable">
+              <thead class="fs-14">
+              <tr>
+                <th style="width: 5%">Student ID</th>
+                <th style="width: 10%">Student Name</th>
+                <th style="width: 30%">Feedback</th>
+                <th style="width: 10%">Date</th>
+              </tr>
+              </thead>
+              <tbody style="font-size: 12px;" id="feedbacktablebody">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+  <script th:src="@{/js/viewStudentFeedback.js}"></script>
+</th:block>
+</body>
+</html>

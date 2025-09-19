@@ -1,0 +1,16 @@
+
+.display-none {
+    display: none;
+}
+
+#programs {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#programs {
+    max-width: 400px;
+    /* Adjust width as needed */
+    width: 100%;
+}

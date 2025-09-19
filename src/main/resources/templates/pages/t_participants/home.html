@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{layouts/participant-layout}"
+>
+<head>
+    <title>Participant Home</title>
+    <div layout:fragment="static-files">
+        <link th:href="@{/css/participantHome.css}" rel="stylesheet">
+    </div>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container-fluid bgcolor py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-12">
+                <div class="profile-card-modern">
+                    <div>
+                        <img th:if="${participantImage != null}" th:src="'data:image/jpeg;base64,' + ${participantImage}" class="profile-avatar" alt="Participant Photo"/>
+                        <img th:unless="${participantImage != null}" th:src="@{/tempscripts/images/participant_photo.png}" class="profile-avatar" alt="Default Participant Photo"/>
+                    </div>
+
+                    <div class="profile-info">
+                        <h5 th:text="'Welcome ' + ${myinfo.username}">Welcome User</h5>
+                        <p class="role">Participant</p>
+                        <div class="contact-info">
+                            <div th:if="${myinfo.emailid}">
+                                <span th:text="'Email ID: ' + ${myinfo.emailid}">Email</span>
+                            </div>
+                            <div th:if="${myinfo.usermobile}">
+                                <span th:text="'Mobile No: ' + ${myinfo.usermobile}">Mobile</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Server Date & Time -->
+                    <div class="server-datetime">
+                        <input id="sysdate" type="hidden" th:value="${sysdate}" />
+                        <input id="timeZoneOffset" type="hidden" th:value="${timeZoneOffset}" />
+
+                        <b>Server Date & Time</b>
+                        <p id="servdate">--/--/----</p>
+                        <p id="servtime">--:--:----</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/serverDateTime.js}"></script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/student-layout}"
+        xmlns:th="http://thymeleaf.org"
+>
+<div layout:fragment="static-files">
+    <script th:src="@{/js/studyMaterials.js}"></script>
+</div>
+<title layout:fragment="title">Study Materials</title>
+<main layout:fragment="content">
+
+    <div class="container mt-4 mb-4">
+        <div class="card box-shadow-grey">
+            <h4 class="card-title titlecss"><i class="fa fa-list">  Study Materials</i></h4>
+            <hr>
+
+            <div class="card-body margin-0">
+                <p>Select the subject to view the Study Materials</p>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="subcode">Select Subject:</label>
+                        <select id="subcode" class="form-control">
+                            <option value="-1">Select Subject</option>
+                            <option th:each="i : ${sublist}" th:value="${i[1]}" th:text="${i[0]}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered center-sans-serif" id="assignmentlist">
+                        <thead class="fs-14">
+                        <tr>
+                            <th class="w-10">Sl. No.</th>
+                            <th class="w-20">Material Name</th>
+                            <th class="w-10">Upload Date</th>
+                            <th class="w-10 noExport">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody class="fs-12" id="stmattable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</html>

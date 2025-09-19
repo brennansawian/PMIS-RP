@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{${layoutPath}}">
+<head>
+  <title>Program Feedback</title>
+  <div layout:fragment="static-files">
+    <link th:href="@{/css/overallFeedback.css}" rel="stylesheet">
+  </div>
+</head>
+<body>
+
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+  <div class="container my-4 my-md-5">
+    <div class="card box-shadow-grey">
+      <div class="feedback-main-container">
+
+        <!-- Program Details Section -->
+        <div class="details-container mb-5">
+          <h3 class="text-center mb-4 text-secondary">Program Details</h3>
+          <div th:each="v : ${mprogramlist}">
+            <div class="row">
+              <div class="col-md-6"><label>Title:</label><p class="font-weight-bold" th:text="${v[1]}"></p></div>
+              <div class="col-md-6"><label>Organised by:</label><p class="font-weight-bold">NERIE- NCERT, Shillong</p></div>
+            </div>
+            <div class="row">
+              <div class="col-md-6"><label>Venue:</label><p class="font-weight-bold" th:text="${v[9]}"></p></div>
+              <div class="col-md-6"><label>Date:</label><p class="font-weight-bold"><span th:text="${v[4]}"></span> to <span th:text="${v[5]}"></span></p></div>
+            </div>
+            <div class="row">
+              <div class="col-md-6"><label>Coordinator:</label><p class="font-weight-bold" th:text="${v[10]}"></p></div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+              <div class="col-md-6"><label>Name:</label><p class="font-weight-bold" th:text="${login.username}"></p></div>
+              <div class="col-md-6"><label>Email:</label><p class="font-weight-bold" th:text="${login.emailid}"></p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Program Feedback Form Section -->
+        <h2 class="titlecss mb-4">Program Feedback Form</h2>
+        <form th:object="${tpfeedback}" method="POST" id="tpfeedback" role="form" autocomplete="off">
+
+          <div class="form-group">
+            <label>1. Rate the overall quality of the program. <span class="mandatory-asterisk">*</span></label>
+            <div class="radio-group">
+              <label><input type="radio" th:field="*{q1}" value="1" required/> Poor</label>
+              <label><input type="radio" th:field="*{q1}" value="2" required/> Average</label>
+              <label><input type="radio" th:field="*{q1}" value="3" required/> Good</label>
+              <label><input type="radio" th:field="*{q1}" value="4" required/> Excellent</label>
+            </div>
+          </div>
+          <div class="form-group"><label>2. How satisfied were you with the program materials? <span class="mandatory-asterisk">*</span></label><div class="radio-group"><label><input type="radio" th:field="*{q2}" value="1" required/> Poor</label><label><input type="radio" th:field="*{q2}" value="2" required/> Average</label><label><input type="radio" th:field="*{q2}" value="3" required/> Good</label><label><input type="radio" th:field="*{q2}" value="4" required/> Excellent</label></div></div>
+          <div class="form-group"><label>3. Did the program achieve your expectations? <span class="mandatory-asterisk">*</span></label><div class="radio-group"><label><input type="radio" th:field="*{q3}" value="1" required/> Poor</label><label><input type="radio" th:field="*{q3}" value="2" required/> Average</label><label><input type="radio" th:field="*{q3}" value="3" required/> Good</label><label><input type="radio" th:field="*{q3}" value="4" required/> Excellent</label></div></div>
+          <div class="form-group"><label>4. Rate the support from the coordinator and resource persons. <span class="mandatory-asterisk">*</span></label><div class="radio-group"><label><input type="radio" th:field="*{q4}" value="1" required/> Poor</label><label><input type="radio" th:field="*{q4}" value="2" required/> Average</label><label><input type="radio" th:field="*{q4}" value="3" required/> Good</label><label><input type="radio" th:field="*{q4}" value="4" required/> Excellent</label></div></div>
+          <div class="form-group"><label>5. Rate the use of educational/technological aids. <span class="mandatory-asterisk">*</span></label><div class="radio-group"><label><input type="radio" th:field="*{q5}" value="1" required/> Poor</label><label><input type="radio" th:field="*{q5}" value="2" required/> Average</label><label><input type="radio" th:field="*{q5}" value="3" required/> Good</label><label><input type="radio" th:field="*{q5}" value="4" required/> Excellent</label></div></div>
+          <div class="form-group"><label>6. Rate the program logistics (accommodation/food/etc). <span class="mandatory-asterisk">*</span></label><div class="radio-group"><label><input type="radio" th:field="*{q6}" value="1" required/> Poor</label><label><input type="radio" th:field="*{q6}" value="2" required/> Average</label><label><input type="radio" th:field="*{q6}" value="3" required/> Good</label><label><input type="radio" th:field="*{q6}" value="4" required/> Excellent</label></div></div>
+          <div class="form-group"><label>7. Rate your confidence in training others on these topics. <span class="mandatory-asterisk">*</span></label><div class="radio-group"><label><input type="radio" th:field="*{q7}" value="1" required/> Poor</label><label><input type="radio" th:field="*{q7}" value="2" required/> Average</label><label><input type="radio" th:field="*{q7}" value="3" required/> Good</label><label><input type="radio" th:field="*{q7}" value="4" required/> Excellent</label></div></div>
+
+          <div class="form-group"><label for="q8">Which sessions did you like? Why?</label><textarea th:field="*{q8}" id="q8" maxlength="250" rows="4" class="form-control"></textarea></div>
+          <div class="form-group"><label for="q9">Which sessions did you not like? Why?</label><textarea th:field="*{q9}" id="q9" maxlength="250" rows="4" class="form-control"></textarea></div>
+          <div class="form-group"><label for="q10">Which topics should have been covered in greater detail?</label><textarea th:field="*{q10}" id="q10" maxlength="250" rows="4" class="form-control"></textarea></div>
+          <div class="form-group"><label for="q11">What was the best and worst part of this program? Why?</label><textarea th:field="*{q11}" id="q11" maxlength="250" rows="4" class="form-control"></textarea></div>
+          <div class="form-group"><label for="q12">Your suggestions for improving the program further.</label><textarea th:field="*{q12}" id="q12" maxlength="250" rows="4" class="form-control"></textarea></div>
+
+          <div class="text-center mt-5">
+            <button type="submit" class="btn-submit">Submit Feedback</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Feedback Modal -->
+  <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-light text-dark">
+          <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
+          <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body" id="feedbackModalBody">
+          <!-- Message content inserted via JS -->
+        </div>
+        <div class="modal-footer">
+          <!-- Button inserted via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block layout:fragment="scripts">
+  <script th:inline="javascript">
+    function showModalAlert(message, title = 'Message', onOkCallback) {
+        $('#feedbackModalLabel').text(title);
+        $('#feedbackModalBody').html(message);
+
+        const okButton = $('<button type="button" class="btn btn-primary">OK</button>');
+
+        okButton.on('click', function() {
+            $('#feedbackModal').modal('hide');
+
+            if (typeof onOkCallback === 'function') {
+                setTimeout(onOkCallback, 200);
+            }
+        });
+
+        $('#feedbackModal .modal-footer').empty().append(okButton);
+
+        $('#feedbackModal').modal('show');
+    }
+
+
+    $(document).ready(function () {
+        const phid = /*[[${phaseid}]]*/ null;
+        const viewmode = /*[[${view}]]*/ false;
+        const loader = document.getElementById('loader');
+
+        if (viewmode === true) {
+            // Retrieve values from the model. Thymeleaf handles nulls and quotes.
+            const q8Value = /*[[${tpfeedback.q8}]]*/ '';
+            const q9Value = /*[[${tpfeedback.q9}]]*/ '';
+            const q10Value = /*[[${tpfeedback.q10}]]*/ '';
+            const q11Value = /*[[${tpfeedback.q11}]]*/ '';
+            const q12Value = /*[[${tpfeedback.q12}]]*/ '';
+
+            $('#q8').val(q8Value);
+            $('#q9').val(q9Value);
+            $('#q10').val(q10Value);
+            $('#q11').val(q11Value);
+            $('#q12').val(q12Value);
+
+            $('#tpfeedback').find('input, textarea, select').prop('disabled', true);
+
+            $('.btn-submit').hide();
+        }
+
+        $("#tpfeedback").submit(function (event) {
+            event.preventDefault();
+
+            if (loader) loader.style.display = 'block';
+
+            const formData = new FormData(this);
+            const postUrl = /*[[@{/nerie/participant/feedback/save-overall-feedback}]]*/ '/nerie/participant/feedback/save-overall-feedback';
+            const redirectUrl = /*[[@{/nerie/program/my-programs}]]*/ '/nerie/program/my-programs';
+
+            $.ajax({
+                type: "POST",
+                url: postUrl + "?phid=" + phid,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (loader) loader.style.display = 'none';
+                    if (data === '-1') {
+                        showModalAlert("Error. Something went wrong. Please try again.", "Error");
+                    } else {
+                        showModalAlert(
+                            "Feedback Successfully Uploaded.",
+                            "Success",
+                            function() {
+                                window.location.href = redirectUrl;
+                            }
+                        );
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if (loader) loader.style.display = 'none';
+                    const errorMessage = "An error occurred: " + textStatus + " - " + errorThrown;
+                    showModalAlert(errorMessage, "Request Failed");
+                    console.error("AJAX Error:", textStatus, errorThrown);
+                }
+            });
+        });
+    });
+  </script>
+</th:block>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/landing-layout}"
+>
+<head>
+  <title>RIE Bhopal</title>
+  <div layout:fragment="styles">
+    <link rel="stylesheet" th:href="@{/css/blogs.css}">
+  </div>
+</head>
+<body>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+  <!--Pre Loader-->
+  <div layout:replace="~{fragments/lilypreloader :: preloader}"></div>
+  <!-- page title -->
+  <section id="about-hero" class="hero-section overlay bg-cover" data-background="tempscripts/images/aboutus/ncert_building.jpg">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <ul class="list-inline custom-breadcrumb mb-2">
+            <li class="list-inline-item"><a class="h2 text-primary font-secondary" th:href="@{/nerie/about}">NCERT Constituent Units</a></li>
+            <li class="list-inline-item text-white h3 font-secondary nasted">RIE Bhopal</li>
+          </ul>
+          <p class="text-lighten mb-0">Regional Institute of Education, Bhopal (NCERT),Madhya Pradesh 462013</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- about -->
+  <section class="section-sm bg-gray adjust-section">
+    <div class="container">
+      <div class="row" >
+        <div class="col-12 mb-4">
+          <img th:src="@{/lily/images/aboutus/RIE Bhopal.jpg}" alt="blog-thumb" class="img-fluid w-100">
+        </div>
+
+        <!-- border -->
+        <div class="col-12 mt-4 pb-3">
+          <div class="border-bottom border-primary"></div>
+        </div>
+
+        <div class="col-12">
+          <ul class="list-inline">
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><span class="font-weight-bold mr-2">Principal</span>Prof. Nityanand Pradhan</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>Regional Institute of Education, Bhopal (NCERT)</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>National Council of Educational Research and Training</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="font-weight-bold mr-2"></i>Jahanuma Palace Road, near Hotel Jehenuma Palace, Madhya Pradesh 462013</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><a class="text-light" href="https://riebhopal.nic.in/" target="_blank"><i class="ti-link mr-2"></i>RIE Bhopal website</a></li>
+          </ul>
+        </div>
+
+        <div class="col-12 mb-5">
+          <br>
+          <h2>RIE Bhopal</h2>
+          <p align="justify" style="font-size: 15px">
+            Regional Institute of Education (RIE), Bhopal is a constituent unit of NCERT, New Delhi. The Institute looks after teacher education and other educational requirements of the States of Chhattisgarh, Goa, Gujarat, Madhya Pradesh, Maharashtra and UTs of Dadra and Nagar Haveli and Daman and Diu.
+            The Institute is located at Shyamla Hills and is 7 Kms away from both Bhopal and Habibganj railway station and about 20 Kms from Raja Bhoj Airport, Bhopal.
+            Our mission is to strengthen pupil's learning through advocacy and teaching initiatives. To develop competency and create an aura of imparting quality and finesse education to students and teach and train them innovatively with proper attention, focusing on their brighter career in teaching profession.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

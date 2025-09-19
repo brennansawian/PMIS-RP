@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+>
+  <head>
+    <!-- Meta -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- shared styles -->
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
+    <link th:href="@{/css/nav-bar.css}" rel="stylesheet">
+
+    <!-- Common scripts -->
+    <th:block th:replace="~{fragments/common-assets :: common-scripts}"></th:block>
+
+    <!-- page-specific CSS files -->
+    <div layout:fragment="static-files"></div>
+
+    <!-- page title -->
+    <title layout:fragment="title">Home</title>
+
+    <!--Loader JS-->
+    <script th:src="@{/js/loader.js}" defer></script>
+
+  </head>
+
+  <!-- body -->
+  <body class="d-flex flex-column min-vh-100">
+    <header class="header">
+      <!-- Top Government Bar -->
+      <div class="top-bar">
+        <div class="container">
+          <div class="d-flex justify-content-center align-items-center flex-wrap">
+            <div class="gov-info text-center">
+              <div class="gov-title-hi">भारत सरकार</div>
+              <div class="gov-title-en">Government of India</div>
+            </div>
+            <div class="gov-info text-center">
+              <div class="gov-title-hi">शिक्षा मंत्रालय</div>
+              <div class="gov-title-en">Ministry of Education</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Header -->
+      <div class="main-header">
+        <div class="container">
+          <div class="logo-container justify-content-center">
+            <img
+                    th:src="@{/tempscripts/images/ncertlogo.png}"
+                    alt="NCERT Logo"
+                    class="logo-img"
+            >
+            <div class="header-titles">
+              <h1 class="main-title">NATIONAL COUNCIL OF EDUCATIONAL RESEARCH & TRAINING</h1>
+              <div class="sub-title">राष्ट्रीय शैक्षिक अनुसंधान और प्रशिक्षण परिषद</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Navigation Header -->
+      <nav layout:fragment="navigation"></nav>
+    </header>
+
+    <div layout:replace="~{fragments/spinner :: spinloader}" id="loader"></div>
+
+    <main layout:fragment="content" id="content" class="content container-fluid bgcolor flex-grow-1"></main>
+
+    <div class="footer-bs">
+      <footer class="container">
+        <div class="footer-content">
+          <div class="b-footer-credit">
+            <p class="m-2 text-black">Copyright ©
+              <script>
+                var CurrentYear = new Date().getFullYear()
+                document.write(CurrentYear)
+              </script>
+              , designed, developed & hosted by
+              <a href="https://meg.nic.in/" class="text-muted" target="_blank">
+                <strong>National Informatics Center,Meghalaya State Center, Shillong</strong>
+              </a>
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <th:block layout:fragment="scripts"></th:block>
+    <th:block layout:fragment="dynamic-menu"></th:block>
+  </body>
+</html>

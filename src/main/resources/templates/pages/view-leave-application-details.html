@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{${layoutPath}}">
+<head>
+  <title>Leave Application Approval</title>
+  <div layout:fragment="static-files">
+  </div>
+</head>
+<body>
+
+<!-- Loader div from base template -->
+<div id="loader"><div class="spinner"></div></div>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+  <span id="studentLeaveIdHolder" th:data-studentleaveid="${leavedetails.studentleaveid}" style="display:none;"></span>
+
+  <div class="container mt-4 mb-4">
+    <div class="card box-shadow-grey">
+
+      <h4 class="card-title titlecss"><i class="fa fa-file-text-o">  Leave Application Details</i></h4>
+      <hr class="mt-2 mb-0"/>
+
+      <div class="card-body">
+        <div th:if="${leavedetails != null}" class="row">
+
+          <div class="col-lg-8">
+            <div class="card mb-4">
+              <div class="card-header font-weight-bold">
+                <i class="fa fa-user"></i>  Student Information
+              </div>
+              <div class="card-body">
+                <h5 class="text-primary" th:text="${leavedetails.studentid.fname + ' ' + (leavedetails.studentid.mname != null ? leavedetails.studentid.mname + ' ' : '') + leavedetails.studentid.lname}"></h5>
+                <p class="mb-2"><strong>Roll Number:</strong> <span th:text="${leavedetails.studentid.rollno}"></span></p>
+                <p class="mb-2"><strong>Course:</strong> <span th:text="${leavedetails.studentid.coursecode.coursename}"></span></p>
+                <p class="mb-2" th:if="${leavedetails.studentid.semestercode != null}">
+                  <strong>Semester:</strong> <span th:text="${leavedetails.studentid.semestercode.semestername}"></span>
+                </p>
+                <p class="mb-2" th:if="${leavedetails.studentid.sphaseid != null}">
+                  <strong>Phase:</strong> <span th:text="${leavedetails.studentid.sphaseid.sphasename}"></span>
+                </p>
+                <p class="mb-2" th:if="${leavedetails.buildingno != null and !#strings.isEmpty(leavedetails.buildingno.trim())}">
+                  <strong>Building No:</strong> <span th:text="${leavedetails.buildingno}"></span>
+                </p>
+                <p class="mb-0" th:if="${leavedetails.roomno != null and !#strings.isEmpty(leavedetails.roomno.trim())}">
+                  <strong>Room No:</strong> <span th:text="${leavedetails.roomno}"></span>
+                </p>
+              </div>
+            </div>
+
+            <!-- Leave Details Card -->
+            <div class="card mb-4">
+              <div class="card-header font-weight-bold">
+                <i class="fa fa-calendar"></i>  Leave Details
+              </div>
+              <div class="card-body">
+                <p><strong>Reason for Leave:</strong></p>
+                <blockquote class="blockquote">
+                  <p class="mb-0 font-italic" th:text="${leavedetails.reasonforleave}"></p>
+                </blockquote>
+                <p class="mb-2"><strong>Leave Station:</strong> <span th:text="${leavedetails.leavestation}"></span></p>
+                <hr>
+                <div class="row">
+                  <div class="col-md-6 mb-2">
+                    <strong>From:</strong>
+                    <span class="badge badge-info p-2" th:text="${#dates.format(leavedetails.requestedfrom, 'EEEE, dd-MMM-yyyy')}"></span>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <strong>To:</strong>
+                    <span class="badge badge-info p-2" th:text="${#dates.format(leavedetails.requestedto, 'EEEE, dd-MMM-yyyy')}"></span>
+                  </div>
+                </div>
+                <p class="mb-0 text-muted"><strong>Applied On:</strong> <span th:text="${#dates.format(leavedetails.applicationdate, 'dd-MMM-yyyy')}"></span></p>
+              </div>
+            </div>
+
+            <!-- Guardian & Documents Card -->
+            <div class="card">
+              <div class="card-header font-weight-bold">
+                <i class="fa fa-file-alt"></i>  Guardian & Documents
+              </div>
+              <div class="card-body">
+                <p class="mb-2"><strong>Guardian:</strong> <span th:text="${leavedetails.nameofguardian + ' (' + leavedetails.guardianrelationship + ')'}"></span></p>
+                <p class="mb-3"><strong>Guardian Phone:</strong> <span th:text="${leavedetails.phnoguardian}"></span></p>
+
+                <th:block th:if="${leavedetails.gapprovalletter != null && leavedetails.gapprovalletter.length > 0}">
+                  <a th:href="@{/nerie/student-leaves/view-approval(studentleaveid=${leavedetails.studentleaveid}, approvaltype='guardian')}"
+                     class="btn btn-outline-primary btn-sm" target="_blank">
+                    <i class="fa fa-download mr-1"></i> View Guardian Approval
+                  </a>
+                </th:block>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Status and Actions -->
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-header font-weight-bold text-center bg-light">
+                <i class="fa fa-tasks"></i>  Approval Status & Actions
+              </div>
+              <div class="card-body">
+
+                <!-- Final Status: Approved -->
+                <div th:if="${leavedetails.isapproved == '1'}" class="alert alert-success text-center">
+                  <h5 class="alert-heading"><i class="fa fa-check-circle"></i> Approved</h5>
+                  <p class="mb-0">This leave application has been fully approved.</p>
+                </div>
+
+                <!-- Final Status: Rejected -->
+                <div th:if="${leavedetails.isapproved == '0' || leavedetails.isdeanapproved == '0' || leavedetails.iswardenapproved == '0'}" class="alert alert-danger text-center">
+                  <h5 class="alert-heading"><i class="fa fa-times-circle"></i> Rejected</h5>
+                  <hr class="my-2">
+                  <p class="mb-0 font-italic" th:text="${leavedetails.rejectionreason}"></p>
+                </div>
+
+                <!-- Action Button: shows action buttons based on user role and application status -->
+                <div th:if="${leavedetails.isapproved == null && leavedetails.isdeanapproved != '0' && leavedetails.iswardenapproved != '0'}">
+                  <!-- Warden Actions -->
+                  <div th:if="${(rolecode == 1 || rolecode == 2 || rolecode == 4) and leavedetails.iswardenapproved == null}" class="text-center">
+                    <button class="btn btn-success btn-block mb-2" data-toggle="modal" data-target="#modalaccept-modal">
+                      Forward to Dean
+                    </button>
+                    <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalreject-modal">
+                      Reject
+                    </button>
+                  </div>
+
+                  <!-- Dean Actions -->
+                  <div th:if="${rolecode == 3 and leavedetails.iswardenapproved == '1' and leavedetails.isdeanapproved == null}" class="text-center">
+                    <button class="btn btn-success btn-block mb-2" data-toggle="modal" data-target="#modalaccept-modal">
+                      Forward to Principal
+                    </button>
+                    <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalreject-modal">
+                      Reject
+                    </button>
+                  </div>
+
+                  <!-- Principal Actions -->
+                  <div th:if="${role == 'Z' and leavedetails.isdeanapproved == '1' and leavedetails.isapproved == null}" class="text-center">
+                    <button class="btn btn-success btn-block mb-2" data-toggle="modal" data-target="#modalaccept-modal">
+                      Approve
+                    </button>
+                    <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#modalreject-modal">
+                      Reject
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Status Timeline: shows the progress if no action is currently needed from the user -->
+                <hr th:if="${leavedetails.isapproved == null && leavedetails.isdeanapproved != '0' && leavedetails.iswardenapproved != '0'}">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Warden
+                    <span th:if="${leavedetails.iswardenapproved == '1'}" class="badge badge-success badge-pill p-2">Forwarded</span>
+                    <span th:if="${leavedetails.iswardenapproved == '0'}" class="badge badge-danger badge-pill p-2">Rejected</span>
+                    <span th:if="${leavedetails.iswardenapproved == null}" class="badge badge-warning badge-pill p-2">Pending</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Dean
+                    <span th:if="${leavedetails.isdeanapproved == '1'}" class="badge badge-success badge-pill p-2">Forwarded</span>
+                    <span th:if="${leavedetails.isdeanapproved == '0'}" class="badge badge-danger badge-pill p-2">Rejected</span>
+                    <span th:if="${leavedetails.isdeanapproved == null}" class="badge badge-secondary badge-pill p-2">Waiting</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Principal
+                    <span th:if="${leavedetails.isapproved == '1'}" class="badge badge-success badge-pill p-2">Approved</span>
+                    <span th:if="${leavedetails.isapproved == '0'}" class="badge badge-danger badge-pill p-2">Rejected</span>
+                    <span th:if="${leavedetails.isapproved == null}" class="badge badge-secondary badge-pill p-2">Waiting</span>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Case where details are not found -->
+        <div class="text-center p-5" th:unless="${leavedetails != null}">
+          <i class="fa fa-exclamation-triangle fa-3x text-warning"></i>
+          <h4 class="mt-3">Details Not Found</h4>
+          <p class="text-muted">The requested leave application could not be found.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accept/Forward Modal -->
+  <div class="modal fade" id="modalaccept-modal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Action</h5>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        <div class="modal-body text-center">
+          <p>Are you sure you want to approve/forward this application?</p>
+          <form onsubmit="return acceptleavefunc();" id="acceptleavefid" autocomplete="off" class="d-inline">
+            <input type="hidden" id="accept-studentleaveid" name="studentleaveid" />
+            <input type="hidden" id="formrolecode" th:value="${rolecode}" />
+            <input type="hidden" id="formrolecodeprincidean" th:value="${(((leavedetails.isapproved == null && (leavedetails.iswardenapproved == '1' || leavedetails.iswardenapproved == '2') && leavedetails.isdeanapproved == '1') && role == 'Z' && rolecode == 3)) ? '9' : ((role == 'Z' && rolecode == null)) ? '9' : ((role != 'Z')) ? '-1' : ((role == 'Z' && leavedetails.isdeanapproved == null)) ? '-1' : '-1'}"/>
+            <button type="submit" class="btn btn-success" id="accept-submit-btn">Yes, Proceed</button>
+          </form>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reject Modal -->
+  <div class="modal fade" id="modalreject-modal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form onsubmit="return rejectleavefunc();" id="rejectprogramfid" autocomplete="off">
+          <div class="modal-header">
+            <h5 class="modal-title">Reject Application</h5>
+            <button type="button" class="close" data-dismiss="modal">×</button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="reject-studentleaveid" name="studentleaveid" />
+            <div class="form-group">
+              <label for="RejectReasonDescUpload">Reason For Rejection:<span class="red-bold">*</span></label>
+              <textarea id="RejectReasonDescUpload" name="rejectionreason" maxlength="250" rows="4" class="form-control" required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger" id="reject-submit-btn">Confirm Rejection</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<th:block layout:fragment="scripts">
+  <script th:src="@{/js/viewLeaveApplicationDetails.js}"></script>
+</th:block>
+</body>
+</html>

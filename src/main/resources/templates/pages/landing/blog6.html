@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/landing-layout}"
+>
+<head>
+  <title>PSSCIVE</title>
+  <div layout:fragment="styles">
+    <link rel="stylesheet" th:href="@{/css/blogs.css}">
+  </div>
+</head>
+<body>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+  <!--Pre Loader-->
+  <div layout:replace="~{fragments/lilypreloader :: preloader}"></div>
+  <!-- page title -->
+  <section id="about-hero" class="hero-section overlay bg-cover" data-background="tempscripts/images/aboutus/ncert_building.jpg">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <ul class="list-inline custom-breadcrumb mb-2">
+            <li class="list-inline-item"><a class="h2 text-primary font-secondary" th:href="@{/nerie/about}">NCERT Constituent Units</a></li>
+            <li class="list-inline-item text-white h3 font-secondary nasted">PSSCIVE</li>
+          </ul>
+          <p class="text-lighten mb-0">PSSCIVE(NCERT),Bhopal – 462013 , Madhya Pradesh, INDIA</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- about -->
+  <section class="section-sm bg-gray adjust-section">
+    <div class="container">
+      <div class="row" >
+        <div class="col-12 mb-4">
+          <img th:src="@{/lily/images/aboutus/PSSSCIVE_Bhopal_blog.jpg}" alt="blog-thumb" class="img-fluid w-100">
+        </div>
+
+        <!-- border -->
+        <div class="col-12 mt-4 pb-3">
+          <div class="border-bottom border-primary"></div>
+        </div>
+
+        <div class="col-12">
+          <ul class="list-inline">
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><span class="font-weight-bold mr-2">Joint Director</span>Prof. Rajesh P. Khambayat</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>PSS Central Institute of Vocational Education</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>National Council of Educational Research and Training</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="font-weight-bold mr-2"></i>Shyamla Hills, Bhopal – 462013 , Madhya Pradesh, INDIA</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><a class="text-light" href="http://www.psscive.ac.in/" target="_blank"><i class="ti-link mr-2"></i>PSSCIVE website</a></li>
+          </ul>
+        </div>
+
+        <div class="col-12 mb-5">
+          <br>
+          <h2>PSSCIVE</h2>
+          <p align="justify" style="font-size: 15px">
+            The Pandit Sunderlal Sharma Central Institute of Vocational Education (PSSCIVE) is an apex research and development organization in the field of vocational education. It is a constituent unit of National Council of
+            Educational Research and Training (NCERT), established in 1993 by the Ministry of Education (MoE), Government of India. The Institute has a picturesque 38-acre campus at Shyamla Hills in Bhopal. It comprises six
+            academic disciplines, namely Agriculture and Animal Husbandry, Business and Commerce, Engineering and Technology, Health and Paramedical Science, Home Science and Hospitality Management and Humanities, Science, Education and Research with 05 Centres.
+            <br>
+            The Institute is also a UNEVOC (International Project on Technical and Vocational Education) Network Centre in India, which coordinates all the activities, including communication with UNESCO-UNEVOC International Centre, Bonn, Germany.
+            Through the network, the Centre shares knowledge and experiences related to all aspects of VET, exchange country experiences, and discuss issues of common relevance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

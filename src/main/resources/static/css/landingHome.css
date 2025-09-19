@@ -1,0 +1,59 @@
+@media (min-width: 992px) {
+  #modalmorelist-modal .modal-dialog {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 991.98px) {
+  #modalmorelist-modal .modal-dialog {
+    max-width: 95%;
+  }
+}
+
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+
+.custommodallink {
+    font-size: 18px !important;
+    color: #000;
+}
+.custommodallink:hover  {
+    background-color: #ABE6FF !important;
+    cursor: pointer !important;
+    color: #fff;
+}
+.carditem {
+    border: 1px solid #ABE6FF !important;
+}
+.carditem:hover {
+    background-color: #ABE6FF !important;
+    border: 1px solid #182b45 !important;
+}
+.carditem .card-title {
+    color: #182b45 !important;
+}
+.carditem .card-text {
+    color: #182b45 !important;
+}
+.carditem .fa {
+    color: #182b45 !important;
+}
+.carditem:hover .card-title {
+    color: #182b45 !important;
+}
+.carditem:hover .card-text {
+    color: #182b45 !important;
+}
+.carditem:hover .fa {
+    color: #182b45 !important;
+}
+
+.btn.btn-view-more{
+    color: #000 !important;
+    background-color: #ABE6FF !important;
+    border-color: #ABE6FF !important;
+    text-align: center;
+}

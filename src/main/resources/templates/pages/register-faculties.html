@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{${layoutPath}}"
+>
+<head>
+  <title>Register Faculties</title>
+  <div layout:fragment="static-files">
+    <link rel="stylesheet" th:href="@{/tempscripts/bootstrap-select/bootstrap-select.min.css}" />
+    <link rel="stylesheet" th:href="@{/lily/js/select2/select2.min.css}" />
+  </div>
+</head>
+<body>
+
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+  <div class="container mt-4 mb-4">
+    <div class="card box-shadow-grey">
+      <h4 class="card-title titlecss"><i class="fa fa-book"> &nbsp;Register Faculties</i></h4>
+      <hr/>
+      <div class="card-body margin-0">
+        <form method="POST" th:object="${tfaculty}" name="userloginfn" id="userloginfid" role="form" autocomplete="off">
+          <input type="hidden" th:field="*{facultyid}" id="facultyid" readonly="true" />
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label bold">User:<span class="span">*</span> </label>
+            <div class="col-md-5">
+              <select th:field="*{usercode.usercode}" id="usercode" class="form-control" required="true">
+                <option value="-1">-- Select User --</option>
+                <option th:each="f : ${faculties}" th:value="${f[0]}" th:text="${f[1]}"></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label bold">First Name:<span class="span">*</span> </label>
+            <div class="col-md-5">
+              <input type="text" th:field="*{fname}" id="fname" class="form-control" required="true" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label bold">Middle Name:</label>
+            <div class="col-md-5">
+              <input type="text" th:field="*{mname}" id="mname" class="form-control" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label bold">Last Name:<span class="span">*</span></label>
+            <div class="col-md-5">
+              <input type="text" th:field="*{lname}" id="lname" class="form-control" required="true" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label bold">Designation:<span class="span">*</span> </label>
+            <div class="col-md-5">
+              <select th:field="*{designationcode.designationcode}" id="designationcode" class="form-control" required="true">
+                <option value="-1">-- Select Designation --</option>
+                <option th:each="e : ${designation}" th:value="${e.designationcode}" th:text="${e.designationname}"></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label bold">Department faculty will/belongs to<span class="span">*</span> </label>
+            <div class="col-md-5">
+              <select th:field="*{departmentcode.departmentcode}" id="departmentcode" class="form-control" required="true">
+                <option value="-1">-- Select Department --</option>
+                <option th:each="d : ${departments}" th:value="${d.departmentcode}" th:text="${d.departmentname}"></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label bold">Select Course/Courses: <span class="span">*</span> </label>
+            <div class="col-md-5" id="courselist">
+              <select name="course" id="coursecode" class="form-control select2" multiple="multiple" title="Select Courses" required="true">
+                <option value="-1">Select</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label bold">Select subjects faculty will teach: <span class="span">*</span> </label>
+            <div class="col-md-5" id="subjectslist">
+              <select name="subject" id="subject" class="form-control select2" multiple="multiple" title="Select Subjects" required="true">
+                <option th:each="d : ${allsubjects}" th:value="${d.subjectcode}" th:text="${d.subjectname}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-6 offset-md-3">
+              <div class="d-flex justify-content-center">
+                <input class="btn btn-info mx-1" type="submit" value="Submit" />
+                <input type="reset" value="Reset" class="btn btn-warning mx-1" />
+              </div>
+            </div>
+          </div>
+        </form>
+        <hr/>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered center-sans-serif" id="usertable">
+            <thead class="fs-14">
+            <tr>
+              <th class="w1">Sl No.</th>
+              <th>First Name</th>
+              <th>Middle Name</th>
+              <th>Last Name</th>
+              <th>Designation</th>
+              <th>Department</th>
+              <th>Subjects</th>
+              <th>Course</th>
+              <th class="noExport">Action</th>
+            </tr>
+            </thead>
+            <tbody class="fs-14">
+            <tr th:each="v, s : ${allfaculties}">
+              <td th:text="${s.count}"></td>
+              <td th:text="${v[2]}"></td>
+              <td th:text="${v[3]}"></td>
+              <td th:text="${v[4]}"></td>
+              <td th:text="${v[5]}"></td>
+              <td th:text="${v[6]}"></td>
+              <td th:text="${v[7]}"></td>
+              <td th:text="${v[8]}"></td>
+              <td>
+                <input type="button" value="Edit Faculty" class="clickme danger11 edit-faculty-btn btn btn-sm btn-info" th:attr="data-id=${v[0]}" />
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Feedback Modal -->
+  <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-light text-dark">
+          <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
+          <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body" id="feedbackModalBody">
+          <!-- Message content inserted via JS -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="modalOkButton" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block layout:fragment="scripts">
+
+
+  <script th:src="@{/tempscripts/bootstrap-select/bootstrap-select.min.js}"></script>
+  <script th:src="@{/lily/js/select2/select2.min.js}"></script>
+
+  <script th:src="@{/js/registerFaculties.js}"></script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,20 @@
+CREATE TABLE m_honorarium (
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    programTitle VARCHAR(255),
+    venue VARCHAR(255),
+    fromdate DATE,
+    todate DATE,
+    numberofdays INT,
+    rateperday DOUBLE PRECISION,
+    totalamount DOUBLE PRECISION,
+    amountinwords TEXT,
+    nameofficial VARCHAR(255),
+    designation VARCHAR(255),
+    address TEXT,
+    accountnumber VARCHAR(50),
+    bankname VARCHAR(255),
+    branch VARCHAR(255),
+    ifsc VARCHAR(20),
+    pancardnumber VARCHAR(20),
+    rp_userlogin_usercode VARCHAR(100)
+);

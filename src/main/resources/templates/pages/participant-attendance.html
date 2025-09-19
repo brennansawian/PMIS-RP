@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{${layoutPath}}"
+>
+    <div layout:fragment="static-files">
+        <link rel="stylesheet" th:href="@{/css/participantAttendance.css}" />
+        <script th:src="@{/js/participantAttendance.js}"></script>
+    </div>
+
+    <title layout:fragment="title">Participant Attendance</title>
+
+    <main layout:fragment="content">
+        <div class="container pt-4 pb-4">
+            <div class="card box-shadow-grey">
+                <div class="card-title titlecss">
+                    <h4><i class="fa fa-book">&nbsp;Participant Attendance</i></h4>
+                </div>
+                <hr />
+                <div class="card-body margin-0">
+                    <div class="container bold">
+                        <form id="tparticipantattendanceid" role="form" autocomplete="off">
+                            <div class="form-group row">
+                                <div class="col-md-1 col-form-label"></div>
+                                <div class="col-md-3 col-form-label">
+                                    <label for="programs">Program:<span class="span">*</span> </label>
+                                </div>
+                                <div class="col-md-7">
+                                    <select id="programs" class="form-control" required="true">
+                                        <option value="">Select</option>
+                                        <option th:each="p : ${programlistP}" th:value="${p[0]}" th:title="${p[1]}" th:text="${p[1]}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-1 col-form-label"></div>
+                                <div class="col-md-3 col-form-label">
+                                    <label for="phaseno">Phase No:<span class="span">*</span></label>
+                                </div>
+                                <div class="col-md-7">
+                                    <select name="phaseid" id="phaseno" class="form-control" required="true">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-1 col-form-label"></div>
+                                <div class="col-md-3 col-form-label">
+                                    <label for="programday">Day:<span class="span">*</span> </label>
+                                </div>
+                                <div class="col-md-7">
+                                    <select name="programday" id="programday" class="form-control" required="true">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-1 col-form-label"></div>
+                                <div class="col-md-3 col-form-label">
+                                    <label for="timings">Session:<span class="span">*</span> </label>
+                                </div>
+                                <div class="col-md-7">
+                                    <select name="programtimetablecode" id="timings" class="form-control" required="true">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row table-responsive display-none" id="tablediv">
+                                <table class="table table-striped table-bordered center-sans-serif" id="participantatt">
+                                    <thead>
+                                    <tr>
+                                        <th class="w-1">Sl No.</th>
+                                        <th>Application Code</th>
+                                        <th>Participant Name</th>
+                                        <th class="noExport">Action</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div style="text-align: center;">
+                                <input id="submit" type="submit" name="submit" value="SUBMIT" class="btn btn-info" />
+                                <input type="button" value="CANCEL" id="cancel" class="btn btn-danger" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</html>

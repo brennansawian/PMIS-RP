@@ -1,0 +1,132 @@
+/* Style for Landing Layout Header (Before Login) */
+.fm {
+    /*font-size: 9px;*/
+}
+.lt {
+    /*border-right: 1px solid #000;*/
+    padding: 0px 3px 0px 0px;
+}
+.rt {
+    border-left: 1px solid #000;
+    padding: 0px 0px 0px 3px;
+}
+.modal-backdrop{
+    z-index: -1;
+}
+.bg-ner{
+    background-color: #ABE6FF !important;
+}
+.text-dark-collpased{
+    font-weight: bold;
+    color:#1a1a37 !important;
+}
+
+.list-color-custom{
+    background-color: #ABE6FF !important;
+}
+
+.landing-header .texts .top span {
+    font-size: 0.75rem; /* Adjust font size for better fit */
+}
+.landing-header .texts .bottom p {
+    font-size: 0.85rem; /* Adjust font size for better fit */
+    line-height: 1.2;
+}
+
+/* Responsive styles for Before Login Header */
+ @media (max-width: 991.98px) {
+    .landing-header .navbar-collapse {
+        background-color: #abe6ff;
+    }
+
+    .landing-header .navbar-nav .nav-link {
+        color: #003366 !important;
+    }
+
+    .landing-header .navbar-nav .nav-item.active {
+        background-color: #a9d7f0;
+        border-radius: .25rem;
+    }
+}
+
+
+
+/* Style for Main Layout Header (After Login) */
+.top-bar {
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  border-bottom: 2px solid #dee2e6;
+  padding: 0.5rem 0;
+}
+
+.gov-info {
+  position: relative;
+  padding: 0.5rem 2rem;
+}
+
+.gov-info:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 70%;
+  width: 1px;
+  background: #6c757d;
+}
+
+.gov-title-hi {
+  font-size: 1.1rem;
+  color: #1a237e;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.gov-title-en {
+  font-size: 0.9rem;
+  color: #455a64;
+}
+
+.main-header {
+  background: white;
+  padding: 1rem 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.logo-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+}
+
+.main-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a237e;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.sub-title {
+  font-size: 1.1rem;
+  color: #455a64;
+}
+
+/* Responsive styles for After Login Header */
+@media (max-width: 768px) {
+  .gov-info { padding: 0.5rem 1rem; }
+  .main-title { font-size: 1.2rem; }
+  .sub-title { font-size: 1rem; }
+  .logo-img { width: 70px; height: 70px; }
+}
+

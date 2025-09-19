@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/landing-layout}"
+>
+<head>
+  <title>RIE Ajmer</title>
+  <div layout:fragment="styles">
+    <link rel="stylesheet" th:href="@{/css/blogs.css}">
+  </div>
+</head>
+<body>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+  <!--Pre Loader-->
+  <div layout:replace="~{fragments/lilypreloader :: preloader}"></div>
+  <!-- page title -->
+  <section id="about-hero" class="hero-section overlay bg-cover" data-background="tempscripts/images/aboutus/ncert_building.jpg">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <ul class="list-inline custom-breadcrumb mb-2">
+            <li class="list-inline-item"><a class="h2 text-primary font-secondary" th:href="@{/nerie/about}">NCERT Constituent Units</a></li>
+            <li class="list-inline-item text-white h3 font-secondary nasted">RIE Ajmer</li>
+          </ul>
+          <p class="text-lighten mb-0">Regional Institute of Education, Ajmer (NCERT), Rajasthan-305004</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- about -->
+  <section class="section-sm bg-gray adjust-section">
+    <div class="container">
+      <div class="row" >
+        <div class="col-12 mb-4">
+          <img th:src="@{/lily/images/aboutus/RIE -Ajmer.jpg}" alt="blog-thumb" class="img-fluid w-100">
+        </div>
+
+        <!-- border -->
+        <div class="col-12 mt-4 pb-3">
+          <div class="border-bottom border-primary"></div>
+        </div>
+
+        <div class="col-12">
+          <ul class="list-inline">
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><span class="font-weight-bold mr-2">Principal</span>Prof. S.V. Sharma</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>Regional Institute of Education, Ajmer (NCERT)</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>National Council of Educational Research and Training</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="font-weight-bold mr-2"></i>Capt. D.P Choudhary Marg, Ajmer, Rajasthan-305004</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><a class="text-light" href="https://www.rieajmer.raj.nic.in/" target="_blank"><i class="ti-link mr-2"></i>RIE Ajmer website</a></li>
+          </ul>
+        </div>
+
+        <div class="col-12 mb-5">
+          <br>
+          <h2>RIE Ajmer</h2>
+          <p align="justify" style="font-size: 15px">
+            Ajmer was set up in the year 1963. Later it was renamed as Regional Institute of Education (RIE), Ajmer in the year 1995. It looks after the educational interests
+            of Northern Region comprising the states of Haryana, Himachal Pradesh, Jammu & Kashmir, Punjab, Rajasthan, Uttarakhand,
+            Uttar Pradesh, the National Capital Territory of Delhi and the Union Territory of Chandigarh. Ajmer is well-known all
+            over India as a historical and religious place of pilgrimage as well as an educational centre. It owes this reputation
+            partly to the Regional Institute of Education (RIE). The Institute is situated six km. away from the Ajmer Railway Station
+            in midst of idyllic surroundings with the historic Anasagar Lake in front and the Aravali hills all around. It is almost
+            equidistant from the world famous Dargah of Khawaja Moinuddin Chisti beyond the lake and the holy place of Hindu pilgrimage,
+            Pushkar, at the back.This Institute, with its spacious buildings, playgrounds, gardens, lawnsand farm is spread over 110
+            acres. It is affiliated to the M.D.S. University,Ajmer and its courses are recognised by the NCTE, New Delhi. It is
+            controlled and managed by the NCERT. The management committee, chaired by the Vice-Chancellor of the affiliating university
+            performs the advisory role on matters of academic interest.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

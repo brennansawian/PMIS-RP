@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{${layoutPath}}"
+>
+<div layout:fragment="static-files">
+    <!-- Utilities -->
+    <script th:src="@{/js/utils/networkUtilities.js}"></script>
+    <script th:src="@{/js/venueList.js}"></script>
+</div>
+
+<title layout:fragment="title">Venues</title>
+
+<main layout:fragment="content">
+
+    <div class="container pt-4 pb-4">
+        <div class="card box-shadow-grey">
+            <h4 class="card-title titlecss"><i class="fa fa-list">  Venues</i>
+                <span class="float-right pr-4">
+                    <input type="button" class="btn btn-success" id="addft" name="addft" value="Add New" data-toggle="modal" data-target="#venue-modal"/>
+                </span>
+            </h4>
+            <hr>
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table id="venuetable" class="table table-striped table-bordered center-sans-serif">
+                        <thead class="fs-14">
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Venue Name</th>
+                            <th class="noExport">Action</th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="fs-12">
+                        <tr th:each="v, s : ${mvenueList}">
+                            <td th:text="${s.index + 1}"></td>
+                            <td th:text="${v.venuename}"></td>
+                            <td class="white-space-nowrap">
+                                <button class="clickme danger11 editvenuebtn btn btn-sm btn-info"
+                                        data-toggle="modal"
+                                        data-target="#venue-modal"
+                                        data-function="editfunc"
+                                        th:attr="data-param1=${v.venuecode}, data-param2=${v.venuename}">
+                                    <i class="fa fa-edit">  Edit</i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="modal fade" id="venue-modal">
+            <div class="modal-dialog modal-dialog-centered max-width35" >
+                <div class="modal-content">
+                    <!--Modal Header-->
+                    <div class="modal-header text-center d-block p-5 border-bottom-0">
+                        <h5 class="modal-title" ><u>Add/Edit Venue</u></h5>
+                        <button type="button" class="close position-absolute right-15-8"  data-dismiss="modal">×</button>
+                    </div>
+
+                    <!--Modal body-->
+                    <div class="modal-body">
+                        <form id="mvenuefid" role="form" autocomplete="off">
+                            <div class="form-group  row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-3">
+                                    <label><b>Venue Name:<span class="text-danger fs-20">*</span></b></label>
+                                </div>
+                                <div class="col-md-7">
+                                    <input id="venuecode" name="venuecode" class="form-control" hidden="true"/>
+                                    <input id="venuename" name="venuename" class="form-control alphabets" required="true" maxlength="100"/>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group ">
+                                <div style="text-align: center">
+                                    <input id="submit" type="submit" name="submit" value="SUBMIT" class="btn btn-info" />
+                                    <input type="button" value="CANCEL" class="btn btn-danger" data-dismiss="modal" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Feedback Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-light text-dark">
+                    <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
+                    <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="feedbackModalBody">
+                    <!-- Message content inserted via JS -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="modalOkButton" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</html>

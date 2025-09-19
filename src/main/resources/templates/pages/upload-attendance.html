@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/coordinator-faculty-layout}"
+        xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Attendance</title>
+    <div layout:fragment="static-files"></div>
+</head>
+<body>
+
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
+<main layout:fragment="content">
+    <div class="container">
+        <div class="card mt-4 box-shadow-grey" >
+            <h4 class="card-title titlecss"><i class="fa fa-list">  Upload Attendance</i></h4>
+            <hr>
+            <div class="card-body">
+                <form role="form" method="POST" id="attendanceform">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-info text-center py-3 px-4">
+                                <h5 class="mb-0">
+                                    When marking attendance, all students are marked <strong>present</strong> by default. Kindly <strong>uncheck</strong> the students who are absent.
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="subject">Subject:</label>
+                            <select id="subject" name="subjectcode" class="form-control" required="required">
+                                <option value="">-- Select Subject --</option>
+                                <th:block th:each="item : ${subs}">
+                                    <option th:value="${item[0]}" th:text="${item[1]}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="dateselect">Attendance date:</label>
+                            <input type="text" id="dateselect" class="form-control" name="dateselect" required="required"/>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="starttime">Class Start Time:</label>
+                            <input type="time" id="starttime" class="form-control" name="starttime" required="required"/>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="endtime">Class End Time:</label>
+                            <input type="time" id="endtime" class="form-control" name="endtime" required="required"/>
+                        </div>
+                    </div>
+                    <div class="row mt-4 d-none" id="dlist">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered center-sans-serif" id="studentlist">
+                                    <thead class="fs-14">
+                                    <tr>
+                                        <th>Student Id</th>
+                                        <th>Student Name</th>
+                                        <th class="attendance-header">Absent/Present (Mark) <button type="button" id="selectAllBtn" class="btn btn-sm btn-info">Select All</button></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="fs-14" id="studentlistbody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-sm-12 col-md-6">
+                            <input type="submit" class="btn btn-success" value="Submit Attendance" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br/>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/lily/js/notiflix/notiflix.js}"></script>
+    <script th:src="@{/js/uploadAttendance.js}"></script>
+</th:block>
+</body>
+</html>

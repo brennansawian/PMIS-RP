@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{layouts/admin-layout}"
+>
+    <head>
+        <title>Home</title>
+        <div layout:fragment="static-files">
+            <script th:src="@{/static/lily/js/dashboard.js}"></script>
+        </div>
+    </head>
+    <body>
+
+<main layout:fragment="content">
+    <div th:if="${LOGIN.userrole == 'S'}">
+        <div class="container-fluid bgcolor mb-4">
+            <br>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="card box-shadow-grey">
+                        <!-- User Profile Information Section -->
+                        <div class="row align-items-center justify-content-center p-3">
+                            <div class="col-12 col-md-auto text-center mb-3 mb-md-0">
+                                <th:block th:if="${profilepic != null}">
+                                    <img id="previewfile1" class="img-thumbnail" th:src="'data:image/jpg;base64,' + ${profilepic}"  style='width:150px; height: 150px' alt="Profile Picture"/>
+                                </th:block>
+                                <th:block th:unless="${profilepic != null}">
+                                    <img th:src="@{/tempscripts/images/defaultprofile.jpg}" id="previewfile1"  class="img-thumbnail"  style='width:150px; height: 150px' alt="Default Profile Picture"/>
+                                </th:block>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="row">
+                                    <div class="col-12 col-lg-7 text-center text-lg-left mb-3 mb-lg-0">
+                                        <h5 class="mb-3"><span th:text="'Welcome ' + ${LOGIN.username}"></span></h5>
+                                        <div class="d-inline-block text-left">
+                                            <p class="mb-1">Logged in as: Super Administrator</p>
+                                            <p class="mb-1" th:text="'Email ID: ' + ${LOGIN.emailid}"></p>
+                                            <p class="mb-0" th:text="'Mobile No: ' + ${LOGIN.usermobile}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-5 text-center text-lg-right">
+                                        <div class="card-body p-0">
+                                            <input id="sysdate" type="hidden" th:value="${sysdate}" />
+                                            <input id="timeZoneOffset" type="hidden" th:value="${timeZoneOffset}" />
+                                            <b class="d-block mt-3 mt-lg-0">Server Date & Time</b>
+                                            <h6 id="servdate" class="mb-0"></h6>
+                                            <h6 id="servtime"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="m-0">
+                        <!-- Programs Conducted Table Section -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card border-0">
+                                    <h4 class="card-title titlecss"><i class="fa fa-book">  Programs Conducted</i></h4>
+                                    <hr>
+                                    <div class="card-body margin-0">
+                                        <div class="container bold">
+                                            <div class="row table-responsive">
+                                                <div class="col-md-12 p-4" id="tablediv">
+                                                    <table class="table table-striped table-bordered center-sans-serif" id="usertable">
+                                                        <thead class="bg-warning">
+                                                        <tr>
+                                                            <th rowspan="2" class="align-middle">Sl.No.</th>
+                                                            <th rowspan="2" class="align-middle text-center">Office Name</th>
+                                                            <th colspan="3" class="text-center">No. Of Programs</th>
+                                                        </tr>
+                                                        <tr class="bg-info text-dark">
+                                                            <th>Ongoing</th>
+                                                            <th>Upcoming</th>
+                                                            <th>Completed</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr th:each="a, i : ${OfficeWiseCountProgramList}">
+                                                            <td th:text="${i.count}"></td>
+                                                            <td th:text="${a[0]}" class="text-left"></td>
+                                                            <td th:text="${a[1]}"></td>
+                                                            <td th:text="${a[2]}"></td>
+                                                            <td th:text="${a[3]}"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="bg-dark text-white text-center" colspan="2">Total</td>
+                                                            <td class="bg-dark text-white" th:text="${#aggregates.sum(OfficeWiseCountProgramList.![[1]])}"></td>
+                                                            <td class="bg-dark text-white" th:text="${#aggregates.sum(OfficeWiseCountProgramList.![[2]])}"></td>
+                                                            <td class="bg-dark text-white" th:text="${#aggregates.sum(OfficeWiseCountProgramList.![[3]])}"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <br>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/serverDateTime.js}"></script>
+</th:block>
+
+</body>
+</html>

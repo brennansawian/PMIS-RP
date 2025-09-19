@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/coordinator-faculty-layout}"
+>
+<head>
+  <title>Assignments</title>
+  <div layout:fragment="static-files">
+  </div>
+
+</head>
+<body>
+
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+
+  <div class="container pt-4 pb-4">
+    <div class="card box-shadow-grey">
+      <div class="card-header bg-success">
+        <h4 class="card-title fff text-center"><i class="fa fa-clipboard-list">  New Assignment</i></h4>
+      </div>
+      <div class="card-body">
+        <form th:object="${assignment}" method="POST" th:action="@{/nerie/assignments/upload-assignment}" name="assignments" id="assignmentid" enctype="multipart/form-data" role="form" autocomplete="off">
+          <div class="row">
+            <div class="mt-4 col-sm-12 col-md-6">
+              <label for="subjectCodeCreate">Subject:<span class="red-bold">*</span></label>
+              <select id="subjectCodeCreate" class="form-control" th:field="*{subjectcode.subjectcode}" required>
+                <option value="">Select</option>
+                <th:block th:each="d : ${subs}">
+                  <option th:value="${d[0]}" th:text="${d[0]} + ' - ' + ${d[1]}"></option>
+                </th:block>
+              </select>
+            </div>
+            <div class="mt-4 col-sm-12 col-md-6">
+              <label for="assignmentNameCreate">Assignment Name:<span class="red-bold">*</span></label>
+              <input type="text" class="form-control" id="assignmentNameCreate" th:field="*{title}" required="true"/>
+            </div>
+
+            <div class="row mt-4 col-sm-12 col-md-12 col-lg-12">
+              <div class="col-md-8 col-lg-6">
+                <label for="AssignmentDescUploadCreate">Assignment Description:<span class="red-bold">*</span></label>
+                <textarea form="assignmentid" id="AssignmentDescUploadCreate" maxlength="500" rows="4" class="form-control" th:field="*{description}" required="true"></textarea>
+                <b><span id="charactercountdescCreate"></span></b>
+              </div>
+              <div class="col-lg-6 col-sm-12 col-md-4 mt-4">
+                <label>Select Submission Type:<span class="red-bold">*</span></label>
+                <div>
+                  <label class="mr-2">
+                    <input type="radio" id="fileRadioCreate" value="FILE" th:field="*{submissiontype}" required />
+                    Upload File
+                  </label>
+                  <label>
+                    <input type="radio" id="linkRadioCreate" value="LINK" th:field="*{submissiontype}" />
+                    Submit Link
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 col-sm-12 col-md-4" id="fileUploadDivCreate" style="display: none;">
+              <label for="file1Create">Upload Assignment:<span class="red-bold">*</span><span class="red-bold">(Only PDF allowed)</span></label>
+              <input type="file" accept=".pdf" name="file1" id="file1Create" class="form-control-file" onchange="assignmentfile('Create')"/>
+            </div>
+
+            <div class="mt-4 col-sm-12 col-md-4" id="linkInputDivCreate" style="display: none;">
+              <label for="linkInputCreate">Submission Link:<span class="red-bold">*</span></label>
+              <input type="url" name="submissionLink" id="linkInputCreate" class="form-control"/>
+            </div>
+
+            <div class="mt-4 col-sm-12 col-md-4">
+              <label for="assignmentdateCreate">Assignment Date:<span class="red-bold">*</span></label>
+              <input class="form-control datepicker" id="assignmentdateCreate" th:field="*{uploaddate}" required="true"/>
+            </div>
+            <div class="mt-4 col-sm-12 col-md-4">
+              <label for="lastdateCreate">Last Date for Submission:<span class="red-bold">*</span></label>
+              <input class="form-control datepicker" id="lastdateCreate" th:field="*{submissiondate}" required="true"/>
+            </div>
+            <div class="mt-4 col-sm-12 col-md-4">
+              <label for="fullmarkCreate">Full Mark:<span class="red-bold">*</span></label>
+              <input type="number" min="0" class="form-control" id="fullmarkCreate" th:field="*{fullmark}" required="true"/>
+            </div>
+            <div class="mt-4 col-sm-12 col-md-4">
+              <label for="passmarkCreate">Pass Mark:<span class="red-bold">*</span></label>
+              <input type="number" min="0" class="form-control" id="passmarkCreate" th:field="*{passmark}" required="true"/>
+            </div>
+            <div class="mt-4 col-sm-12 col-md-4 align-self-end">
+              <input id="subbtnCreate" type="submit" class="btn btn-success btn-block" value="Upload Assignment" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card mt-4 box-shadow-grey">
+      <div class="card-body">
+        <div class="table-responsive">
+          <h4 class="card-title titlecss mb-3"><i class="fa fa-list">  Assignments List</i></h4>
+          <hr/>
+          <table class="table table-striped table-bordered center-sans-serif" id="assignmentslist">
+            <thead class="fs-14">
+            <tr>
+              <th class="w-15" >Assignment Name</th>
+              <th class="w-10" >Subject</th>
+              <th class="w-20" >Assigned Date</th>
+              <th class="w-20" >Last Date</th>
+              <th class="w-20" >View/Edit Assignment</th>
+              <th class="w-20" >View Submissions</th>
+            </tr>
+            </thead>
+            <tbody class="fs-12">
+            <tr th:each="v : ${alist}">
+              <td th:text="${v.title}"></td>
+              <td th:text="${v.subjectcode.subjectname}"></td>
+              <td th:text="${#dates.format(v.uploaddate, 'dd-MM-yyyy')}"></td>
+              <td th:text="${#dates.format(v.submissiondate, 'dd-MM-yyyy')}"></td>
+
+              <td>
+                <th:block th:if="${v.submissiontype == 'FILE' or (v.submissiontype == null and v.reldoc != null and v.reldoc.length > 0)}">
+                  <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center">
+                    <a th:href="@{/nerie/assignments/viewAssignmentDocument(fid=${v.assignmenttestid})}"
+                       class="btn btn-sm btn-primary mb-1 mb-sm-0 mr-sm-1"
+                       target="_blank">
+                      View
+                    </a>
+                    <button class="edit-button editbtn-file btn btn-sm btn-primary"
+                            th:data-id="${v.assignmenttestid}"
+                            th:data-title="${v.title}"
+                            th:data-description="${v.description}"
+                            th:data-subject="${v.subjectcode.subjectcode}"
+                            th:data-uploaddate="${#dates.format(v.uploaddate, 'dd-MM-yyyy')}"
+                            th:data-submissiondate="${#dates.format(v.submissiondate, 'dd-MM-yyyy')}"
+                            th:data-fullmark="${v.fullmark}"
+                            th:data-passmark="${v.passmark}"
+                            th:data-submissiontype="'FILE'">Edit</button>
+                  </div>
+                </th:block>
+                <th:block th:if="${v.submissiontype == 'LINK'}">
+                  <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center">
+                    <a th:href="${v.reldocAsString}"
+                       class="btn btn-sm btn-primary mb-1 mb-sm-0 mr-sm-1"
+                       target="_blank">
+                      Link
+                    </a>
+                    <button class="edit-button editbtn-link btn btn-sm btn-primary"
+                            th:data-id="${v.assignmenttestid}"
+                            th:data-title="${v.title}"
+                            th:data-description="${v.description}"
+                            th:data-subject="${v.subjectcode.subjectcode}"
+                            th:data-uploaddate="${#dates.format(v.uploaddate, 'dd-MM-yyyy')}"
+                            th:data-submissiondate="${#dates.format(v.submissiondate, 'dd-MM-yyyy')}"
+                            th:data-fullmark="${v.fullmark}"
+                            th:data-passmark="${v.passmark}"
+                            th:data-submissiontype="'LINK'"
+                            th:data-linkurl="${v.reldocAsString}">Edit</button>
+                  </div>
+                </th:block>
+                <th:block th:if="${(v.submissiontype == null and (v.reldoc == null or v.reldoc.length == 0)) or (v.submissiontype == 'FILE' and (v.reldoc == null or v.reldoc.length == 0))}">
+                  No Attachment
+                </th:block>
+              </td>
+
+              <td>
+                    <span class="text-success bold" th:if="${v.submissiontype == 'LINK'}">
+                      Reminder to Check your Google Forms!
+                    </span>
+                <a class="clickme danger11 edit-study-material btn btn-sm btn-info" th:if="${v.submissiontype == 'FILE' or (v.submissiontype == null and v.reldoc != null and v.reldoc.length > 0)}" th:href="@{/nerie/assignments/view-submitted-assignment(aid=${v.assignmenttestid})}" target="_blank">View Submissions</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Assignment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" name="editassignmentForm" id="editassignmentForm" enctype="multipart/form-data" role="form" autocomplete="off" th:action="@{/nerie/assignments/editAssignment}">
+            <input type="hidden" name="edassignmentid" id="assignmentIdEdit" />
+            <div class="row">
+              <div class="mt-4 col-sm-12 col-md-6">
+                <label for="subjectCodeEdit">Subject:<span class="red-bold">*</span></label>
+                <select id="subjectCodeEdit" class="form-control" name="edsubject" required>
+                  <option value="">Select</option>
+                  <th:block th:each="d : ${subs}">
+                    <option th:value="${d[0]}" th:text="${d[0]} + ' - ' + ${d[1]}"></option>
+                  </th:block>
+                </select>
+              </div>
+              <div class="mt-4 col-sm-12 col-md-6">
+                <label for="edassignmentNameEdit">Assignment Name:<span class="red-bold">*</span></label>
+                <input type="text" class="form-control" id="edassignmentNameEdit" name="edassignmentName" required="true"/>
+              </div>
+
+              <div class="mt-4 col-sm-12 col-md-6">
+                <label for="edAssignmentDescUploadEdit">Assignment Description:<span class="red-bold">*</span></label>
+                <textarea form="editassignmentForm" id="edAssignmentDescUploadEdit" name="eddescription" maxlength="500" rows="4" class="form-control" required="true"></textarea>
+                <b><span id="edcharactercountdescEdit"></span></b>
+              </div>
+
+              <div class="col-lg-6 col-sm-12 col-md-4 mt-4">
+                <label>Select Submission Type:<span class="red-bold">*</span></label>
+                <div>
+                  <label class="mr-2">
+                    <input type="radio" id="edfileRadioEdit" value="FILE" name="submissiontype" required />
+                    Upload File
+                  </label>
+                  <label>
+                    <input type="radio" id="edlinkRadioEdit" name="submissiontype" value="LINK" />
+                    Submit Link
+                  </label>
+                </div>
+              </div>
+
+              <div class="mt-4 col-sm-12 col-md-4" id="edfileInputDivEdit" style="display: none;">
+                <label for="edfile1Edit">Upload Assignment:<span class="red-bold">* (Only PDF allowed)</span></label>
+                <input type="file" accept=".pdf" name="file1" id="edfile1Edit" class="form-control-file" onchange="assignmentfile('Edit')"/>
+              </div>
+
+              <div class="mt-4 col-sm-12 col-md-4" id="edlinkInputDivEdit" style="display: none;">
+                <label for="edlinkInputEdit">Submission Link:<span class="red-bold">*</span></label>
+                <input type="url" name="submissionLink" id="edlinkInputEdit" class="form-control"/>
+              </div>
+
+
+              <div class="mt-4 col-sm-12 col-md-4">
+                <label for="edassignmentdateEdit">Assignment Date:<span class="red-bold">*</span></label>
+                <input class="form-control datepicker" id="edassignmentdateEdit" name="edassignmentdate" required="true"/>
+              </div>
+              <div class="mt-4 col-sm-12 col-md-4">
+                <label for="edlastdateEdit">Last Date for Submission:<span class="red-bold">*</span></label>
+                <input class="form-control datepicker" id="edlastdateEdit" name="edlastdate" required="true"/>
+              </div>
+              <div class="mt-4 col-sm-12 col-md-4">
+                <label for="edfullmarkEdit">Full Mark:<span class="red-bold">*</span></label>
+                <input type="number" min="0" class="form-control" id="edfullmarkEdit" name="edfullmark" required="true"/>
+              </div>
+              <div class="mt-4 col-sm-12 col-md-4">
+                <label for="edpassmarkEdit">Pass Mark:<span class="red-bold">*</span></label>
+                <input type="number" min="0" class="form-control" id="edpassmarkEdit" name="edpassmark" required="true"/>
+              </div>
+              <div class="mt-4 col-sm-12 col-md-4 align-self-end">
+                <input id="subbtnEdit" type="submit" class="btn btn-success btn-block" value="Update Assignment" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Feedback Modal -->
+  <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-light text-dark">
+          <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
+          <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body" id="feedbackModalBody">
+          <!-- Message content inserted via JS -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="modalOkButton" class="btn btn-primary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block layout:fragment="scripts">
+  <script th:src="@{/js/uploadAssignment.js}"></script>
+</th:block>
+</body>
+</html>

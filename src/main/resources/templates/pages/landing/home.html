@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/landing-layout}"
+>
+<head>
+    <title>Home</title>
+    <div layout:fragment="styles">
+        <link th:href="@{/css/landingHome.css}" rel="stylesheet">
+    </div>
+</head>
+<body>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+    <div layout:replace="~{fragments/lilypreloader :: preloader}"></div>
+    <section class="hero-section overlay bg-cover" th:attr="data-background=@{/lily/images/about/nerie.png}">
+        <div class="container">
+            <div class="hero-slider">
+                <div class="hero-slider-item">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="text-white" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".1">Ongoing Programs</h1>
+                            <p class="text-white mb-4" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".4">
+                                <th:block th:each="st : ${ongoingprogramlist}">
+                                    <span>
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                        <a class="text-white" th:id="${st[0]}" th:href="@{/nerie/reports/publicReport(phaseid=${st[0]})}" target="_blank">
+                                            <span th:text="${st[11]}"></span>: <span th:text="${st[2]}"></span>
+                                            started on <span th:text="${st[9]}"></span>
+                                            at <span th:text="${st[10]}"></span>
+                                        </a>
+                                        <br/>
+                                    </span>
+                                </th:block>
+                                <th:block th:if="${#lists.isEmpty(ongoingprogramlist)}">
+                                    <span>No Details Available Yet!</span>
+                                </th:block>
+                            </p>
+
+                            <th:block th:if="${#lists.size(ongoingprogramlist) > 2}">
+                                <a href="#" class="btn btn-view-more moreongoingbtn" title="Click here to View more Ongoing Programs"
+                                   data-toggle="modal" data-target="#modalmorelist-modal"
+                                   data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3"
+                                   data-animation-in="fadeInLeft" data-delay-in=".7"
+                                   data-function="getmoreongoingfunc">
+                                    View More
+                                </a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slider-item">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="text-white" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".1">Upcoming Programs</h1>
+                            <p class="text-white mb-4" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".4">
+                                <th:block th:each="u : ${upcomingprogramlist}">
+                                    <span>
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                        <a class="text-white" th:id="${u[0]}" th:href="@{/nerie/reports/publicReport(phaseid=${u[0]})}" target="_blank">
+                                            <span th:text="${u[11]}"></span>: <span th:text="${u[2]}"></span>
+                                            <span th:if="${u[9] != null and u[9] != 'No dates finalized yet!'}">
+                                                starting from <span th:text="${u[9]}"></span>
+                                            </span>
+                                            <span th:unless="${u[9] != null and u[9] != 'No dates finalized yet!'}">
+                                                (<span th:text="${u[9]}"></span>)
+                                            </span>
+                                            at <span th:text="${u[10]}"></span>
+                                        </a>
+                                        <br/>
+                                    </span>
+                                </th:block>
+                                <th:block th:if="${#lists.isEmpty(upcomingprogramlist)}">
+                                    <span>No Details Available Yet!</span>
+                                </th:block>
+                            </p>
+                            <th:block th:if="${#lists.size(upcomingprogramlist) > 2}">
+                                <a href="#" class="btn btn-view-more upcomingProgramsBtn"
+                                   data-animation-out="fadeOutUp"
+                                   data-delay-out="5"
+                                   data-duration-in=".3"
+                                   data-animation-in="fadeInDown"
+                                   data-delay-in=".7"
+                                   title="Click here to View more Upcoming Programs"
+                                   data-toggle="modal"
+                                   data-target="#modalmorelist-modal"
+                                   data-function="getmoreupcomingfunc">
+                                    View More
+                                </a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slider-item">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="text-white" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">Completed Programs</h1>
+                            <p class="text-white mb-4" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".4">
+                                <th:block th:each="c : ${completedprogramlist}">
+                                    <span>
+                                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                        <a class="text-white" th:id="${c[0]}" th:href="@{/nerie/reports/publicReport(phaseid=${c[0]})}" target="_blank">
+                                            <span th:text="${c[11]}"></span>: <span th:text="${c[2]}"></span>
+                                            starting from <span th:text="${c[9]}"></span>
+                                            at <span th:text="${c[10]}"></span>
+                                        </a>
+                                        <br/>
+                                    </span>
+                                </th:block>
+                                <th:block th:if="${#lists.isEmpty(completedprogramlist)}">
+                                    <span>No Completed Programs</span>
+                                </th:block>
+                            </p>
+                            <th:block th:if="${#lists.size(completedprogramlist) > 2}">
+                                <a href="#" class="btn btn-view-more view-more-completed"
+                                   data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3"
+                                   data-animation-in="zoomIn" data-delay-in=".7"
+                                   title="Click here to View more Completed Programs"
+                                   data-toggle="modal" data-target="#modalmorelist-modal"> <!-- No data-function needed if directly calling -->
+                                    View More
+                                </a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /hero slider -->
+
+    <section class="section-sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex align-items-center section-title justify-content-between">
+                        <h2 class="mb-0 text-nowrap mr-3">Our Programs</h2>
+                        <div class="border-top w-100 border-primary d-none d-sm-block"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- course list -->
+            <div class="row justify-content-center">
+                <!-- course item -->
+                <div class="col-lg-4 col-sm-6 mb-5">
+                    <div class="card carditem p-0 border-primary rounded-0 hover-shadow">
+                        <p class="pt-5 text-center"><span class="fa fa-bookmark" style="font-size:40px;"></span></p>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">No. of Ongoing Programs</h4>
+                            <hr/>
+                            <h3 class="card-text mb-4">
+                                Total  <span class="float-right" th:text="${countongoing}">0</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- course item -->
+                <div class="col-lg-4 col-sm-6 mb-5">
+                    <div class="card carditem p-0 border-primary rounded-0 hover-shadow">
+                        <p class="pt-5 text-center"><span class="fa fa-list" style="font-size:40px"></span></p>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">No.of Upcoming Programs</h4>
+                            <hr/>
+                            <h3 class="card-text mb-4 test">
+                                Total <span class="float-right" th:text="${countupcoming}">0</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- course item -->
+                <div class="col-lg-4 col-sm-6 mb-5">
+                    <div class="card carditem p-0 border-primary rounded-0 hover-shadow">
+                        <p class="pt-5 text-center"><span class="fa fa-calendar-o" style="font-size:40px"></span></p>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">No. of Completed Programs</h4>
+                            <hr/>
+                            <h3 class="card-text mb-4">
+                                Total  <span class="float-right" th:text="${countcompleted}">0</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /courses -->
+    <div class="modal fade" id="modalmorelist-modal">
+        <!-- MODIFICATION: Removed the inline style 'max-width: 70%' from this div to allow responsive CSS to take control -->
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block p-5 border-bottom-0">
+                    <h5 class="modal-title" ><u><span id="titlespan" style="font-weight: bold"></span></u></h5>
+                    <button type="button" class="close position-absolute" style="right: 15px; top: 8px;" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="programlistdiv" style="text-justify: inter-word">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div layout:fragment="scripts">
+    <!-- custom scripts -->
+    <script th:src="@{/lily/js/script.js}"></script>
+    <script th:src="@{/js/landingHome.js}"></script>
+</div>
+</body>
+</html>

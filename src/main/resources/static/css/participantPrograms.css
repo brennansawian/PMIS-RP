@@ -1,0 +1,73 @@
+/* Styles for Action buttons in the table */
+.clickme {
+  background-color: #5c70db;
+  padding: 4px 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 13px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+.clickme:hover {
+  color: white;
+  opacity: 0.9;
+}
+
+/* Specialized button colors (override .clickme background) */
+.downloadbtn { background-color: #007bff; }
+.feedbackbtn { background-color: #ffc107; color: #000; }
+.feedbackoverallbtn { background-color: #17a2b8; }
+.viewbtn { background-color: #6c757d; }
+.clickme-view-writeoverallfeedback { background-color: #28938e; }
+.clickme-view { background-color: #b4ed75; color: #000; }
+
+/* General page styling */
+.titlecss {
+  font-weight: bold;
+  color: #006699;
+  text-align: center;
+  margin: 0;
+  padding-top: 20px;
+}
+.box-shadow-grey {
+  background-color: white;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+}
+.bold {
+  font-weight: bold;
+}
+.center-sans-serif {
+  text-align: center;
+  font-family: sans-serif;
+}
+.fs-14 {
+  font-size: 14px;
+}
+.fs-12 {
+  font-size: 12px;
+}
+
+/* Utility classes */
+.r-15-t-8 {
+  right: 15px;
+  top: 8px;
+}
+.w-s-nowrap {
+  white-space: nowrap;
+}
+.w-1 {
+  width: 1%;
+}
+.margin-0 {
+  margin: 0;
+}
+.span {
+  color: red;
+}
+.err {
+  color: red;
+  font-weight: bold;
+}

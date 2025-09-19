@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{${layoutPath}}"
+>
+<head>
+    <title>Attendance Report of Participant and Resource</title>
+    <div layout:fragment="static-files">
+    </div>
+
+</head>
+<body>
+
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+    <br>
+    <div class="container">
+        <div class="card box-shadow-grey" >
+            <div class="card-title titlecss" ><h4><i class="fa fa-book">&nbsp;Resource Person & Participant Reports</i></h4></div>
+            <hr>
+            <div class="card-body margin-0">
+                <div class="container bold">
+
+                    <form method="POST"  modelAttribute="rep_att"  name="rep_attnm" id="rep_attid" role="form" autocomplete="off">
+                        <div class="form-group row">
+                            <div class="col-md-1 col-form-label"></div>
+                            <div class="col-md-3 col-form-label">
+                                <label>Report type:<span class="span">*</span> </label>
+                            </div>
+                            <div class="col-md-5">
+                                <select name="reporttype" id="reporttype" class="form-control" required="true">
+                                    <option value="-1" th:text="'Select'">Select</option>
+                                    <option value="1" th:text="'Participant'"></option>
+                                    <option value="2" th:text="'Resource Person'"></option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-1 col-form-label"></div>
+                            <div class="col-md-3 col-form-label">
+                                <label>Financial Year:<span class="span">*</span></label>
+                            </div>
+                            <div class="col-md-5">
+                                <select name="finyear" id="finyear" class="form-control">
+                                    <option value="" th:text="'Select'"></option>
+                                    <th:block th:each="o : ${fylist}">
+                                        <option th:value="${o[0]}" th:text="${o[1]}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-1 col-form-label"></div>
+                            <div class="col-md-3 col-form-label">
+                                <label>Program:<span class="span">*</span> </label>
+                            </div>
+                            <div class="col-md-5">
+                                <select name="programs" id="programs" class="form-control" required="true">
+                                    <option value="-1" th:text="'Select'"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-1 col-form-label"></div>
+                            <div class="col-md-3 col-form-label">
+                                <label>Phase No:<span class="span">*</span> </label>
+                            </div>
+                            <div class="col-md-5">
+                                <select path="phaseid.phaseid" id="phaseid" class="form-control" required="true" >
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <center>
+                            <input id="view_aggregateid" type="button" name="view_aggregate" value="View Aggregate Attendance" class="btn btn-info"/>
+
+<!--                            <%&#45;&#45;<input id="view_aggregateid" type="button" name="view_aggregate" value="View Aggregate Attendance" class="btn btn-info" onclick=" getlistreportfunc('1')"/>&#45;&#45;%>-->
+                            <input id="view_detailsid" type="button" name="view_details" value="View Detailed Attendance" class="btn btn-info"/>
+
+<!--                            <%&#45;&#45;<input id="view_detailsid" type="button" name="view_details" value="View Detailed Attendance" class="btn btn-info" onclick=" getlistreportfunc('2')"/>&#45;&#45;%>-->
+                            <input id="view_rpid" type="button" name="view_rp" value="View" class="btn btn-info"/>
+
+<!--                            <%&#45;&#45;<input id="view_rpid" type="button" name="view_rp" value="View" class="btn btn-info" onclick=" getlistreportfunc('3')"/>&#45;&#45;%>-->
+                        </center>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/reportAttendanceList.js}"></script>
+</th:block>
+</body>
+</html>

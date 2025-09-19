@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/student-layout}"
+        xmlns:th="http://thymeleaf.org"
+>
+<head>
+    <div layout:fragment="static-files">
+        <!-- Utilities -->
+        <script th:src="@{/js/utils/networkUtilities.js}"></script>
+        <script th:src="@{/js/studentProfile.js}"></script>
+    </div>
+    <title layout:fragment="title">Profile</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container mt-4 mb-4">
+        <div class="card box-shadow-grey" >
+            <div class="card-title titlecss" ><h4><i class="fa fa-book">  View Profile</i></h4></div>
+            <hr>
+            <div class="card-body margin-0">
+                <div class="container bold">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active sans-serif-green" id="profile-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="true">My Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sans-serif-green" id="mysubjects-tab" data-toggle="pill" href="#mysubjects" role="tab" aria-controls="mysubjects" aria-selected="false">My Subjects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sans-serif-green" id="uploadphoto-tab" data-toggle="tab" href="#uploadphoto" role="tab" aria-controls="uploadphoto" aria-selected="false">Upload Profile Photo</a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <div th:if="${profilepic != null}">
+                                        <img class="rounded-circle" width="100" alt="Profile Photo" height="100" th:src="'data:image/jpg;base64,' + ${profilepic}" />
+                                    </div>
+                                    <div th:if="${profilepic == null}">
+                                        <img th:src="@{/lily/images/teachers/student.jpg}" alt="Profile Photo" class="rounded-circle" width="100" height="100">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <br>
+                                    <label for="inputStudentid">Roll No</label>
+                                    <input type="text" class="form-control" id="inputStudentid" readonly>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <br>
+                                    <label for="inputName">Name</label>
+                                    <input type="text" class="form-control" id="inputName" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputAcademicYear">Academic Year:</label>
+                                    <input type="text" class="form-control" id="inputAcademicYear" readonly>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputDOB">Date of Birth:</label>
+                                    <input type="text" class="form-control" id="inputDOB" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail" >Email ID:</label>
+                                    <input id="inputEmail" readonly class="form-control" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputMobileno">Mobile No:</label>
+                                    <input id="inputMobileno" readonly class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="inputDepartment">Department:</label>
+                                    <input type="text" class="form-control" id="inputDepartment" readonly>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputCourse">Course:</label>
+                                    <input type="text" class="form-control" id="inputCourse" readonly>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputSemphase">Semester/Phase:</label>
+                                    <input type="text" class="form-control" id="inputSemphase" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+
+                        <div class="tab-pane fade" id="mysubjects" role="tabpanel" aria-labelledby="mysubjects-tab">
+                            <div class="card card-body bg-light cardborder mb-4">
+                                <p class="fw-bold text-center" style="font-size: 18px;">My Subjects</p>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered center-sans-serif" id="subjecttable">
+                                        <thead class="fs-14 text-center">
+                                        <tr>
+                                            <th>Sl.no</th>
+                                            <th>Subject</th>
+                                            <th>Faculty</th>
+                                            <th>Attendance</th>
+                                            <th>Attendance Percentage</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="fs-12 text-center">
+                                        <tr th:each="s, iStat : ${sublist}">
+                                            <td th:text="${iStat.index + 1}"></td>
+                                            <td>
+                                                <span th:text="${s.sname}"></span> - <span th:text="${s.stype}"></span>
+                                            </td>
+                                            <td th:text="${s.fname}"></td>
+                                            <td>
+                                                Total: <span th:text="${s.total}"></span><br>
+                                                Present: <span th:text="${s.present}"></span><br>
+                                                Absent: <span th:text="${s.absent}"></span><br>
+                                            </td>
+                                            <td th:text="${s.total == 0 ? 'N/A' : (s.present * 100.0 / s.total) + '%'}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="uploadphoto" role="tabpanel" aria-labelledby="uploadphoto-tab">
+                            <div class="card border-0 shadow-lg mx-auto my-5" style="max-width: 700px;">
+                                <div class="card-body">
+                                    <h2 class="text-center font-weight-bold mb-4">Upload Profile Photo</h2>
+                                    <form name="uploadphoto" id="uploadphotoform">
+                                        <div class="form-group row">
+                                            <div class="col-md-4 col-form-label text-md-right">
+                                                <label for="file1">Select (jpg/jpeg/png):</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="file" name="file1" id="file1" class="form-control-file" onchange="previewFile1image()" accept=".jpg, .jpeg, .png"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mt-3">
+                                            <div class="col-md-12 text-center">
+                                                <div th:if="${profilepic != null}">
+                                                    <img id="previewfile1" class="img-thumbnail" th:src="'data:image/jpg;base64,' + ${profilepic}" alt="Image Preview" style="width:150px; height: 150px; object-fit: cover;"/>
+                                                </div>
+                                                <div th:if="${profilepic == null}">
+                                                    <img id="previewfile1" class="img-thumbnail" th:src="@{/lily/images/teachers/student.jpg}" alt="Image Preview" style="width:150px; height: 150px; object-fit: cover;"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row mt-4">
+                                            <div class="col-md-12 text-center">
+                                                <input type="submit" id="uploadbtn" value="Upload Photo" class="btn btn-info"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

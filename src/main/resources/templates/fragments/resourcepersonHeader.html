@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+>
+  <ul layout:fragment="resourceperson-navlist" class="navbar-nav main-menu d-flex"> <!--Replaced main layout-->
+    <li class="nav-item-menu d-block">
+      <a class="nav-link-menu" th:href="@{/nerie/home}">Home</a>
+    </li>
+
+    <li class="nav-item-menu d-block">
+      <a href="#" class="nav-link-menu">Programs<b class="caret"></b></a>
+      <ul class="sub-menu">
+        <li class="sub-sub-menu"><a th:href="@{/nerie/resource-persons/my-programs}" class="nav-link-menu">My Programs</a></li>
+      </ul>
+    </li>
+      <li class="nav-item-menu d-block">
+      <a href="#" class="nav-link-menu">Forms<b class="caret"></b></a>
+      <ul class="sub-menu">
+        <li class="sub-sub-menu"><a th:href="@{/nerie/resource-persons/honorariumform}" class="nav-link-menu">Honorarium Form</a></li>
+        <li class="sub-sub-menu"><a th:href="@{/nerie/resource-persons/taform}" class="nav-link-menu">TA Forms</a></li>
+       <li class="sub-sub-menu"><a th:href="@{/nerie/resource-persons/nltaform}" class="nav-link-menu">TA Forms(Non Local)</a></li>
+      </ul>
+    </li>
+    <li class="nav-item-menu d-block">
+      <a href="#" class="nav-link-menu">Profile<b class="caret"></b></a>
+      <ul class="sub-menu">
+        <li class="sub-sub-menu"><a th:href="@{/nerie/resource-persons/editprofile}" class="nav-link-menu">Update Profile</a></li>
+        <li class="sub-sub-menu"><a th:href="@{/nerie/users/change-password}" class="nav-link-menu">Change Password</a></li>
+        <li class="sub-sub-menu"><a id="logout-link" href="#" class="nav-link-menu">Logout</a></li>
+      </ul>
+    </li>
+    <script th:src="@{/js/logout.js}"></script>
+  </ul>
+</html>

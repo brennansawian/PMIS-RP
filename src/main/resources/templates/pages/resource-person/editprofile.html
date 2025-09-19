@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/resource-person-layout}">
+<head>
+    <title layout:fragment="title">Edit Profile - Resource Person</title>
+    <th:block layout:fragment="static-files"></th:block>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container-fluid mt-4">
+        <div class="container pb-4">
+            <div class="card box-shadow-grey">
+                <h4 class="card-title titlecss px-3 py-2"><i class="fa fa-user-edit"></i> Edit Profile - Resource Person</h4>
+                <hr class="mx-3">
+                <div class="card-body">
+                    <form method="POST"
+                          th:object="${userlogin}"
+                          enctype="multipart/form-data"
+                          name="userloginfn"
+                          id="userloginfid"
+                          role="form"
+                          autocomplete="off">
+                        
+                        <input type="hidden" th:field="*{usercode}" id="usercode"/>
+
+                        <!-- User ID (Read-only) -->
+                        <div class="form-group row mb-3">
+                            <label for="userid" class="col-md-3 col-form-label">User ID:<span class="text-danger">*</span></label>
+                            <div class="col-md-5">
+                                <input type="text" th:field="*{userid}" id="userid" class="form-control" required readonly/>
+                                <small class="text-danger" th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}"></small>
+                            </div>
+                        </div>
+
+                        <!-- Name -->
+                        <div class="form-group row mb-3">
+                            <label for="username" class="col-md-3 col-form-label">Name:<span class="text-danger">*</span></label>
+                            <div class="col-md-5">
+                                <input type="text" th:field="*{username}" id="username" class="form-control" maxlength="100" required/>
+                                <small class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+                            </div>
+                        </div>
+
+                        <!-- Mobile No -->
+                        <div class="form-group row mb-3">
+                            <label for="usermobile" class="col-md-3 col-form-label">Mobile No.:<span class="text-danger">*</span></label>
+                            <div class="col-md-5">
+                                <input type="text" th:field="*{usermobile}" id="usermobile" class="form-control" required maxlength="10" pattern="\d{10}"/>
+                                <small class="text-danger" th:if="${#fields.hasErrors('usermobile')}" th:errors="*{usermobile}"></small>
+                            </div>
+                            <div class="col-md-4">
+                                <span id="msg1" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group row mb-3">
+                            <label for="emailid" class="col-md-3 col-form-label">Email ID:<span class="text-danger">*</span></label>
+                            <div class="col-md-5">
+                                <input type="email" th:field="*{emailid}" id="emailid" class="form-control" maxlength="50" required/>
+                                <small class="text-danger" th:if="${#fields.hasErrors('emailid')}" th:errors="*{emailid}"></small>
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-info px-4">Update Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Optional JS 
+    <th:block layout:fragment="scripts">
+    <script th:src="@{/js/updateUserProfile.js}"></script>
+    </th:block>
+--> 
+</body>
+</html>

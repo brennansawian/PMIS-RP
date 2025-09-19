@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/landing-layout}"
+>
+<head>
+    <title>RIE Bhubaneshwar</title>
+    <div layout:fragment="styles">
+        <link rel="stylesheet" th:href="@{/css/blogs.css}">
+    </div>
+</head>
+<body>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+    <!--Pre Loader-->
+    <div layout:replace="~{fragments/lilypreloader :: preloader}"></div>
+    <!-- page title -->
+    <section id="about-hero" class="hero-section overlay bg-cover" data-background="tempscripts/images/aboutus/ncert_building.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="list-inline custom-breadcrumb mb-2">
+                        <li class="list-inline-item"><a class="h2 text-primary font-secondary" th:href="@{/nerie/about}">NCERT Constituent Units</a></li>
+                        <li class="list-inline-item text-white h3 font-secondary nasted">RIE Bhubaneshwar</li>
+                    </ul>
+                    <p class="text-lighten mb-0">Regional Institute of Education, Bhubaneshwar (NCERT),Bhubaneswar, Odisha 751022</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- about -->
+    <section class="section-sm bg-gray adjust-section">
+        <div class="container">
+            <div class="row" >
+                <div class="col-12 mb-4">
+                    <img th:src="@{/lily/images/aboutus/RIE Bhubaneswar.jpg}" alt="blog-thumb" class="img-fluid w-100">
+                </div>
+
+                <!-- border -->
+                <div class="col-12 mt-4 pb-3">
+                    <div class="border-bottom border-primary"></div>
+                </div>
+
+                <div class="col-12">
+                    <ul class="list-inline">
+                        <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><span class="font-weight-bold mr-2">Principal</span>Prof. Prakash Chandra Agarwal</li>
+                        <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>Regional Institute of Education, RIE Bhubaneswar (NCERT)</li>
+                        <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>National Council of Educational Research and Training</li>
+                        <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="font-weight-bold mr-2"></i>DM School Road, Near BDA NICCO Park, UNIT- 9, Bhubaneswar, Odisha 751022</li>
+                        <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><a class="text-light" href="https://www.riebbs.ac.in/" target="_blank"><i class="ti-link mr-2"></i>RIE Bhubaneswar website</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 mb-5">
+                    <br>
+                    <h2>RIE Bhubaneshwar</h2>
+                    <p align="justify" style="font-size: 15px">
+                        The Regional Institute of Education, Bhubaneswar is a constituent unit of National Council of Educational Research and Training (NCERT), New Delhi. The RIE, Bhubaneswar is equipped with all infrastructure facilities
+                        including Computer Application Centre and Video-conferencing Hall. The Institute offers innovative Pre-service Professional Training Programmes to prepare School Teachers and Teacher Educators of Elementary Training Institutes.
+                        The Institute is actively engaged in In-service Teacher Education Programmes catering to the needs of Eastern states and the Union Territory of Andaman and Nicobar Islands. It also provides expertise for programmes organized by the states
+                        under its jurisdiction and other educational agencies like SCERTs, DIETs, SIEMAT, DPEP, SSA. The Institute is also engaged in Research and Developmental activities in different areas of school education.
+                        All the programmes of the Institute are geared to keep pace with the changing educational needs of the region at school level.
+                        <br>
+                        This Institute stands on Sachivalaya marg, Bhubaneswar about 5 km away from the city Railway Station and 7 km away from Biju Pattnaik International Airport. Known as “ Temple City of India for its rich heritage of temples like the Lingaraj,
+                        Mukteswar, Rajarani, Kedar Gouri and Baital, etc. Bhubaneswar is famous for their art, sculpture, architecture and sanctity as well. It also prides over the renowned and ancient monuments like Khandagiri, Udaygiri and Dhauli, to name a few.
+                        Declared as the 1st Smart City by the Government of India in 2016, Bhubaneswar has a glorious past where the historic Kalinga war was fought in 261 BC along the banks of the river Daya, which led to a miraculous transformation of Emperor Ashoka
+                        from Chandashoka to Dharmashoka in the path of peace and non-violence.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

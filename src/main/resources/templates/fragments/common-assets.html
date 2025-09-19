@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--
+  Fragment for all common bootstrap files.
+-->
+<th:block th:fragment="common-scripts">
+    <!-- jQuery -->
+    <script th:src="@{/lily/plugins/jQuery/jquery.min.js}"></script>
+    <script th:src="@{/tempscripts/js/popper.min.js}"></script>
+    <script th:src="@{/lily/js/jquery-3.6.0.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.5.2.js"></script>
+    <script th:src="@{/tempscripts/vendor/jquery/jquery-confirm.min.js}" type="text/javascript"></script>
+    <link th:href="@{/tempscripts/vendor/jquery/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
+
+    <!-- jQuery UI -->
+    <script th:src="@{/lily/js/jquery-ui/jquery-ui.js}" type="text/javascript"></script>
+    <link th:href="@{/lily/js/jquery-ui/jquery-ui.css}" type="text/css" rel="stylesheet" />
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" th:href="@{/tempscripts/vendor/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/tempscripts/css/base.css}" /> <!--Header And Footer Style Bootstrap-->
+    <link rel="stylesheet" th:href="@{/tempscripts/css/base-responsive.css}" />
+    <link rel="stylesheet" th:href="@{/tempscripts/css/animate.min.css}" />
+    <link rel="stylesheet" th:href="@{/tempscripts/css/slicknav.min.css}" />
+    <link rel="stylesheet" th:href="@{/tempscripts/css/font-awesome.min.css}" />
+    <link th:href="@{/tempscripts/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/tempscripts/vendor/bootstrap/js/bootstrap.min.js}" type="text/javascript"></script>
+    <script th:src="@{/tempscripts/vendor/bootstrap/js/bootstrap-toggle.js}" type="text/javascript"></script>
+
+    <!-- filter -->
+    <script th:src="@{/lily/plugins/filterizr/jquery.filterizr.min.js}"></script>
+
+    <!-- slick slider -->
+    <link rel="stylesheet" th:href="@{/lily/plugins/slick/slick.css}">
+
+    <!-- themefy-icon -->
+    <link rel="stylesheet" th:href="@{/lily/plugins/themify-icons/themify-icons.css}">
+
+    <!-- animation css -->
+    <link rel="stylesheet" th:href="@{/lily/plugins/animate/animate.css}">
+
+    <!-- Notiflix  -->
+    <script th:src="@{/lily/js/notiflix/notiflix.js}"></script>
+    <link th:href="@{/lily/js/notiflix/notiflix.css}" type="text/css" rel="stylesheet" />
+
+    <!-- aos -->
+    <link rel="stylesheet" th:href="@{/lily/plugins/aos/aos.css}">
+
+    <!-- venobox popup -->
+    <link rel="stylesheet" th:href="@{/lily/plugins/venobox/venobox.css}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/tempscripts/css/font-awesome.min.css}" />
+    <link th:href="@{/tempscripts/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" />
+
+    <!-- GIFs -->
+    <link rel="shortcut icon" th:href="@{/tempscripts/images/India.gif}" type="image/x-icon">
+    <link rel="icon" th:href="@{/tempscripts/images/India.gif}" type="image/x-icon">
+    <link th:href="@{/tempscripts/images/India.gif}" rel="shortcut icon" type="image/x-icon" />
+
+    <!-- DataTables -->
+    <script th:src="@{/lily/js/CustomDataTable/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/dataTables.bootstrap4.min.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/dataTables.responsive.min.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/responsive.bootstrap4.min.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/pdfmake.min.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/vfs_fonts.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/jszip.min.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/buttons.html5.min.js}"></script>
+
+    <!-- Chart Libraries -->
+    <script th:src="@{/tempscripts/vendor/charts/Chart.js}"></script>
+    <script th:src="@{/tempscripts/vendor/charts/moment.min.js}"></script>
+    <script th:src="@{/tempscripts/vendor/charts/Chart.min.js}"></script>
+    <script th:src="@{/tempscripts/vendor/charts/utils.js}"></script>
+
+    <!-- Custom Scripts -->
+    <script th:src="@{/lily/js/utility.js}"></script>
+    <script th:src="@{/lily/js/customajax.js}"></script>
+    <!--    <script th:src="@{/lily/js/ajaxheader.js}"></script>-->
+
+    <!-- Network Utilities -->
+    <script th:src="@{/js/utils/networkUtilities.js}"></script>
+
+    <!-- Select2 -->
+    <link rel="stylesheet" th:href="@{/lily/js/select2/select2.min.css}" />
+    <script th:src="@{/lily/js/select2/select2.min.js}"></script>
+</th:block>
+
+</body>
+</html>

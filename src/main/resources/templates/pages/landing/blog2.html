@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/landing-layout}"
+>
+<head>
+  <title>NERIE</title>
+  <div layout:fragment="styles">
+    <link rel="stylesheet" th:href="@{/css/blogs.css}">
+  </div>
+</head>
+<body>
+
+<!-- Main Content Area -->
+<main layout:fragment="content">
+  <!--Pre Loader-->
+  <div layout:replace="~{fragments/lilypreloader :: preloader}"></div>
+  <!-- page title -->
+  <section id="about-hero" class="hero-section overlay bg-cover" data-background="tempscripts/images/aboutus/ncert_building.jpg">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <ul class="list-inline custom-breadcrumb mb-2">
+            <li class="list-inline-item"><a class="h2 text-primary font-secondary" th:href="@{/nerie/about}">NCERT Constituent Units</a></li>
+            <li class="list-inline-item text-white h3 font-secondary nasted">NERIE</li>
+          </ul>
+          <p class="text-lighten mb-0">North-East Regional Institute of Education (NERIE), Umiam-Ri-Bhoi, Meghalaya-793103</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- about -->
+  <section class="section-sm bg-gray adjust-section">
+    <div class="container">
+      <div class="row" >
+        <div class="col-12 mb-4">
+          <img th:src="@{/lily/images/aboutus/NERIE- Umiam_lq.jpg}" alt="blog-thumb" class="img-fluid w-100">
+        </div>
+
+        <!-- border -->
+        <div class="col-12 mt-4 pb-3">
+          <div class="border-bottom border-primary"></div>
+        </div>
+
+        <div class="col-12">
+          <ul class="list-inline">
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><span class="font-weight-bold mr-2">Principal</span>Prof. Bidyadhar Barthakur</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>North East Regional Institute of Education/li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="ti-book mr-2"></i>National Council of Educational Research and Training</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><i class="font-weight-bold mr-2"></i>Umiam-Ri-Bhoi, Meghalaya-793103</li>
+            <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><a class="text-light" href="http://nerie.nic.in/" target="_blank"><i class="ti-link mr-2"></i>NERIE website</a></li>
+          </ul>
+        </div>
+
+        <div class="col-12 mb-5">
+          <br>
+          <h2>North-East Regional Institute of Education (NERIE), Shillong</h2>
+          <p align="justify" style="font-size: 15px">
+            The North East Regional Institute of Education (NERIE) stands amidst the natural grandeur in Umiam village, which is about 20 kms away from Shillong city. Like other constituent units of the National Council of Educational Research and Training (NCERT), New Delhi, this Regional Institute of Education too,
+            caters to the educational needs of the eight states of the North East- Assam, Arunachal Pradesh, Manipur, Meghalaya, Mizoram, Nagaland, Sikkim and Tripura.
+            The Institute continued to function as a field office for about ten years. However, in the year 2005, the post of Principal along with 24 posts for the faculty were
+            advertised and filled up by the NCERT, New Delhi. The increase in the faculty strength led to an increase in the number of administerial staff in the Institute. As the Institute's human power was growing, the Institute in May 2012 was shifted from Shillong to its permanent campus in Nongsder village, Umiam.
+            In sync with the NCERT's objectives, the objectives of the Institute are spelled out as follows-
+            <br>(I) To undertake, aid, promote and coordinate research in all branches of education. - As such in a year, the Institute carries out on an average eight research programmes.
+            <br>(II) To conduct pre- service training courses in the region- The Institute reached one of its milestones in the year 2015, when the Two year B.Ed course was launched.
+            <br>(III) To organize in- service training programmes based on the educational needs of the eight states- On an average per academic session, the Institute conducts as many as twenty to twenty five training programmes.
+            <br>(IV) To develop educational materials, learning resources for both students and teachers as per the needs of the time and age-About ten such programmes are conducted every year.
+            <br>(V) To organize extension services- This is done mainly through seminars and conferences at regional and national level. The sole purpose is to make the Institute a learning space in recent trends in school education and teacher education.
+            <br>(VI) To provide leadership in training, development and research activities on the flagship programmes of the Ministry of Human Resource and Development (MHRD), GOI. In these past years, the Institute took the lead in the implementation of the Sarva Shiksha Abhiyan and
+            Rastriya Madhyamik Shiksha Abhiyan programmes for the universalization of school education in the country. From this academic year onwards, the Institute will take up programmes on the Samagra Shiksha Abhiyan, the newly launched programme of MHRD.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

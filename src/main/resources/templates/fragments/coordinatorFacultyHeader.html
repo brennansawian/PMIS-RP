@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+>
+<ul layout:fragment="coordinator-faculty-navlist" class="navbar-nav main-menu d-flex">
+    <li class="nav-item-menu d-block active">
+        <a class="nav-link-menu" th:href="@{/nerie/home}">Home</a>
+    </li>
+
+    <li class="nav-item-menu d-block">
+        <a class="nav-link-menu" href="#">Initialization</a>
+        <ul class="sub-menu">
+            <li class="sub-sub-menu"><a th:href="@{/nerie/offices/createoffice}" class="nav-link-menu">Add/Edit Venue</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/users/create-user}" class="nav-link-menu">Program Categories</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/designations/list}" class="nav-link-menu">Add/Edit Qualification</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/designations/list}" class="nav-link-menu">Add/Edit Subject</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/designations/list}" class="nav-link-menu">Map Qualification Subject</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/designations/list}" class="nav-link-menu">Add/Edit Rooms</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/designations/list}" class="nav-link-menu">Initialize Holiday List</a></li>
+        </ul>
+    </li>
+
+    <li class="nav-item-menu d-block">
+        <a class="nav-link-menu" href="#">Add/Edit Program</a>
+        <ul class="sub-menu">
+            <li class="sub-sub-menu"><a th:href="@{/nerie/offices/report-office-list}" class="nav-link-menu">Add Resource Person</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/offices/report-coordinator-list}" class="nav-link-menu">Map Resource Person</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/offices/report-course-list}" class="nav-link-menu">Upload Materials</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/offices/report-course-list}" class="nav-link-menu">Un-Close Program</a></li>
+        </ul>
+    </li>
+
+    <li class="nav-item-menu d-block">
+        <a class="nav-link-menu" href="#">Participants</a>
+        <ul class="sub-menu">
+            <li class="sub-sub-menu"><a th:href="@{/nerie/offices/report-office-list}" class="nav-link-menu">Manage Participants</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/offices/report-coordinator-list}" class="nav-link-menu">Attendance</a></li>
+        </ul>
+    </li>
+
+    <li class="nav-item-menu d-block">
+        <a class="nav-link-menu" href="#">Report</a>
+        <ul class="sub-menu">
+            <li class="sub-sub-menu"><a th:href="@{/nerie/reports/report-participant-resource-list}" class="nav-link-menu">Participant &amp; Resource Person Report</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/reports/report-program-schedule}" class="nav-link-menu">Program Schedule Report</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/reports/report-attendance-list}" class="nav-link-menu">Attendance Report</a></li>
+        </ul>
+    </li>
+
+    <li class="nav-item-menu d-block">
+        <a class="nav-link-menu" href="#">Manage Academics</a>
+        <ul class="sub-menu">
+            <li class="sub-sub-menu">
+                <a th:href="@{/nerie/subjects/create-academic-subjects}" class="nav-link-menu">Manage Subject</a>
+            </li>
+            <hr/>
+            <li class="sub-sub-menu">
+                <a th:href="@{/nerie/course-categories/create-academic-courses}" class="nav-link-menu">Manage Course</a>
+            </li>
+            <hr/>
+            <li class="sub-sub-menu">
+                <a th:href="@{/nerie/faculties/register-faculties}" class="nav-link-menu">Manage Faculty</a>
+            </li>
+            <hr/>
+            <li class="sub-sub-menu">
+                <a th:href="@{/nerie/offices/report-course-list}" class="nav-link-menu">Manage Students</a>
+            </li>
+            <hr/>
+            <li class="sub-sub-menu">
+                <a th:href="@{/nerie/students/promotion-student-list}" class="nav-link-menu">Promote Students</a>
+            </li>
+            <hr/>
+            <li class="sub-sub-menu">
+                <a th:href="@{/nerie/student-leaves/approve-student-leave}" class="nav-link-menu">Student Leave Application</a>
+            </li>
+            <hr/>
+            <li class="sub-sub-menu">
+                <a th:href="@{/nerie/student-leaves/student-leave-reports}" class="nav-link-menu">Student Leave Report</a>
+            </li>
+            <hr/>
+        </ul>
+    </li>
+
+    <li class="nav-item-menu d-block">
+        <a class="nav-link-menu" href="#">Academics</a>
+        <ul class="sub-menu">
+            <li class="sub-sub-menu"><a th:href="@{/nerie/attendance/upload-attendance}" class="nav-link-menu">Upload Attendance</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/attendance/view-student-attendance}" class="nav-link-menu">View Student Attendance</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/study-materials/upload-study-materials}" class="nav-link-menu">Upload Study Materials</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/tests/create-tests}" class="nav-link-menu">Create Tests</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/internal-evaluation-marks/upload-internal-evaluation-marks}" class="nav-link-menu">Internal Evaluation</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/assignments/upload-assignment}" class="nav-link-menu">Assignments</a></li>
+            <li class="sub-sub-menu"><a th:href="@{/nerie/feedbacks/view-student-feedback}" class="nav-link-menu">View Feedbacks</a></li>
+        </ul>
+    </li>
+
+    <li class="nav-item-menu d-block">
+        <a class="nav-link-menu" href="#">Profile</a>
+        <ul class="sub-menu">
+            <li class="sub-sub-menu"><a class="nav-link-menu" th:href="@{/nerie/users/profile}">Edit Profile</a></li>
+            <li class="sub-sub-menu"><a class="nav-link-menu" th:href="@{/nerie/users/change-password}">Change Password</a></li>
+            <li class="sub-sub-menu"><a id="logout-link" href="#" class="nav-link-menu">Logout</a></li>
+        </ul>
+    </li>
+
+    <script th:src="@{/js/logout.js}"></script>
+</ul>
+</html>

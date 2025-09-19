@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/student-layout}"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<!-- static-files fragment -->
+<div layout:fragment="static-files">
+    <!-- Make sure jquery-ui.js and jquery-ui.css are included in your student-layout or here -->
+    <link rel="stylesheet" th:href="@{/js/jquery-ui/jquery-ui.css}">
+    <script th:src="@{/js/jquery-ui/jquery-ui.min.js}"></script>
+
+    <!-- Page-specific JS -->
+    <script th:src="@{/js/leaveApplication.js}"></script>
+
+    <!-- DataTables JS -->
+    <script th:src="@{/lily/js/CustomDataTable/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/dataTables.bootstrap4.min.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/dataTables.responsive.min.js}"></script>
+    <script th:src="@{/lily/js/CustomDataTable/responsive.bootstrap4.min.js}"></script>
+</div>
+
+<!-- title fragment -->
+<title layout:fragment="title">Leave Application</title>
+
+<!-- content fragment -->
+<main layout:fragment="content">
+
+    <div class="container mt-4 mb-4">
+        <!-- Apply for Leave Form -->
+        <div class="card box-shadow-grey">
+            <div class="card-header bg-success">
+                <h4 class="card-title titlecss text-white"><i class="fa fa-list">  Apply For Leave</i></h4>
+            </div>
+            <div class="card-body">
+                <!-- Student Information -->
+                <div class="leave-info">
+                    Name:
+                    <span>
+                            <th:block th:text="${student.fname}"></th:block>
+                            <th:block th:if="${student.mname != null}" th:text="' ' + ${student.mname}"></th:block>
+                            <th:block th:if="${student.lname != null}" th:text="' ' + ${student.lname}"></th:block>
+                        </span>
+                </div>
+                <div class="leave-info">Roll No: <span th:text="${student.rollno}"></span></div>
+                <div class="leave-info">Course: <span th:text="${student.coursecode.coursename}"></span></div>
+                <div class="leave-info" th:if="${student.semestercode != null}">
+                    Semester: <span th:text="${student.semestercode.semestername}"></span>
+                </div>
+                <div class="leave-info" th:if="${student.sphaseid != null}">
+                    Phase: <span th:text="${student.sphaseid.sphasename}"></span>
+                </div>
+                <hr>
+            </div>
+            <div class="card-body">
+                <form name="studentleave" id="studentleaveid" enctype="multipart/form-data" role="form" autocomplete="off">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 fw-bold">
+                            <input type="checkbox" id="isDayScholar" style="transform: scale(1.5); margin-right: 8px;"/>
+                            <label for="isDayScholar" class="fs-18">Is Day Scholar?</label>
+                        </div>
+
+                        <div class="mt-3 col-sm-12 col-md-5">
+                            <label for="leave-station">Leave Station:<span class="red-bold">*</span></label>
+                            <input type="text" class="form-control" id="leave-station" name="leavestation" required="true"/>
+                        </div>
+
+                        <div class="mt-3 col-md-8 col-lg-7">
+                            <label for="leave-reason">Reason For Leave:<span class="red-bold">*</span></label>
+                            <textarea form="studentleaveid" name="reasonforleave" maxlength="500" rows="4" class="form-control" id="leave-reason" required="true"></textarea>
+                            <b><span id="charactercountdesc"></span></b>
+                        </div>
+
+                        <!-- Non-Day Scholar Info (conditional) -->
+                        <div id="nondayscholar-info" class="row col-md-12 col-sm-12 mt-3">
+                            <div class="col-sm-12 col-md-5">
+                                <label for="buildingno">Building<span class="red-bold">*</span></label>
+                                <select id="buildingno" name="buildingno" class="form-control" required="true">
+                                    <option value="">Select</option>
+                                    <option th:if="${student.gender == 'F'}" value="Type IV (Female)">Type IV (Female)</option>
+                                    <option th:if="${student.gender == 'M'}" value="Type II (Male)">Type II (Male)</option>
+                                    <option value="Quarter">Quarter</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-lg-6 ml-2">
+                                <label for="roomno">Room Number:<span class="red-bold">*</span></label>
+                                <input type="text" id="roomno" name="roomno" class="form-control" required="true"/>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 col-sm-12 col-md-5">
+                            <label for="guardian-name">Guardian Name:<span class="red-bold">*</span></label>
+                            <input type="text" class="form-control" id="guardian-name" name="nameofguardian" required="true"/>
+                        </div>
+
+                        <div class="mt-4 col-sm-12 col-md-4">
+                            <label for="guardian-rel">Guardian's Relationship:<span class="red-bold">*</span></label>
+                            <select id="guardian-rel" name="guardianrelationship" class="form-control" required="true">
+                                <option value="">Select</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Father">Father</option>
+                                <option value="Guardian">Guardian</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-4 col-sm-12 col-md-3">
+                            <label for="guardian-phno">Guardian Phone Number:<span class="red-bold">*</span></label>
+                            <input type="text" maxlength="10" class="form-control" id="guardian-phno" name="phnoguardian" required="true"/>
+                        </div>
+
+                        <div class="mt-4 col-sm-12 col-md-6">
+                            <label for="requestedfromdate">Leave From:<span class="red-bold">*</span></label>
+                            <input type="text" class="form-control datepicker" id="requestedfromdate" name="requestedfrom" required="true"/>
+                        </div>
+                        <div class="mt-4 col-sm-12 col-md-6">
+                            <label for="requestedtodate">Leave To:<span class="red-bold">*</span></label>
+                            <input type="text" class="form-control datepicker" id="requestedtodate" name="requestedto" required="true"/>
+                        </div>
+
+                        <!-- File Upload Div -->
+                        <div class="mt-4 my-2 col-sm-12 col-md-12 d-flex flex-column align-items-center">
+                            <h5>Supporting Documents (If Any)</h5>
+                            <label for="file1">Upload Guardian's Approval Letter: <span class="red-bold">(Only PDF allowed)</span></label>
+                            <input type="file" accept=".pdf" name="file1" id="file1" onchange="assignmentfile1()"/>
+                        </div>
+
+                        <div class="form-group mt-3 col-sm-12 col-md-8 fw-bold">
+                            <input type="checkbox" id="declarationCheckbox" style="transform: scale(1.5); margin-right: 8px;"/>
+                            <label for="declarationCheckbox">
+                                Declaration: The information provided by me is correct and accurate to the best of my
+                                knowledge. I understand that any false information may lead to consequences as
+                                per the Institute's policies.
+                            </label>
+                        </div>
+
+                        <div class="mt-4 col-sm-12 col-md-4">
+                            <label for="subbtn" class="text-muted"> </label>
+                            <input id="subbtn" type="submit" class="btn btn-success btn-block" value="Submit Leave Application" disabled/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Leave History Table -->
+        <div class="card-body mt-4 box-shadow-grey">
+            <div class="table-responsive">
+                <h4 class="card-title titlecss"><i class="fa fa-list">  My Leave Applications</i></h4>
+                <hr>
+                <table class="table table-striped table-bordered center-sans-serif" id="leavelist">
+                    <thead class="fs-14">
+                    <tr>
+                        <th>Application Submission Date</th>
+                        <th>Leave Station</th>
+                        <th>Leave From</th>
+                        <th>Leave To</th>
+                        <th>Reason for Leave</th>
+                        <th>View Guardian Approval</th>
+                        <th>Approval Status</th>
+                    </tr>
+                    </thead>
+                    <tbody class="fs-12">
+                    <tr th:each="v : ${leavelist}">
+                        <td th:text="${#dates.format(v.applicationdate, 'dd-MM-yyyy')}"></td>
+                        <td th:text="${v.leavestation}"></td>
+                        <td th:text="${#dates.format(v.requestedfrom, 'dd-MM-yyyy')}"></td>
+                        <td th:text="${#dates.format(v.requestedto, 'dd-MM-yyyy')}"></td>
+                        <td th:text="${v.reasonforleave}"></td>
+
+                        <td>
+                            <th:block th:if="${#strings.isEmpty(v.gapprovalletter)}">No Attachment</th:block>
+                            <a th:if="${not #strings.isEmpty(v.gapprovalletter)}"
+                               th:href="@{'/nerie/student-leaves/view-approval'(studentleaveid=${v.studentleaveid}, approvaltype='G')}"
+                               class="text-success" target="_blank">View</a>
+                        </td>
+
+                        <td th:switch="${v.isapproved}">
+                            <span th:case="null" class="text-danger">No Action Taken Yet!</span>
+                            <span th:case="'1'" class="text-success">Approved!</span>
+                            <span th:case="'0'" class="text-danger">
+                                Not Approved <br />
+                                Reason: <th:block th:text="${v.rejectionreason}"></th:block>
+                            </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+</html>

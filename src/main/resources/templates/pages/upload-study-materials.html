@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/coordinator-faculty-layout}"
+>
+<head>
+    <title>Study Materials</title>
+    <div layout:fragment="static-files">
+    </div>
+</head>
+<body>
+
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
+<main layout:fragment="content">
+
+    <div class="container">
+        <div class="card mt-4 box-shadow-grey">
+            <div class="card-header bg-success">
+                <h4 class="card-title fff text-center"><i class="fa fa-clipboard-list">  Upload Study Materials</i></h4>
+            </div>
+            <div class="card-body">
+                <form th:object="${studymaterials}" method="POST"
+                      th:action="@{/nerie/study-materials/upload-study-materials}" name="studymat"
+                      id="studymaterials" enctype="multipart/form-data" role="form" autocomplete="off">
+                    <div class="row">
+                        <input type="hidden" th:field="*{studymaterialid}" id="studymaterialid"
+                               class="form-control"/>
+                        <div class="mt-4 col-sm-12 col-md-6">
+                            <label for="subject">Subject:</label>
+                            <select id="subject" class="form-control" th:field="*{subjectcode.subjectcode}">
+                                <option value="-1">Select</option>
+                                <th:block th:each="d : ${subs}">
+                                    <option th:if="${d.length > 1}" th:value="${d[0]}">
+                                        <span th:if="${d.length > 2 and d[2] != null}"
+                                              th:text="${d[2]} + ' - '"></span><span
+                                            th:text="' - ' + ${d[1]} "></span>
+                                    </option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="mt-4 col-sm-12 col-md-6">
+                            <label for="assignmentName">Study Material Title:</label>
+                            <input type="text" class="form-control" id="assignmentName" th:field="*{title}"
+                                   required="required" placeholder="Eg: Lesson 1 Notes"/>
+                        </div>
+                        <div class="mt-4 col-sm-12 col-md-6">
+                            <label for="file1">Upload Study Material <span
+                                    class="red">(Only PDF allowed)</span></label>
+                            <input type="file" accept=".pdf" name="file1" id="file1" class="form-control-file"
+                                   onchange="assignmentfile()"/>
+                            <span class="mt-2 r" id="filemessage"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6"></div>
+                        <div class="mt-4 col-sm-12 col-md-6">
+                            <input type="submit" class="btn btn-success btn-block" value="Upload Study Material"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4 box-shadow-grey">
+            <div class="card-body">
+                <h4 class="card-title titlecss"><i class="fa fa-clipboard-list">  Study Materials List - All</i></h4>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered center-sans-serif" id="assignmentslist">
+                        <thead class="fs-14">
+                        <tr>
+                            <th class="w-15">Material Name</th>
+                            <th class="w-10">File</th>
+                            <th class="w-20">Upload Date</th>
+                            <th class="w-20">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="stmattable">
+                        <tr th:each="i : ${allmaterials}">
+                            <td th:text="${i.title}"></td>
+                            <td>
+                                <a class="btn btn-sm btn-secondary"
+                                   th:href="@{/nerie/study-materials/viewStudyMaterialDocument(sid=${i.studymaterialid})}"
+                                   target="_blank">
+                                    <i class="fa"></i>&nbsp;View Study Material
+                                </a>
+                            </td>
+                            <td th:text="${#dates.format(i.uploaddate, 'dd-MMM-yyyy HH:mm:ss')}"></td>
+                            <td>
+                                <button class="clickme danger11 edit-study-material btn btn-sm btn-info"
+                                        th:attr="data-id=${i.studymaterialid}, data-title=${i.title}, data-subject=${i.subjectcode?.subjectcode}">
+                                    <i class="fa fa-edit"></i>  Edit
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <!-- Success Modal -->
+    <div class="modal fade" id="uploadSuccessModal" tabindex="-1" role="dialog" aria-labelledby="uploadSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-light text-dark">
+                    <h5 class="modal-title" id="uploadSuccessModalLabel"><i class="fa fa-check-circle"></i> Upload Success</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" onclick="window.location.reload();">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Successfully Uploaded Study Material.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="window.location.reload();">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/uploadStudyMaterials.js}"></script>
+</th:block>
+</body>
+</html>

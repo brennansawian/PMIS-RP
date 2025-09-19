@@ -1,0 +1,160 @@
+/* Main container for the navbar */
+.dynamicmenu {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #ffffff;
+}
+
+/* --- Main Navbar Appearance --- */
+.dashboard-bgcolor {
+  background: linear-gradient(90deg, #85d9ff 0%, #87dbff 50%, #90e3ff 100%);
+  padding: 0.25rem 1rem;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: padding 0.3s ease;
+}
+
+.navbar-nav.main-menu {
+  width: 100%;
+  justify-content: space-around;
+}
+
+.nav-item-menu {
+  position: relative;
+  margin: 0;
+}
+
+/* --- Main Navigation Links --- */
+.nav-link-menu {
+  color: #000 !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s ease;
+  border-radius: 0.375rem;
+  background: transparent;
+}
+
+.nav-link-menu:hover {
+  background: rgb(255 255 255 / 15%);
+}
+
+/* --- Dropdown (Sub-Menu) Styling  --- */
+.sub-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  background: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  min-width: 220px;
+  padding: 0.5rem;
+  z-index: 1000;
+  list-style: none;
+  border: 1px solid #e5e7eb;
+}
+
+.dropdown-menu-right .sub-menu {
+  left: auto;
+  right: 0;
+}
+
+
+.nav-item-menu:hover > .sub-menu {
+  display: block;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.sub-menu .nav-link-menu {
+  color: #374151 !important;
+  padding: 0.6rem 1rem !important;
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.sub-menu .nav-link-menu:hover {
+  background: #e5e7eb6e !important;
+  color: #1f2937 !important;
+  border-radius: 0.25rem;
+}
+
+.sub-menu hr {
+  margin: 0.25rem 0.5rem;
+  border-top: 1px solid #e5e7eb6e;
+}
+
+/* --- Hamburger Toggle for Light Background --- */
+.navbar-toggler {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background-color: transparent !important;
+}
+
+.navbar-toggler:hover {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-toggler span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: #333333;
+  margin: 5px 0;
+  border-radius: 1px;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.navbar-toggler[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.navbar-toggler[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Mobile View --- */
+@media (max-width: 991.98px) {
+  .dashboard-bgcolor { padding: 0.5rem 1rem; }
+  .navbar-collapse {
+      padding: 1rem 0;
+      margin-top: 0.5rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .nav-item-menu { margin: 0.1rem 0; }
+  .nav-link-menu { padding: 0.6rem 0.5rem !important; }
+
+  .sub-menu {
+      position: static;
+      box-shadow: none;
+      border: none;
+      background: rgba(0, 0, 0, 0.08);
+      margin: 0.5rem 0;
+      padding: 0.5rem 0 0.5rem 1rem;
+      min-width: 100%;
+      border-radius: 0.375rem;
+  }
+
+  .sub-menu .nav-link-menu {
+      color: #000 !important;
+      font-weight: normal;
+  }
+  .sub-menu .nav-link-menu:hover {
+      background: rgba(0, 0, 0, 0.1) !important;
+      color: #000 !important;
+  }
+  .sub-menu hr { border-top: 1px solid rgba(0, 0, 0, 0.1); }
+}

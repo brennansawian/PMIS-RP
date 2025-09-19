@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/participant-layout}">
+<head>
+    <title>Update Participant Profile</title>
+    <th:block layout:fragment="static-files"></th:block>
+</head>
+<body>
+
+<main layout:fragment="content">
+    <br/>
+    <input type="hidden" id="ismodified-data" value="[[${ismodified}]]" />
+    <div class="container">
+        <div class="card box-shadow-grey">
+            <div class="card-title titlecss"><h4 align="center"><i class="fa fa-book">  Update Participant Profile</i></h4></div>
+            <hr/>
+            <div class="card-body margin-0">
+                <form th:object="${tparticipant}" th:action="@{/nerie/participant/update-profile}" method="POST" name="tparticipantfn" id="tparticipantfid" role="form" autocomplete="off">
+                    <input type="hidden" th:field="*{usercode}" id="usercodeH"/>
+
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="emailid">Email ID:<span class="mandatory-asterisk">*</span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="email" name="emailid" id="emailid" class="form-control" required="required" maxlength="50"
+                                   th:value="${currentUserDetails != null ? currentUserDetails.userid : ''}" />
+                        </div>
+                        <div class="col-md-2 col-form-label">
+                            <label for="username">Participant Name:<span class="mandatory-asterisk">*</span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" name="username" id="username" class="form-control alphabets" required="required" maxlength="50"
+                                   th:value="${currentUserDetails != null ? currentUserDetails.username : ''}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="qualificationcode">Qualification:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{mqualifications.qualificationcode}" id="qualificationcode" class="form-control" required="required">
+                                <option value="" text="Select">Select</option>
+                                <option th:each="o : ${mqualificationlist}" th:value="${o.qualificationcode}" th:text="${o.qualificationname}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-form-label">
+                            <label for="qualificationsubjectcode">Specialized Subject: </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{mqualificationsubjects.qualificationsubjectcode}" id="qualificationsubjectcode" class="form-control">
+                                <option value="0" text="Not Applicable">Not Applicable</option>
+                                <th:block th:if="${mqualificationsubjectlist != null}">
+                                    <option th:each="o : ${mqualificationsubjectlist}" th:value="${o[0]}" th:text="${o[1]}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="designationcode">Designations:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="designationcode" name="designationcode" class="form-control selectpicker" data-live-search="true" title="Select Designation" required="required">
+                                <option value="" text="Select">Select</option>
+                                <option th:each="o : ${mdesignationlist}"
+                                        th:value="${o.designationcode}"
+                                        th:text="${o.designationname}"
+                                        th:selected="${tparticipant.mdesignations != null && tparticipant.mdesignations.designationcode == o.designationcode}"></option>
+                                <option value="others" id="otherText" text="Others"
+                                        th:selected="${tparticipant.mdesignations != null && tparticipant.mdesignations.designationcode == 'others'}">Others</option> <!-- Check if 'others' is stored in mdesignations.designationcode -->
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-form-label">
+                            <label for="participantexperienceyears">Experience(in years):<span class="mandatory-asterisk">*</span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" th:field="*{participantexperienceyears}" id="participantexperienceyears" class="form-control numberspl defaultval" maxlength="3" required="required" placeholder="Years"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row display-none" id="dlist" >
+                        <div class="col-md-2 col-form-label">
+                            <label for="dinput">Enter Designation: <span class="mandatory-asterisk">*</span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <input id="dinput" class="form-control" name="dinput"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="participantexperiencemonths">Experience(in months):<span class="mandatory-asterisk">*</span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" th:field="*{participantexperiencemonths}" id="participantexperiencemonths" class="form-control numberspl defaultval" required="required" maxlength="3" Placeholder="Months"/>
+                        </div>
+                        <div class="col-md-2 col-form-label">
+                            <label for="participantteachingsubjects">Subject of Teaching:</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" th:field="*{participantteachingsubjects}" id="participantteachingsubjects" class="form-control" maxlength="50"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="gender">Gender:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{gender}" id="gender" class="form-control" required="required">
+                                <option value="" text="Select">Select</option>
+                                <option value="M" text="Male">Male</option>
+                                <option value="F" text="Female">Female</option>
+                                <option value="O" text="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr/>
+                    <h5>Office Address:</h5>
+                    <hr/>
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="participantofficestatecode">State:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{mstatesparticipant.statecode}" id="participantofficestatecode" class="form-control" required="required">
+                                <option value="" th:text="Select">Select</option>
+                                <option th:each="o : ${statelist}" th:value="${o.statecode}" th:text="${o.statename}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-form-label">
+                            <label for="participantofficeaddress">Address:<span class="mandatory-asterisk">*</span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <textarea th:field="*{participantofficeaddress}" id="participantofficeaddress" maxlength="100" class="form-control" required="required" ></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="participantofficetypecode">Office Type:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{mparticipantofficetypes.participantofficetypecode}" id="participantofficetypecode" class="form-control" required="required">
+                                <option value="" text="Select">Select</option>
+                                <option th:each="o : ${participantofficetypelist}" th:value="${o.participantofficetypecode}" th:text="${o.participantofficetypename}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-form-label otherparticipantofficetypediv display-none">
+                            <label for="otherparticipantofficetype">Other Office Type Name:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4 otherparticipantofficetypediv display-none">
+                            <textarea th:field="*{otherparticipantofficetype}" id="otherparticipantofficetype" class="form-control alphabets"></textarea>
+                        </div>
+                    </div>
+                    <hr/>
+                    <h5>Residential Address:</h5>
+                    <hr/>
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="statecode">State:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{mstates.statecode}" id="statecode" class="form-control" required="required">
+                                <option value="" text="Select">Select</option>
+                                <option th:each="o : ${statelist}" th:value="${o.statecode}" th:text="${o.statename}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-form-label">
+                            <label for="districtcode">District:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{mdistricts.districtcode}" id="districtcode" class="form-control selectcheckstate" required="required">
+                                <option value="" text="Select">Select</option>
+                                <th:block th:if="${districtlist != null}">
+                                    <option th:each="d : ${districtlist}" th:value="${d.districtcode}" th:text="${d.districtname}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="addressline1">Address Line 1:<span class="mandatory-asterisk">*</span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <textarea th:field="*{addressline1}" id="addressline1" class="form-control" required="required" maxlength="100"></textarea>
+                        </div>
+                        <div class="col-md-2 col-form-label">
+                            <label for="addressline2">Address Line 2:</label>
+                        </div>
+                        <div class="col-md-4">
+                            <textarea th:field="*{addressline2}" id="addressline2" class="form-control" maxlength="100"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="pincode">Pincode:<span class="mandatory-asterisk">*</span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" th:field="*{pincode}" id="pincode" class="form-control numbers" required="required" maxlength="6"/>
+                        </div>
+                    </div>
+                    <hr/>
+                    <h5>Contact Nos:</h5>
+                    <hr/>
+                    <div class="form-group row">
+                        <div class="col-md-1 col-form-label">
+                            <label for="officephoneno">Office:</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" th:field="*{officephoneno}" id="officephoneno" maxlength="13" class="form-control numberspl" />
+                        </div>
+                        <div class="col-md-1 col-form-label">
+                            <label for="landlineno">Residence:</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" th:field="*{landlineno}" id="landlineno" maxlength="13" class="form-control numberspl" />
+                        </div>
+                        <div class="col-md-1 col-form-label">
+                            <label for="usermobile">Mobile No.:<span class="mandatory-asterisk">*</span></label>
+                        </div>
+                        <div class="col-md-3">
+                            <!-- Not in T_Participants, use currentUserDetails. Value from MT_Userlogin.usermobile -->
+                            <input type="text" name="usermobile" id="usermobile" class="form-control numbers" required="required" maxlength="10"
+                                   th:value="${currentUserDetails != null ? currentUserDetails.usermobile : ''}"/>
+                            <span id="msg1" class="mandatory-asterisk"></span>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label">
+                            <label for="locality">Locality/Region:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{locality}" id="locality" class="form-control" required="required">
+                                <option value="" text="Select">Select</option>
+                                <option value="U" text="Urban">Urban</option>
+                                <option value="R" text="Rural">Rural</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-form-label">
+                            <label for="categorycode">Category:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{mcategories.categorycode}" id="categorycode" class="form-control" required="required">
+                                <option value="" text="Select">Select</option>
+                                <option th:each="o : ${mcategorylist}" th:value="${o.categorycode}" th:text="${o.categoryname}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-form-label">
+                            <label for="isdifferentlyabled">Whether belongs to Differently Able Group:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{isdifferentlyabled}" id="isdifferentlyabled" class="form-control" required="required">
+                                <option value="" text="Select">Select</option>
+                                <option value="N" text="No">No</option>
+                                <option value="Y" text="Yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-form-label">
+                            <label for="isminority">Whether belongs to Religious Minority:<span class="mandatory-asterisk">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select th:field="*{isminority}" id="isminority" class="form-control" required="required">
+                                <option value="" text="Select">Select</option>
+                                <option value="N" text="No">No</option>
+                                <option value="Y" text="Yes">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="ifminoritydiv" class="display-none">
+                        <div class="form-group row">
+                            <div class="col-md-4 col-form-label">
+                                <label for="minoritycode">If Yes mention:<span class="mandatory-asterisk">*</span> </label>
+                            </div>
+                            <div class="col-md-4">
+                                <select th:field="*{mminorities.minoritycode}" id="minoritycode" class="form-control">
+                                    <option value='' text="Select">Select</option>
+                                    <option th:each="o : ${mminoritylist}" th:value="${o.minoritycode}" th:text="${o.minorityname}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ifotherminority" class="display-none">
+                        <div class="form-group row">
+                            <div class="col-md-4 col-form-label">
+                                <label for="others">If others mention:<span class="mandatory-asterisk">*</span></label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" th:field="*{others}" id="others" class="form-control alphabets" maxlength="30"/>
+                            </div>
+                        </div>
+                    </div>
+                    <center>
+                        <input id="submit" type="submit" name="submit" value="SUBMIT" class="btn btn-info" />
+                    </center>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <!-- Feedback Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-light text-dark">
+                    <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
+                    <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="feedbackModalBody">
+                    <!-- Message content inserted via JS -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="modalOkButton" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/lily/js/notiflix/notiflix.js}"></script>
+    <script th:src="@{/js/editParticipantProfile.js}"></script>
+</th:block>
+</body>
+</html>

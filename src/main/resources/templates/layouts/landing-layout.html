@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+>
+<head>
+    <title>NERIE</title>
+    <div layout:replace="~{fragments/metas :: meta}"></div>
+    <link th:href="@{/css/header.css}" rel="stylesheet">
+    <link th:href="@{/css/footer.css}" rel="stylesheet">
+    <div layout:fragment="styles"></div>
+</head>
+
+<body class="d-flex flex-column min-vh-90">
+
+<header class="header landing-header">
+    <div class="navigation w-100 bg-ner">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark p-0">
+                <div class="d-flex align-items-center py-2 p-2">
+                    <a class="navbar-brand p-0 m-0" th:href="@{/nerie/index}">
+                        <img th:src="@{/tempscripts/images/ncertlogo.png}" class="align-self-center b-emblem-image"
+                             style="width: 65px;height: 76px; flex-shrink: 0;">
+                    </a>
+                    <div class="texts ml-3">
+                        <div class="top d-flex justify-content-center">
+                            <div class="lt text-right pr-2">
+                                <span class="fm mb-0">भारत सरकार</span>
+                                <br>
+                                <span class="fm">Government of India</span>
+                            </div>
+                            <div class="rt pl-2">
+                                <span class="fm">शिक्षा मंत्रालय</span>
+                                <br><span class="fm">Ministry Of Education</span>
+                            </div>
+                        </div>
+                        <div class="bottom">
+                            <p class="p-2 mb-0 text-center font-weight-bold">
+                                NATIONAL COUNCIL OF EDUCATIONAL RESEARCH & TRAINING
+                            </p>
+                            <p class="p-0 mb-0 text-center font-weight-bold">
+                                राष्ट्रीय शैक्षिक अनुसंधान और प्रशिक्षण परिषद
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navbar Toggler -->
+                <div class="p-2">
+                <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation"
+                        aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="collapse navbar-collapse pb-2" id="navigation">
+                    <ul class="navbar-nav ml-auto text-center list-color-custom">
+                        <li class="nav-item" th:classappend="${currentPage == 'home'} ? 'active' : ''" id="navhome">
+                            <a class="nav-link text-dark-collpased" th:href="@{/nerie/index}">Home</a>
+                        </li>
+                        <li class="nav-item" th:classappend="${currentPage == 'about'} ? 'active' : ''" id="navaboutus">
+                            <a class="nav-link text-dark-collpased" th:href="@{/nerie/about}">About Us</a>
+                        </li>
+                        <li class="nav-item" th:classappend="${currentPage == 'participant'} ? 'active' : ''" id="partcipant">
+                            <a class="nav-link text-dark-collpased" th:href="@{/nerie/participants/register}">
+                                Participant Registration
+                            </a>
+                        </li>
+                        <li class="nav-item" th:classappend="${currentPage == 'login'} ? 'active' : ''" id="login">
+                            <a class="nav-link text-dark-collpased" th:href="@{/nerie/login}">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+<main layout:fragment="content" class="flex-grow-1">
+    <pre>Your content goes here.</pre>
+</main>
+
+<footer class="footer">
+    <div class="copyright py-4 bg-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12  text-center">
+                    <p class="mb-0 text-white">Copyright ©
+                        <script>
+                            var CurrentYear = new Date().getFullYear()
+                            document.write(CurrentYear)
+                        </script>
+                        , designed, developed & hosted by
+                        <a href="https://meg.nic.in/" class="text-muted" target="_blank">
+                            National Informatics Center,Meghalaya State Center, Shillong
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div layout:fragment="scripts"></div>
+</body>
+</html>

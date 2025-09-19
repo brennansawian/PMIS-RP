@@ -1,0 +1,12 @@
+#about-hero {
+    padding: 70px 0 70px;
+}
+.bg-cover {
+    background-size: contain;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+
+.adjust-section {
+  margin-top: -2%;
+}

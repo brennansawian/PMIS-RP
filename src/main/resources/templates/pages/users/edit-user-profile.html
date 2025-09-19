@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{${layoutPath}}">
+<head>
+    <title layout:fragment="title">Edit Profile</title>
+    <th:block layout:fragment="static-files"></th:block>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container-fluid mt-4">
+        <div class="container pb-4">
+            <div class="card box-shadow-grey">
+                <h4 class="card-title titlecss"><i class="fa fa-list">  Edit Profile</i></h4>
+                <hr>
+                <div class="card-body margin-0">
+                    <div class="container bold">
+                        <form method="POST"
+                              th:object="${userlogin}"
+                              name="userloginfn"
+                              id="userloginfid"
+                              role="form"
+                              autocomplete="off"
+                              enctype="multipart/form-data">
+
+                            <input type="hidden" th:field="*{usercode}" id="usercode"/>
+
+                            <div class="form-group row mb-3">
+                                <label for="userid" class="col-md-3 col-form-label">User Id:<span class="span">*</span></label>
+                                <div class="col-md-5">
+                                    <input type="text" th:field="*{userid}" id="userid" class="form-control space" required readonly/>
+                                    <small th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}" class="text-danger"></small>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-3">
+                                <label for="username" class="col-md-3 col-form-label">Name:<span class="span">*</span></label>
+                                <div class="col-md-5">
+                                    <input type="text" th:field="*{username}" id="username" class="form-control" required maxlength="100"/>
+                                    <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></small>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-3">
+                                <label for="usermobile" class="col-md-3 col-form-label">Mobile No.:<span class="span">*</span></label>
+                                <div class="col-md-5">
+                                    <input type="text" th:field="*{usermobile}" id="usermobile" class="form-control numbers" required maxlength="10" pattern="\d{10}"/>
+                                    <small th:if="${#fields.hasErrors('usermobile')}" th:errors="*{usermobile}" class="text-danger"></small>
+                                </div>
+                                <div class="col-md-4">
+                                    <span id="msg1" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-3">
+                                <label for="emailid" class="col-md-3 col-form-label">E-mail id:<span class="span">*</span></label>
+                                <div class="col-md-5">
+                                    <input type="email" th:field="*{emailid}" id="emailid" class="form-control" required maxlength="50"/>
+                                    <small th:if="${#fields.hasErrors('emailid')}" th:errors="*{emailid}" class="text-danger"></small>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-3">
+                                <label for="file1" class="col-md-3 col-form-label">Profile photo (jpg/jpeg/png):</label>
+                                <div class="col-md-9">
+                                    <input type="file" name="file1" id="file1" class="form-control-file mb-2" accept=".jpg,.jpeg,.png"/>
+                                    <th:block th:switch="${profilepic != null and profilepic != ''}">
+                                        <img th:case="true"
+                                             id="previewfile1"
+                                             class="img-thumbnail previewfile1"
+                                             th:src="'data:image/jpeg;base64,' + ${profilepic}"
+                                             alt="Profile Photo"
+                                             style='width:150px ;height: 150px'/>
+                                        <img th:case="false"
+                                             id="previewfile1"
+                                             class="img-thumbnail previewfile1"
+                                             th:src="@{/tempscripts/images/defaultprofile.jpg}"
+                                             alt="Default Profile Photo"
+                                             style='width:150px ;height: 150px'/>
+                                    </th:block>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button id="submit" type="submit" name="submit" class="btn btn-info">SUBMIT</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/updateUserProfile.js}"></script>
+</th:block>
+</body>
+</html>

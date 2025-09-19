@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/student-layout}"
+>
+
+<div layout:fragment="static-files">
+    <link th:href="@{/lily/jquery-mini-event-calendar/mini-event-calendar.min.css}" rel="stylesheet" type="text/css"/>
+    <script th:src="@{/js/studentHome.js}"></script>
+    <script th:src="@{/tempscripts/js/dashboard.js}"></script>
+    <script th:src="@{/lily/jquery-mini-event-calendar/mini-event-calendar.min.js}" type="text/javascript"></script>
+    <script th:src="@{/js/serverDateTime.js}"></script>
+
+    <script th:inline="javascript">
+        const allNotifications = /*[[${notifications}]]*/ [];
+    </script>
+
+    <style>
+        .hover-highlight-info, .hover-highlight-primary {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hover-highlight-info:hover {
+            background-color: #e9ecef;
+            cursor: pointer;
+        }
+
+        .hover-highlight-primary:hover {
+            background-color: #eef7ff;
+            cursor: pointer;
+        }
+
+        @media (min-width: 992px) {
+          #notificationsModal .modal-dialog {
+            max-width: 70%;
+          }
+        }
+
+        @media (max-width: 991.98px) {
+          #notificationsModal .modal-dialog {
+            max-width: 95%;
+          }
+        }
+
+        #notificationsModal .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+    </style>
+
+</div>
+
+<main layout:fragment="content">
+    <div class="row mt-4 mb-4">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="card box-shadow-grey">
+                <div class="row align-items-center justify-content-center p-3">
+                    <div class="col-12 col-md-auto text-center mb-3 mb-md-0">
+                        <img th:if="${myinfo.usercode.userphotograph != null}" th:src="'data:image/jpeg;base64,' + ${studentImage}" class="img-thumbnail" style="width:150px; height:150px;" />
+                    </div>
+
+                    <div class="col-12 col-md-10">
+                        <div class="row">
+                            <div class="col-12 col-lg-7 text-center text-lg-left mb-3 mb-lg-0">
+                                <h5 class="mb-3">
+                                    <span th:text="'Welcome ' + ${myinfo.fname} + ' ' + ${myinfo.mname} + ' ' + ${myinfo.lname}"></span>
+                                </h5>
+                                <div class="d-inline-block text-left">
+                                    <p class="mb-1" th:text="'Course: ' + ${myinfo.coursecode.coursename}"></p>
+                                    <p class="mb-1" th:text="'Roll No: ' + ${myinfo.rollno}"></p>
+                                    <p class="mb-1" th:text="'Mobile No: ' + ${myinfo.mobileno}"></p>
+                                    <p class="mb-0" th:text="'Email ID: ' + ${myinfo.email}"></p>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-5 text-center text-lg-right">
+                                <div class="card-body p-0">
+                                    <input id="sysdate" type="hidden" th:value="${sysdate}" />
+                                    <input id="timeZoneOffset" type="hidden" th:value="${timeZoneOffset}" />
+                                    <b class="d-block mt-3 mt-lg-0">Server Date & Time</b>
+                                    <h6 id="servdate" class="mb-0"></h6>
+                                    <h6 id="servtime"></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="container-fluid mt-2 mb-4 px-4">
+                    <div class="row">
+                        <div class="col-lg-5 mb-4 mb-lg-0">
+                            <div class="card bg-dark h-100">
+                                <div class="card-body">
+                                    <div id="calendar"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-7">
+                            <div class="card mb-4 hover-highlight-info"
+                                 th:attr="data-toggle=${not #lists.isEmpty(notifications)} ? 'modal' : null, data-target=${not #lists.isEmpty(notifications)} ? '#notificationsModal' : null">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fa fa-comment mr-2"></i>Notifications</h5>
+                                </div>
+                                <div class="card-body" style="max-height: 250px; overflow-y: auto;">
+                                    <div th:if="${notifications == null or #lists.isEmpty(notifications)}">
+                                        <p class="text-muted">No new notifications.</p>
+                                    </div>
+                                    <ul class="list-unstyled mb-0" th:unless="${notifications == null or #lists.isEmpty(notifications)}">
+                                        <li th:each="n, iterStat : ${notifications}" th:if="${iterStat.index < 3}" class="mb-2 border-bottom pb-2">
+                                            <p class="mb-1" th:text="${n.notification}"></p>
+                                            <small class="text-muted" th:text="|Date: ${#dates.format(n.entrydate, 'dd-MM-yyyy')}|"></small>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-footer text-center" th:if="${#lists.size(notifications) > 3}">
+                                    <span class="text-dark bold">
+                                        ... and <span th:text="${#lists.size(notifications) - 3}"></span> more. Click to view all.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="card navigate-to-submit-assignment hover-highlight-primary" th:attr="data-url=@{/nerie/assignments/viewassignments}">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="mb-0"><i class="fas fa-exclamation-triangle mr-2"></i>Pending Assignments</h5>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Assignment Name</th>
+                                                <th>Subject</th>
+                                                <th>Uploaded Date</th>
+                                                <th>Submission Date</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:if="${pendingAssignments == null or #lists.isEmpty(pendingAssignments)}">
+                                                <td colspan="4" class="text-center text-muted py-4">No pending assignments found.</td>
+                                            </tr>
+                                            <tr th:each="a, iterStat : ${pendingAssignments}" th:if="${iterStat.index < 3}">
+                                                <td th:text="${a[1]}"></td>
+                                                <td th:text="${a[0]}"></td>
+                                                <td th:text="${a[2]}"></td>
+                                                <td th:text="${a[3]}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer text-center" th:if="${#lists.size(pendingAssignments) > 3}">
+                                        <span class="text-dark bold">
+                                            ... and <span th:text="${#lists.size(pendingAssignments) - 3}"></span> more. Click to view all.
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationsModalLabel">All Notifications</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="all-notifications-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</html>

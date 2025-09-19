@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+>
+  <ul layout:fragment="participant-navlist" class="navbar-nav main-menu d-flex"> <!--Replaced main layout-->
+    <li class="nav-item-menu d-block">
+      <a class="nav-link-menu" th:href="@{/nerie/home}">Home</a>
+    </li>
+
+    <li class="nav-item-menu d-block">
+      <a href="#" class="nav-link-menu">Programs<b class="caret"></b></a>
+      <ul class="sub-menu">
+        <li class="sub-sub-menu"><a th:href="@{/nerie/program/accepted-rejected-programs}" class="nav-link-menu">Accept/Reject Program</a></li>
+        <li class="sub-sub-menu"><a th:href="@{/nerie/program/my-programs}" class="nav-link-menu">My Programs</a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item-menu d-block">
+      <a href="#" class="nav-link-menu">Profile<b class="caret"></b></a>
+      <ul class="sub-menu">
+        <li class="sub-sub-menu"><a th:href="@{/nerie/participant/edit-profile}" class="nav-link-menu">Update Profile</a></li>
+        <li class="sub-sub-menu"><a th:href="@{/nerie/users/change-password}" class="nav-link-menu">Change Password</a></li>
+        <li class="sub-sub-menu"><a id="logout-link" href="#" class="nav-link-menu">Logout</a></li>
+      </ul>
+    </li>
+    <script th:src="@{/js/logout.js}"></script>
+  </ul>
+</html>

@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{layouts/coordinator-faculty-layout}"
+>
+<head>
+    <title>Home</title>
+    <div layout:fragment="static-files">
+        <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+    </div>
+</head>
+
+<body>
+<!-- Main Content Area -->
+<main layout:fragment="content">
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="card box-shadow-grey">
+                <div class="row align-items-center justify-content-center p-3">
+                    <!-- Profile Picture Column -->
+                    <div class="col-12 col-md-auto text-center mb-3 mb-md-0">
+                        <th:block th:if="${profilepic != null}">
+                            <img id="previewfile1" class="img-thumbnail" th:src="'data:image/jpg;base64,' + ${profilepic}" style="width:150px; height:150px;" alt="Profile Picture" />
+                        </th:block>
+                        <th:block th:unless="${profilepic != null}">
+                            <img id="previewfile1" class="img-thumbnail" th:src="@{/tempscripts/images/defaultprofile.jpg}" style="width:150px; height:150px;" alt="Default Profile Picture" />
+                        </th:block>
+                    </div>
+
+                    <!-- User Info & Server Time Column -->
+                    <div class="col-12 col-md-10">
+                        <div class="row">
+                            <div class="col-12 col-lg-7 text-center text-lg-left mb-3 mb-lg-0">
+                                <h5 class="mb-3">
+                                    Welcome <span th:text="${LOGIN.username}">User</span>
+                                </h5>
+
+                                <div class="d-inline-block text-left">
+                                    <div th:switch="${LOGIN.userrole}">
+                                        <span th:case="'U'">
+<!--                                            <p class="mb-1" th:if="${LOGIN.isfaculty == '1'}">Logged in as: Coordinator and Faculty</p>-->
+<!--                                            <p class="mb-1" th:unless="${LOGIN.isfaculty == '0'}">Logged in as: Coordinator</p>-->
+                                            <p class="mb-1" th:if="${LOGIN.isfaculty == '0'}">Logged in as: Coordinator</p>
+                                            <p class="mb-1" th:if="${LOGIN.isfaculty == '1'}">Logged in as: Faculty</p>
+                                            <p class="mb-1" th:if="${LOGIN.isfaculty == '2'}">Logged in as: Coordinator and Faculty</p>
+                                        </span>
+                                    </div>
+                                    <p class="mb-1">Email ID: <span th:text="${LOGIN.emailid}">email@example.com</span></p>
+                                    <p class="mb-0">Mobile No: <span th:text="${LOGIN.usermobile}">1234567890</span></p>
+                                </div>
+                            </div>
+
+                            <!-- Right: Server Time -->
+                            <div class="col-12 col-lg-5 text-center text-lg-right">
+                                <div class="card-body p-0">
+                                    <input id="sysdate" type="hidden" th:value="${sysdate}" />
+                                    <input id="timeZoneOffset" type="hidden" th:value="${timeZoneOffset}" />
+                                    <b class="d-block mt-3 mt-lg-0">Server Date & Time</b>
+                                    <h6 id="servdate" class="mb-0"></h6>
+                                    <h6 id="servtime"></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="my-5" id="b-homedb">
+                            <div class="container">
+                                <div class="pl-4 text-right fs-18">
+                                        <span class="mr-2 cursor-pointer" id="one-item-row">
+                                            <i class="fas fa-bars mustard"></i>
+                                        </span>
+                                    <span class="mr-2 cursor-pointer" id="two-item-row">
+                                            <i class="fas fa-th-large mustard"></i>
+                                        </span>
+                                    <span class="mr-2 cursor-pointer" id="three-item-row">
+                                            <i class="fas fa-th mustard"></i>
+                                        </span>
+                                </div>
+                                <div class="new-test-div text-center">
+                                    <div class="col-lg-12 col-sm-12 p-3">
+                                        <div class="p-1">
+                                            <h3 class="font-weight-bold mg-t-orange"><span>Recently Concluded Program/Phases</span></h3>
+                                            <hr>
+                                            <div class="d-block d-lg-flex justify-content-around">
+                                                <h2 th:if="${#lists.isEmpty(recentlycompletedphases)}" class="orange-light">No Recently Completed Phases!</h2>
+                                                <div th:each="a : ${recentlycompletedphases}" class="p-4 bg-light b-dbcard-cust col-lg-5 mb-4 mb-lg-0">
+                                                    <h5 class="mg-t-orange" th:text="${a[0]}"></h5>
+                                                    <h5 class="mg-t-orange"> Phase <span th:text="${a[2]}"></span> | <span th:text="${a[3]}"></span> </h5>
+                                                    <h6 class="font-weight-bold mg-t-orange"><span th:text="${a[5]}"></span> to <span th:text="${a[4]}"></span> </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+
+                                <div class="">
+                                    <div class="row text-center pl-4" id="sortable-cards">
+                                        <!-- My Programs Card -->
+                                        <div class="col-lg-3 col-sm-12 p-3 b-customize">
+                                            <div class="bg-light p-4 b-dbcard cursor-pointer" data-toggle="modal" data-target="#modalmylist-modal">
+                                                <i class="fas fa-folder-open position-absolute s-35-r-40-custom"></i>
+                                                <div class="">
+                                                    <p class="text-left font-weight-bold fs-14-custom"><a title="My Programs"><span>My Programs</span></a></p>
+                                                    <h3 class="text-left font-weight-bold mg-t-custom" th:text="${#lists.size(Myprogramsaccepted) + #lists.size(Myprogramsrejected)}">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Ongoing Program Card -->
+                                        <div class="col-lg-3 col-sm-12 p-3 b-customize">
+                                            <div class="bg-light p-4 b-dbcard cursor-pointer" data-toggle="modal" data-target="#modalongoinglist-modal">
+                                                <i class="fas fa-file position-absolute s-35-r-40"></i>
+                                                <div class="">
+                                                    <p class="text-left font-weight-bold fs-14-green"><a title="Ongoing Program"><span>Ongoing Program</span></a></p>
+                                                    <h3 class="text-left font-weight-bold mg-t-green" th:text="${#lists.size(Ongoing)}">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Upcoming Program Card -->
+                                        <div class="col-lg-3 col-sm-12 p-3 b-customize cursor-pointer" data-toggle="modal" data-target="#modalupcominglist-modal">
+                                            <div class="bg-light p-4 b-dbcard">
+                                                <i class="fas fa-solid fa-inbox position-absolute fs-35-purple"></i>
+                                                <div class="">
+                                                    <p class="text-left font-weight-bold fs-14-purple">Upcoming Program</p>
+                                                    <h3 class="text-left font-weight-bold fs-5-purple" th:text="${#lists.size(Upcoming)}">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Closed Program Card -->
+                                        <div class="col-lg-3 col-sm-12 p-3 b-customize cursor-pointer" data-toggle="modal" data-target="#modalclosedlist-modal">
+                                            <div class="bg-light p-4 b-dbcard">
+                                                <i class="fas fa-solid fa-door-closed position-absolute fs-35-red"></i>
+                                                <div class="">
+                                                    <p class="text-left font-weight-bold fs-14-red">Closed Program</p>
+                                                    <h3 class="text-left font-weight-bold fs-5-red" th:text="${#lists.size(Closed)}">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Completed Program Card -->
+                                        <div class="col-lg-3 col-sm-12 p-3 b-customize cursor-pointer" data-toggle="modal" data-target="#modalarchivedlist-modal">
+                                            <div class="bg-light p-4 b-dbcard">
+                                                <i class="fas fa-clipboard-list-check position-absolute fs-35-blue"></i>
+                                                <div class="">
+                                                    <p class="text-left font-weight-bold fs-14-blue">Completed Program</p>
+                                                    <h3 class="text-left font-weight-bold fs-5-blue" th:text="${#lists.size(Completed)}">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Archived Program Card -->
+                                        <div class="col-lg-3 col-sm-12 p-3 b-customize cursor-pointer" data-toggle="modal" data-target="#modalcompletedlist-modal">
+                                            <div class="bg-light p-4 b-dbcard">
+                                                <i class="fas fa-archive position-absolute fs-35-dark-purple"></i>
+                                                <div class="">
+                                                    <p class="text-left font-weight-bold fs-14-dark-purple">Archived Program</p>
+                                                    <h3 class="text-left font-weight-bold fs-5-dark-purple" th:text="${#lists.size(Archived)}">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Total Programs Card -->
+                                        <div class="col-lg-3 col-sm-12 p-3 b-customize cursor-pointer" data-toggle="modal" data-target="#modalalllist-modal">
+                                            <div class="bg-light p-4 b-dbcard">
+                                                <i class="fas fa-bar-chart position-absolute fs-35-teal"></i>
+                                                <div class="">
+                                                    <p class="text-left font-weight-bold fs-14-teal">Total Programs</p>
+                                                    <h3 class="text-left font-weight-bold fs-5-teal" th:text="${#lists.size(Completed) + #lists.size(Closed) + #lists.size(Ongoing) + #lists.size(Upcoming) + #lists.size(Archived)}">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <br><br>
+
+    <!-- My Programs Modal -->
+    <div class="modal fade modal-fullscreen-xl" id="modalmylist-modal" tabindex="-1" role="dialog" aria-labelledby="modalMyListTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered w-70" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block border-bottom-0">
+                    <h5 class="modal-title bold" id="modalMyListTitle"><u><span class="titlespan">Accepted Programs</span></u></h5>
+                    <button type="button" class="close position-absolute r-15-t-8" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body table-responsive">
+                    <h2 th:if="${#lists.isEmpty(Myprogramsaccepted)}" class="orange-light">No Programs Accepted!</h2>
+                    <table th:unless="${#lists.isEmpty(Myprogramsaccepted)}" id="myProgramsAcceptedTable" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Program ID</th>
+                            <th>Program Name</th>
+                            <th>Program Description</th>
+                            <th>Number of Phases</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="a : ${Myprogramsaccepted}">
+                            <td th:text="${a[4]}"></td>
+                            <td th:text="${a[2]}"></td>
+                            <td th:text="${a[3]}"></td>
+                            <td th:text="${a[1]}"></td>
+                            <td><button class="btn btn-primary myprogramsbtn" th:id="'viewDetailsBtn' + ${a[0]}" th:data-program-code="${a[0]}">View Details</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-center d-block pt-5 pb-2 border-bottom-0">
+                        <h5 class="modal-title bold"><u><span class="titlespan">Rejected Programs</span></u></h5>
+                    </div>
+                    <h2 th:if="${#lists.isEmpty(Myprogramsrejected)}" class="orange-light">No Programs Rejected!</h2>
+                    <div th:unless="${#lists.isEmpty(Myprogramsrejected)}" class="table-responsive">
+                        <table id="myProgramsRejectedTable" class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Program ID</th>
+                                <th>Program Name</th>
+                                <th>Program Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="a : ${Myprogramsrejected}">
+                                <td th:text="${a[4]}"></td>
+                                <td th:text="${a[2]}"></td>
+                                <td th:text="${a[3]}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ongoing Programs Modal -->
+    <div class="modal fade modal-fullscreen-xl" id="modalongoinglist-modal" tabindex="-1" role="dialog" aria-labelledby="modalOngoingListTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered w-70" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block p-5 border-bottom-0">
+                    <h5 class="modal-title bold" id="modalOngoingListTitle"><u><span class="titlespan">Ongoing Program List</span></u></h5>
+                    <button type="button" class="close position-absolute r-15-t-8" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body table-responsive">
+                    <h2 th:if="${#lists.isEmpty(Ongoing)}" class="orange-light">No Ongoing Programs!</h2>
+                    <table th:unless="${#lists.isEmpty(Ongoing)}" id="ongoingTable" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Program ID</th>
+                            <th>Program Name</th>
+                            <th>Program Description</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="a : ${Ongoing}">
+                            <td th:text="${a[1]}"></td>
+                            <td th:text="${a[2]}"></td>
+                            <td th:text="${a[3]}"></td>
+                            <td><button class="btn btn-primary ongoingbtn" th:id="'viewOngoingBtn' + ${a[0]}" th:data-program-code="${a[0]}">View Details</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Programs Modal -->
+    <div class="modal fade modal-fullscreen-xl" id="modalupcominglist-modal" tabindex="-1" role="dialog" aria-labelledby="modalUpcomingListTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered w-70" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block p-5 border-bottom-0">
+                    <h5 class="modal-title bold" id="modalUpcomingListTitle"><u><span class="titlespan">Upcoming Program List</span></u></h5>
+                    <button type="button" class="close position-absolute r-15-t-8" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body table-responsive">
+                    <h2 th:if="${#lists.isEmpty(Upcoming)}" class="orange-light">No Upcoming Programs!</h2>
+                    <table th:unless="${#lists.isEmpty(Upcoming)}" id="upcomingTable" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Program ID</th>
+                            <th>Program Name</th>
+                            <th>Program Description</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="a : ${Upcoming}">
+                            <td th:text="${a[1]}"></td>
+                            <td th:text="${a[2]}"></td>
+                            <td th:text="${a[3]}"></td>
+                            <td><button class="btn btn-primary upcomingbtn" th:id="'viewUpcomingBtn' + ${a[0]}" th:data-program-code="${a[0]}">View Details</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Closed Programs Modal -->
+    <div class="modal fade modal-fullscreen-xl" id="modalclosedlist-modal" tabindex="-1" role="dialog" aria-labelledby="modalClosedListTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered w-70" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block p-5 border-bottom-0">
+                    <h5 class="modal-title bold" id="modalClosedListTitle"><u><span class="titlespan">Closed Program List</span></u></h5>
+                    <button type="button" class="close position-absolute r-15-t-8" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body table-responsive">
+                    <h2 th:if="${#lists.isEmpty(Closed)}" class="orange-light">No Closed Programs!</h2>
+                    <table th:unless="${#lists.isEmpty(Closed)}" id="closedTable" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Program ID</th>
+                            <th>Program Name</th>
+                            <th>Program Description</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="a : ${Closed}">
+                            <td th:text="${a[1]}"></td>
+                            <td th:text="${a[2]}"></td>
+                            <td th:text="${a[3]}"></td>
+                            <td><button class="btn btn-primary closedbtn" th:id="'viewClosedBtn' + ${a[0]}" th:data-program-code="${a[0]}">View Details</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completed Programs Modal -->
+    <div class="modal fade modal-fullscreen-xl" id="modalarchivedlist-modal" tabindex="-1" role="dialog" aria-labelledby="modalCompletedListTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered w-70" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block border-bottom-0">
+                    <h5 class="modal-title bold" id="modalCompletedListTitle"><u><span class="titlespan">Completed Program List</span></u></h5>
+                    <button type="button" class="close position-absolute r-15-t-8" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body table-responsive">
+                    <h2 th:if="${#lists.isEmpty(Completed)}" class="orange-light">No Completed Programs!</h2>
+                    <table th:unless="${#lists.isEmpty(Completed)}" id="completedTable" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Program ID</th>
+                            <th>Program Name</th>
+                            <th>Program Description</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="a : ${Completed}">
+                            <td th:text="${a[1]}"></td>
+                            <td th:text="${a[2]}"></td>
+                            <td th:text="${a[3]}"></td>
+                            <td><button class="btn btn-primary completedbtn" th:id="'viewCompletedBtn' + ${a[0]}" th:data-program-code="${a[0]}">View Details</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Archived Programs Modal -->
+    <div class="modal fade modal-fullscreen-xl" id="modalcompletedlist-modal" tabindex="-1" role="dialog" aria-labelledby="modalArchivedListTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered w-70" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center d-block border-bottom-0">
+                    <h5 class="modal-title bold" id="modalArchivedListTitle"><u><span class="titlespan">Archived Program List</span></u></h5>
+                    <button type="button" class="close position-absolute r-15-t-8" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body table-responsive">
+                    <h2 th:if="${#lists.isEmpty(Archived)}" class="orange-light">No Archived Programs!</h2>
+                    <table th:unless="${#lists.isEmpty(Archived)}" id="archivedTable" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Program ID</th>
+                            <th>Program Name</th>
+                            <th>Program Description</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="a : ${Archived}">
+                            <td th:text="${a[1]}"></td>
+                            <td th:text="${a[2]}"></td>
+                            <td th:text="${a[3]}"></td>
+                            <td><button class="btn btn-primary archivedbtn" th:id="'viewArchivedBtn' + ${a[0]}" th:data-program-code="${a[0]}">View Details</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Generic Program Details Modal -->
+    <div class="modal fade modal-fullscreen-xl" id="MyProgramDetailsModal" tabindex="-1" role="dialog" aria-labelledby="programDetailsTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="programDetailsTitle">Program Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="phaseListBody">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-12 mb-2 bg-dark mb-2">
+                                <h5 id="officeNameDetailsModal" class="text-white mb-0 py-2"></h5>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 class="">Program ID: <span class="programIDDetailsModal" id="programID"></span></h5>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 class="">Program Status: <span id="programStatusDetailsModal"></span></h5>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 class="">Program Category: <span id="programCategoryDetailsModal"></span></h5>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <h6 id="programTitleDetailsModal"></h6>
+                                <br>
+                                <h6 id="programDescDetailsModal"></h6>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-sm-12">
+                                <h5>Phases in <span class="programID" id="programID2"></span></h5>
+                            </div>
+                            <div class="col-sm-12">
+                                <table id="phaselisttable" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Phase No.</th>
+                                        <th>Phase Description</th>
+                                        <th>Date</th>
+                                        <!--<th>End Date</th>-->
+                                        <!--<th>Office</th>-->
+                                        <th>Venues</th>
+                                        <th>Resource Persons</th>
+                                        <th>Program Coordinators</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="phaseListDetailsModal">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <a id="printBTNDetailsModal" target="_blank" class="btn btn-primary">Get Printout</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase More Details Modal -->
+    <div class="modal fade modal-fullscreen-xl" id="PhaseMoreDetailsModal" tabindex="-1" role="dialog" aria-labelledby="PhaseMoreDetailsModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="activityprogramDetailsTitle"><span id="PhaseMoreDetailsprogramname"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="PhaseMoreDetailsListBody">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-12 mb-2 bg-dark mb-2">
+                                <h5 id="PhaseMoreDetailsofficeNameDetailsModal" class="text-white mb-0 py-2"></h5>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 class="">Program ID: <span class="PhaseMoreDetailsprogramIDDetailsModal" id="PhaseMoreDetailsprogramID"></span></h5>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 class="">Program Status: <span id="PhaseMoreDetailsprogramStatusDetailsModal"></span></h5>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 class="">Program Category: <span id="PhaseMoreDetailsprogramCategoryDetailsModal"></span></h5>
+                            </div>
+                            <!--<div class="col-12 mt-4">
+                                <h6 id="activityprogramTitleDetailsModal"></h6>
+                                </br><h6 id="activityprogramDescDetailsModal"></h6>
+                            </div>-->
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <!-- Focus Areas -->
+                            <div class="col-md-6">
+                                <h6>Focus Areas:</h6>
+                                <p id="PhaseMoreDetailsFocusAreas"></p>
+                            </div>
+                            <!-- Budget Proposed -->
+                            <div class="col-md-6">
+                                <h6>Budget Proposed:</h6>
+                                <p id="PhaseMoreDetailsBudgetProposed"></p>
+                            </div>
+                            <!-- Target Group -->
+                            <div class="col-md-6">
+                                <h6>Target Group:</h6>
+                                <p id="PhaseMoreDetailsTargetGroup"></p>
+                            </div>
+                            <!-- Stage -->
+                            <div class="col-md-6">
+                                <h6>Stage:</h6>
+                                <p id="PhaseMoreDetailsStage"></p>
+                            </div>
+                        </div>
+
+                        <!-- Long Text Fields -->
+                        <div class="row mb-2">
+                            <!-- Objectives -->
+                            <div class="col-12 mb-3">
+                                <h6>Objectives:</h6>
+                                <div class="scrollable-text" id="PhaseMoreDetailsObjectives"></div>
+                            </div>
+                            <!-- Methodology -->
+                            <div class="col-12 mb-3">
+                                <h6>Methodology:</h6>
+                                <div class="scrollable-text" id="PhaseMoreDetailsMethodology"></div>
+                            </div>
+                            <!-- Tools -->
+                            <div class="col-12 mb-3">
+                                <h6>Tools:</h6>
+                                <div class="scrollable-text" id="PhaseMoreDetailsTools"></div>
+                            </div>
+                            <!-- KP Indicators -->
+                            <div class="col-12 mb-3">
+                                <h6>KP Indicators:</h6>
+                                <div class="scrollable-text" id="PhaseMoreDetailsKPIndicators"></div>
+                            </div>
+                            <!-- Outcomes -->
+                            <div class="col-12 mb-3">
+                                <h6>Outcomes:</h6>
+                                <div class="scrollable-text" id="PhaseMoreDetailsOutcomes"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <a id="printBTNDetailsModal" target="_blank" class="btn btn-primary">Get Printout</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activities Modal -->
+    <div class="modal fade modal-fullscreen-xl" id="ActivitiesModal" tabindex="-1" role="dialog" aria-labelledby="ActivitiesModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="activityprogramDetailsTitle">Activities in <span id="activityprogramname"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="ActivityListBody">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-12 mb-2 bg-dark mb-2">
+                                <h5 id="activityofficeNameDetailsModal" class="text-white mb-0 py-2"></h5>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 class="">Program ID: <span class="activityprogramIDDetailsModal" id="activityprogramID"></span></h5>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 class="">Program Status: <span id="activityprogramStatusDetailsModal"></span></h5>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 class="">Program Category: <span id="activityprogramCategoryDetailsModal"></span></h5>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-sm-12">
+                                <h5>Activities </h5>
+                            </div>
+                            <div class="col-sm-12">
+                                <table id="activitylistlisttable" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>SL No.</th>
+                                        <th>Activity Name</th>
+                                        <th>Activity Description</th>
+                                        <th>Date</th>
+                                        <th>Expenditure</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="activityListDetailsModal">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <a id="printBTNDetailsModal" target="_blank" class="btn btn-primary">Get Printout</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/dashboard.js}"></script>
+    <script th:src="@{/js/serverDateTime.js}"></script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://thymeleaf.org"
+        layout:decorate="~{${layoutPath}}"
+>
+
+<div layout:fragment="static-files">
+    <script th:src="@{/js/utils/networkUtilities.js}"></script>
+    <script th:src="@{/js/mapQualificSub.js}"></script>
+</div>
+
+<title layout:fragment="title">Map Qualification Subject</title>
+
+<main layout:fragment="content">
+
+    <div class="container mt-4 mb-4">
+        <div class="card box-shadow-grey" >
+            <h4 class="card-title titlecss mb-0"><i class="fa fa-list"> &nbsp;Map Qualification Subject</i></h4>
+            <hr>
+            <div class="text-right mt-0 mb-4 p-3">
+                <input type="button" class="btn btn-success mb-2" id="add-new-sub" name="add-new-sub" value="Add New Subject" data-toggle="modal" data-target="#modalsubj-modal" data-dismiss="modal" />
+                <input type="button" class="btn btn-success mb-2" id="add-new-qualific" name="add-new-qualific" value="Add New Qualification" data-toggle="modal" data-target="#modalquali-modal" data-dismiss="modal" />
+            </div>
+            <div class="card-body">
+
+                <form name="mmapqsfn" id="mmapqsfid" role="form" autocomplete="off">
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label"></div>
+                        <div class="col-md-2 col-form-label">
+                            <label for="qualificationcode">Qualification:<span class="span">*</span> </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="qualificationcode" id="qualificationcode" class="form-control selectpicker" data-live-search="true" title="Select Qualification" required="true">
+                                <option th:each="o : ${mqualificationList}" th:value="${o.qualificationcode}" th:text="${o.qualificationname}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-2 col-form-label"></div>
+                        <div class="col-md-2 col-form-label">
+                            <label>Subject:<span class="span">*</span></label>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="subjectdiv"></div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center">
+                        <input id="submit" type="submit" name="submit" value="SUBMIT" class="btn btn-info" />
+                        <input type="button" value="RESET" class="btn btn-danger" id="resetButton" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Feedback Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-light text-dark">
+                    <h5 class="modal-title" id="feedbackModalLabel">Message</h5>
+                    <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="feedbackModalBody">
+                    <!-- Message content inserted via JS -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="modalOkButton" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org"
+        layout:decorate="~{layouts/admin-layout}"
+>
+  <head>
+    <title layout:fragment="title">Report List</title>
+    <th:block layout:fragment="static-files"></th:block>
+  </head>
+  <body>
+    <main layout:fragment="content">
+      <br>
+      <div class="container">
+        <div class="card box-shadow-grey">
+          <div class="card-title titlecss">
+            <h4><i class="fa fa-book">&nbsp;<span th:text="${reportTitle}">Default Title</span></i></h4>
+          </div>
+          <hr>
+          <div class="card-body margin-0">
+            <div class="container bold">
+              <form method="POST" th:object="${moffices}"  name="mofficesfn" id="mofficesfid" role="form" autocomplete="off">
+                <div class="form-group row">
+                  <div class="col-md-1 col-form-label"></div>
+                  <div class="col-md-3 col-form-label">
+                    <label>Report type:<span class="span">*</span> </label>
+                  </div>
+                  <div class="col-md-5">
+                    <select name="reportstatus" id="reportstatus" class="form-control" required="true">
+                      <option value="-1" th:text="Select"></option>
+
+                      <th:block th:switch="${reportType}">
+                        <option th:case="1" value="1" th:text="'Office Wise Details List'"></option>
+                        <option th:case="2" value="2" th:text="'Office Wise Coordinator List'"></option>
+                        <th:block th:case="3">
+                          <option value="3" th:text="'List of Completed Program'"></option>
+                          <option value="4" th:text="'List of Ongoing Program'"></option>
+                          <option value="5" th:text="'List of Upcoming Program'"></option>
+                        </th:block>
+                      </th:block>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-1 col-form-label"></div>
+                  <div class="col-md-3 col-form-label">
+                    <label>Office:<span class="span">*</span> </label>
+                  </div>
+                  <div class="col-md-5">
+                    <select th:field="*{officecode}" id="officecode" class="form-control" required="true">
+                      <option value="-1" th:text="Select"></option>
+                      <option th:each="o : ${officelist}"
+                              th:value="${o.officecode}"
+                              th:text="${o.officename}">
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-1 col-form-label"></div>
+                  <div class="col-md-3 col-form-label">
+                    <label>Financial Year:</label>
+                  </div>
+                  <div class="col-md-5">
+                    <select name="finyear" id="finyear" class="form-control">
+                      <option value="" th:text="Select"></option>
+                    </select>
+                  </div>
+                </div>
+                <center>
+                  <input id="submit" type="button" name="submit" value="SUBMIT" class="btn btn-info"/>
+                </center>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+
+    </main>
+    <th:block layout:fragment="scripts">
+      <script th:src="@{/js/reportList.js}"></script>
+    </th:block>
+  </body>
+</html>
