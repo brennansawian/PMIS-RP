@@ -2,6 +2,8 @@ package com.nic.nerie.m_taform.model;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.nic.nerie.mt_userlogin.model.MT_Userlogin;
 
 import jakarta.persistence.Entity;
@@ -17,11 +19,15 @@ import jakarta.persistence.Table;
 public class M_Taform {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String program;
     private String venue;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fromdate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate todate;
 
     private String namerecord;
@@ -207,5 +213,7 @@ public class M_Taform {
     public void setRpUserlogin(MT_Userlogin rpUserlogin) {
         this.rpUserlogin = rpUserlogin;
     }
+
+    
 
 }

@@ -28,7 +28,7 @@ public class M_HonorariumService {
     }
 
     // get 1 receipt of the current logged in user
-    public M_Honorarium getById(String id) {
+    public M_Honorarium getById(Long id) {
         return mHonorariumRepository.findById(id).get();
     }
 }

@@ -1,6 +1,7 @@
 package com.nic.nerie.mt_resourcepersons.controller;
 
 import java.security.Principal;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -39,12 +40,15 @@ import com.nic.nerie.m_qualifications.service.M_QualificationsService;
 import com.nic.nerie.m_qualificationsubjects.model.M_QualificationSubjects;
 import com.nic.nerie.m_qualificationsubjects.service.M_QualificationSubjectsService;
 import com.nic.nerie.m_taform.model.M_Taform;
+import com.nic.nerie.m_taform.service.M_TaformService;
 import com.nic.nerie.mt_resourcepersons.model.MT_ResourcePersons;
 import com.nic.nerie.mt_resourcepersons.service.MT_ResourcePersonsService;
 import com.nic.nerie.mt_userlogin.model.MT_Userlogin;
 import com.nic.nerie.mt_userlogin.service.MT_UserloginService;
 import com.nic.nerie.mt_userloginrole.model.MT_UserloginRole;
 import com.nic.nerie.mt_userloginrole.service.MT_UserloginRoleService;
+import com.nic.nerie.t_conveyancecharge.model.T_ConveyanceCharge;
+import com.nic.nerie.t_conveyancecharge.service.T_ConveyanceChargeService;
 import com.nic.nerie.utils.EmailValidator;
 import com.nic.nerie.utils.ExceptionUtil;
 import com.nic.nerie.utils.RandomPasswordGenerator;
@@ -68,6 +72,8 @@ public class MT_ResourcePersonsController {
     private final MT_UserloginRoleService mtUserloginRoleService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private final M_HonorariumService mHonorariumService;
+    private final M_TaformService mTaformService;
+    private final T_ConveyanceChargeService tconveyanceChargeService;
     private static final Logger persistenceLogger = LoggerFactory.getLogger("DATA_PERSISTENCE_LOGGER");
 
     @Autowired
@@ -82,7 +88,9 @@ public class MT_ResourcePersonsController {
             M_ProcessesService mProcessesService,
             AudittrailService audittrailService,
             MT_UserloginRoleService mtUserloginRoleService,
-            BCryptPasswordEncoder bCryptPasswordEncoder) {
+            BCryptPasswordEncoder bCryptPasswordEncoder,
+            M_TaformService mTaformService,
+            T_ConveyanceChargeService tconveyanceChargeService) {
         this.mtResourcePersonsService = mtResourcePersonsService;
         this.mtUserloginService = mtUserloginService;
         this.qualificationsService = qualificationsService;
@@ -95,6 +103,8 @@ public class MT_ResourcePersonsController {
         this.audittrailService = audittrailService;
         this.mtUserloginRoleService = mtUserloginRoleService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.mTaformService = mTaformService;
+        this.tconveyanceChargeService = tconveyanceChargeService;
     }
 
     /*
@@ -637,6 +647,90 @@ public class MT_ResourcePersonsController {
         model.addAttribute("programData", programData);
         model.addAttribute("taform", new M_Taform());
         return "pages/resource-person/taform"; // This should match your Thymeleaf template name
+    }
+
+    @PostMapping("/taform")
+    public String submitTaform(HttpServletRequest request,
+            @ModelAttribute M_Taform taform,
+            // --- single value fields ---
+            @RequestParam("namerecord") String namerecord,
+            @RequestParam("designation") String designation,
+            @RequestParam("basicpay") double basicpay,
+            @RequestParam("address") String address,
+            @RequestParam("city") String city,
+            @RequestParam("pincode") String pincode,
+            @RequestParam("resaddress") String resaddress,
+            @RequestParam("rcity") String rcity,
+            @RequestParam("rpincode") String rpincode,
+            @RequestParam("accountnumber") String accountnumber,
+            @RequestParam("bankname") String bankname,
+            @RequestParam("branch") String branch,
+            @RequestParam("ifsc") String ifsc,
+            @RequestParam("pancardnumber") String pancardnumber,
+
+            // --- multi value fields ---
+            @RequestParam("date") List<Date> dates,
+            @RequestParam("departure") List<String> departures,
+            @RequestParam("arrival") List<String> arrivals,
+            @RequestParam("kms") List<Double> kms,
+            @RequestParam("mode") List<String> modes,
+            @RequestParam("amount") List<Double> amounts
+    ) {
+
+        MT_Userlogin user;
+        try {
+            user = mtUserloginService.getUserloginFromAuthentication();
+        } catch (Exception ex) {
+            throw new MyAuthenticationCredentialsNotFoundException(
+                    ExceptionUtil.generateUnAuthenticatedMessage(request.getRequestURI(),
+                            "Map Resource Person, " + request.getMethod()),
+                    "page");
+        }
+
+        taform.setNamerecord(namerecord);
+        taform.setDesignation(designation);
+        taform.setBasicpay(basicpay);
+        taform.setAddress(address);
+        taform.setCity(city);
+        taform.setPincode(pincode);
+        taform.setResaddress(resaddress);
+        taform.setRcity(rcity);
+        taform.setRpincode(rpincode);
+        taform.setAccountnumber(accountnumber);
+        taform.setBankname(bankname);
+        taform.setBranch(branch);
+        taform.setIfsc(ifsc);
+        taform.setPancardnumber(pancardnumber);
+        taform.setRpUserlogin(user);
+        mTaformService.saveForm(taform);
+
+        
+        // Example: iterate table rows
+        for (int i = 0; i < dates.size(); i++) {
+            T_ConveyanceCharge cc= new T_ConveyanceCharge();
+            cc.setDate(dates.get(i));
+            cc.setAmount(amounts.get(i));
+            cc.setKms(kms.get(i));
+            cc.setModeofconveyance(modes.get(i));
+            cc.setPlaceofarrival(arrivals.get(i));
+            cc.setPlaceofdeparture(arrivals.get(i));
+            cc.setTaform(taform);
+            
+
+            System.out.printf("Row %d -> %s to %s (%s km, %s, ₹%s)%n",
+                    i + 1,
+                    departures.get(i),
+                    arrivals.get(i),
+                    kms.get(i),
+                    modes.get(i),
+                    amounts.get(i));
+
+                    tconveyanceChargeService.saveForm(cc);
+        }
+
+        // You can now save the single value fields + loop through the rows
+
+        return "redirect:/success";
     }
 
     @GetMapping("/nltaform")

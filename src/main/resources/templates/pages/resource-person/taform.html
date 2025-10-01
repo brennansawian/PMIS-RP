@@ -56,7 +56,7 @@
    <!-- Form Container -->
     <div class="container bg-white shadow rounded p-4" style="max-width: 1000px;">
         <h2 class="text-center mb-4 fw-bold text-dark">Local Travelling Allowance Bill (For Local Participants)</h2>
-        <form th:action="@{/taform}" th:object="${taform}" method="post">
+        <form th:action="@{/nerie/resource-persons/taform}" th:object="${taform}" method="POST">
             <div class="row mb-3">
             <div class="col-md-6">
                 <label class="form-label en">Programme/Workshop/Seminar Title:</label>
@@ -69,71 +69,80 @@
           <div class="col-md-6">
             <label class="form-label en">Venue:</label> 
             <label class="form-label hi">स्थान:</label>
-            <input type="text" class="form-control" />
+            <input type="text"  class="form-control" th:field="*{venue}"/>
           </div>
         </div>
                     <div class="col">
                         <label class="form-label en">Dates: From</label>
                         <label class="form-label hi">दिनांक: से</label>
-                        <input type="date" class="form-control" >
+                        <input type="date" class="form-control" th:field="*{fromdate}">
                     </div>
                     <div class="col">
                         <label class="form-label en">To</label>
                         <label class="form-label hi">तक</label>
-                        <input type="date" class="form-control">
+                        <input type="date" class="form-control" th:field="*{todate}">
                     </div>
-                </div>
+                
 
                 <div class="mb-3">
                     <label class="form-label en">Name (as per Bank records in CAPITAL):</label>
                     <label class="form-label hi">नाम (बैंक रिकॉर्ड अनुसार):</label>
-                    <input type="text" class="form-control">
+                    <!-- th:field="*{namerecord}" -->
+                    <input type="text" name="namerecord" class="form-control" > 
                 </div>
 
                 <div class="row mb-3">
                     <div class="col">
                         <label class="form-label en">Designation:</label>
                         <label class="form-label hi">पदनाम:</label>
-                        <input type="text" class="form-control" >
+                        <!-- th:field="*{designation}" -->
+                        <input type="text" name="designation" class="form-control" >
                     </div>
                     <div class="col">
                         <label class="form-label en">Basic Pay / Pay Level:</label>
                         <label class="form-label hi">मूल वेतन:</label>
-                        <input type="text" class="form-control" >
+                        <!-- th:field="*{basicpay}" -->
+                        <input type="number" name="basicpay" class="form-control" >
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label en">Official Address:</label>
                     <label class="form-label hi">कार्यालय का पता:</label>
-                    <textarea class="form-control" rows="2" ></textarea>
+                    <!-- th:field="*{address}" -->
+                    <textarea class="form-control" name="address" rows="2" ></textarea>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col">
                         <label>City:</label>
-                        <input type="text" class="form-control" >
+                        <!-- th:field="*{city}" -->
+                        <input type="text" class="form-control" name="city" >
                     </div>
                     <div class="col">
                         <label>Pin Code:</label>
-                        <input type="text" class="form-control">
+                        <!-- th:field="*{pincode}" -->
+                        <input type="text" class="form-control" name="pincode">
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label en">Residential Address:</label>
                     <label class="form-label hi">आवासीय पता:</label>
-                    <textarea class="form-control" rows="2" ></textarea>
+                    <!-- th:field="*{resaddress}" -->
+                    <textarea class="form-control" rows="2" name="resaddress"></textarea>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col">
                         <label>City:</label>
-                        <input type="text" class="form-control" >
+                        <!-- th:field="*{rcity}" -->
+                        <input type="text" class="form-control" name="rcity">
                     </div>
                     <div class="col">
                         <label>Pin Code:</label>
-                        <input type="text" class="form-control" >
+                        <!-- th:field="*{rpincode}" -->
+                        <input type="text" class="form-control" name="rpincode">
                     </div>
                 </div>
 
@@ -143,14 +152,19 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-md-6"><label>Account No.:</label><input type="text" class="form-control" th:field="*{accountnumber}"></div>
-                    <div class="col-md-6"><label>Bank:</label><input type="text" class="form-control" th:field="*{bankname}"></div>
+                    <!-- th:field="*{accountnumber}" -->
+                    <div class="col-md-6"><label>Account No.:</label><input type="text" class="form-control" name="accountnumber"></div>
+                    <!-- th:field="*{bankname}" -->
+                    <div class="col-md-6"><label>Bank:</label><input type="text" class="form-control" name="bankname"></div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-md-6"><label>Branch:</label><input type="text" class="form-control" th:field="*{branch}"></div>
-                    <div class="col-md-6"><label>IFSC Code:</label><input type="text" class="form-control" th:field="*{ifsc}"></div>
+                    <!-- th:field="*{branch}" -->
+                    <div class="col-md-6"><label>Branch:</label><input type="text" class="form-control" name="branch"></div>
+                     <!-- th:field="*{ifsc}" -->
+                    <div class="col-md-6"><label>IFSC Code:</label><input type="text" class="form-control" name="ifsc"></div>
                 </div>
-                <div class="mb-3"><label>PAN Card No.:</label><input type="text" class="form-control" th:field="*{pancardnumber}"></div>
+                <!-- th:field="*{pancardnumber}" -->
+                <div class="mb-3"><label>PAN Card No.:</label><input type="text" class="form-control" name="pancardnumber"></div>
 
                 <div class="section-title">
                     <span class="en">Details of Conveyance Charges</span>
@@ -223,7 +237,7 @@
   });
 </script>
 
-                <div class="section-title">
+                <!-- <div class="section-title">
                     <span class="en">Declaration</span>
                     <span class="hi">प्रमाण पत्र</span>
                 </div>
@@ -270,7 +284,7 @@
                 <div class="mb-3">
                     <strong>Asst. Cashier Signature:</strong><br>
                     <strong>Participant Signature with revenue stamp:</strong>
-                </div>
+                </div> -->
 
                 <div class="mt-4">
                     <button type="submit" class="btn btn-success w-100">

@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.nic.nerie.m_honorarium.model.M_Honorarium;
 
 @Repository
-public interface M_HonorariumRepository extends JpaRepository<M_Honorarium, String> {
+public interface M_HonorariumRepository extends JpaRepository<M_Honorarium, Long> {
 
 }

@@ -1,9 +1,9 @@
-// package com.nic.nerie.m_taform.repository;
+package com.nic.nerie.m_taform.repository;
 
-// import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-// import com.nic.nerie.m_taform.model.M_Taform;
+import com.nic.nerie.m_taform.model.M_Taform;
 
-// public interface M_TaformRepository extends JpaRepository<M_Taform, String> {
+public interface M_TaformRepository extends JpaRepository<M_Taform, Long> {
 
-// }
+}
