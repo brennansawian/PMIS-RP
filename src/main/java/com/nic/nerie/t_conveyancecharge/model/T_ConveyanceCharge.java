@@ -27,6 +27,12 @@ public class T_ConveyanceCharge {
     private Double kms;
     private String modeofconveyance;
     private Double amount;
+    private Date dateofdeparture;
+    private Date dateofarrival;
+    private String timeofdeparture;
+    private String timeofarrival;
+    private String detailsoftravel;
+    private String nonlocalpartno;
 
     @ManyToOne
     @JoinColumn(name = "taform_id")
@@ -37,9 +43,56 @@ public class T_ConveyanceCharge {
     private Date date;
 
     public T_ConveyanceCharge() {
-    }   
+    }
 
-    
+    public Date getDateofdeparture() {
+        return dateofdeparture;
+    }
+
+    public void setDateofdeparture(Date dateofdeparture) {
+        this.dateofdeparture = dateofdeparture;
+    }
+
+    public Date getDateofarrival() {
+        return dateofarrival;
+    }
+
+    public void setDateofarrival(Date dateofarrival) {
+        this.dateofarrival = dateofarrival;
+    }
+
+    public String getTimeofdeparture() {
+        return timeofdeparture;
+    }
+
+    public void setTimeofdeparture(String timeofdeparture) {
+        this.timeofdeparture = timeofdeparture;
+    }
+
+    public String getTimeofarrival() {
+        return timeofarrival;
+    }
+
+    public void setTimeofarrival(String timeofarrival) {
+        this.timeofarrival = timeofarrival;
+    }
+
+    public String getDetailsoftravel() {
+        return detailsoftravel;
+    }
+
+    public void setDetailsoftravel(String detailsoftravel) {
+        this.detailsoftravel = detailsoftravel;
+    }
+
+    public String getNonlocalpartno() {
+        return nonlocalpartno;
+    }
+
+    public void setNonlocalpartno(String nonlocalpartno) {
+        this.nonlocalpartno = nonlocalpartno;
+    }
+
     public Long getId() {
         return id;
     }
@@ -70,7 +123,7 @@ public class T_ConveyanceCharge {
 
     public void setPlaceofarrival(String placeofarrival) {
         this.placeofarrival = placeofarrival;
-    }  
+    }
 
     public String getModeofconveyance() {
         return modeofconveyance;
@@ -95,7 +148,6 @@ public class T_ConveyanceCharge {
     public void setDate(Date date) {
         this.date = date;
     }
-
 
     public M_Taform getTaform() {
         return taform;
