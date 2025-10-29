@@ -674,8 +674,7 @@ public class MT_ResourcePersonsController {
             @RequestParam("arrival") List<String> arrivals,
             @RequestParam("kms") List<Double> kms,
             @RequestParam("mode") List<String> modes,
-            @RequestParam("amount") List<Double> amounts
-    ) {
+            @RequestParam("amount") List<Double> amounts) {
 
         MT_Userlogin user;
         try {
@@ -702,12 +701,12 @@ public class MT_ResourcePersonsController {
         taform.setIfsc(ifsc);
         taform.setPancardnumber(pancardnumber);
         taform.setRpUserlogin(user);
+        taform.setIslocal(true);
         mTaformService.saveForm(taform);
 
-        
         // Example: iterate table rows
         for (int i = 0; i < dates.size(); i++) {
-            T_ConveyanceCharge cc= new T_ConveyanceCharge();
+            T_ConveyanceCharge cc = new T_ConveyanceCharge();
             cc.setDate(dates.get(i));
             cc.setAmount(amounts.get(i));
             cc.setKms(kms.get(i));
@@ -715,7 +714,6 @@ public class MT_ResourcePersonsController {
             cc.setPlaceofarrival(arrivals.get(i));
             cc.setPlaceofdeparture(arrivals.get(i));
             cc.setTaform(taform);
-            
 
             System.out.printf("Row %d -> %s to %s (%s km, %s, ₹%s)%n",
                     i + 1,
@@ -725,7 +723,7 @@ public class MT_ResourcePersonsController {
                     modes.get(i),
                     amounts.get(i));
 
-                    tconveyanceChargeService.saveForm(cc);
+            tconveyanceChargeService.saveForm(cc);
         }
 
         // You can now save the single value fields + loop through the rows

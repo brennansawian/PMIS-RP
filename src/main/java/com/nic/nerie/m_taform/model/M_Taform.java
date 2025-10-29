@@ -46,12 +46,21 @@ public class M_Taform {
     private String branch;
     private String ifsc;
     private String pancardnumber;
+    private boolean islocal;
 
     @ManyToOne
     @JoinColumn(name = "rp_userlogin_id")
     private MT_Userlogin rpUserlogin;
 
     public M_Taform() {
+    }
+
+    public boolean isIslocal() {
+        return islocal;
+    }
+
+    public void setIslocal(boolean islocal) {
+        this.islocal = islocal;
     }
 
     public long getId() {
@@ -213,7 +222,5 @@ public class M_Taform {
     public void setRpUserlogin(MT_Userlogin rpUserlogin) {
         this.rpUserlogin = rpUserlogin;
     }
-
-    
 
 }
