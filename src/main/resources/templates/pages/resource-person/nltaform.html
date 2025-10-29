@@ -61,160 +61,227 @@
       <h4 class="text-center en fw-bold text-dark">Travelling Allowance Bill (For Non-Local Participants)</h4>
       <h4 class="text-center hi fw-bold text-dark">यात्रा भत्ता बिल (बाहरी प्रतिभागियों हेतु)</h4>
 
-      <form>
+      <form th:action="@{/nerie/resource-persons/nontaform}" th:object="${taform}" method="POST" >
         <!-- Programme Details -->
-        <div class="mb-3">
-          <label class="form-label en">Name of the Programme:</label>
-          <label class="form-label hi">कार्यक्रम का नाम:</label>
-          <textarea class="form-control"></textarea>
-        </div>
+        <div class="col-md-6">
+                <label class="form-label en">Programme/Workshop/Seminar Title:</label>
+                <label class="form-label hi">कार्यक्रम/कार्यगोष्ठी/संगोष्ठी का नाम:</label>
+                <select class="form-control" th:field="*{program}">
+                <option value="">-- Select --</option>
+                <option th:each="program : ${programData}" th:value="${program[8]}" th:text="${program[2]}"></option>
+                </select>
+            </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
-            <label class="form-label en">Venue:</label>
+            <label class="form-label en">Venue:</label> 
             <label class="form-label hi">स्थान:</label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label en">From:</label>
-            <label class="form-label hi">से:</label>
-            <input type="date" class="form-control">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label en">To:</label>
-            <label class="form-label hi">तक:</label>
-            <input type="date" class="form-control">
-          </div>
-        </div>
-
-        <!-- Participant Details -->
-        <div class="mb-3">
-          <label class="form-label en">Name (as per bank, in CAPITAL):</label>
-          <label class="form-label hi">नाम (बैंक रिकॉर्ड अनुसार):</label>
-          <input type="text" class="form-control">
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label>Designation:</label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="col-md-6">
-            <label>Basic Pay / Pay Level:</label>
-            <input type="text" class="form-control">
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label>Official Address:</label>
-          <textarea class="form-control" rows="2"></textarea>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col">
-            <label>City:</label>
-            <input type="text" class="form-control">
+            <input type="text"  class="form-control" th:field="*{venue}"/>
           </div>
           <div class="col">
-            <label>Pin Code:</label>
-            <input type="text" class="form-control">
-          </div>
-        </div>
+                        <label class="form-label en">Dates: From</label>
+                        <label class="form-label hi">दिनांक: से</label>
+                        <input type="date" class="form-control" th:field="*{fromdate}">
+                    </div>
+                    <div class="col">
+                        <label class="form-label en">To</label>
+                        <label class="form-label hi">तक</label>
+                        <input type="date" class="form-control" th:field="*{todate}">
+                    </div>
+                
 
-        <div class="mb-3">
-          <label>Residential Address:</label>
-          <textarea class="form-control" rows="2"></textarea>
-        </div>
+                <div class="mb-3">
+                    <label class="form-label en">Name (as per Bank records in CAPITAL):</label>
+                    <label class="form-label hi">नाम (बैंक रिकॉर्ड अनुसार):</label>
+                    <!-- th:field="*{namerecord}" -->
+                    <input type="text" name="namerecord" class="form-control" > 
+                </div>
 
-        <div class="row mb-3">
-          <div class="col">
-            <label>City:</label>
-            <input type="text" class="form-control">
-          </div>
-          <div class="col">
-            <label>Pin Code:</label>
-            <input type="text" class="form-control">
-          </div>
-        </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label en">Designation:</label>
+                        <label class="form-label hi">पदनाम:</label>
+                        <!-- th:field="*{designation}" -->
+                        <input type="text" name="designation" class="form-control" >
+                    </div>
+                    <div class="col">
+                        <label class="form-label en">Basic Pay / Pay Level:</label>
+                        <label class="form-label hi">मूल वेतन:</label>
+                        <!-- th:field="*{basicpay}" -->
+                        <input type="number" name="basicpay" class="form-control" >
+                    </div>
+                </div>
 
-        <!-- Bank Details -->
-        <div class="section-title">
-          <span class="en">Bank Details</span>
-          <span class="hi">बैंक विवरण</span>
-        </div>
+                <div class="mb-3">
+                    <label class="form-label en">Official Address:</label>
+                    <label class="form-label hi">कार्यालय का पता:</label>
+                    <!-- th:field="*{address}" -->
+                    <textarea class="form-control" name="address" rows="2" ></textarea>
+                </div>
 
-        <div class="row mb-3">
-          <div class="col-md-6"><label>Account No.:</label><input type="text" class="form-control"></div>
-          <div class="col-md-6"><label>Bank:</label><input type="text" class="form-control"></div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-md-6"><label>Branch:</label><input type="text" class="form-control"></div>
-          <div class="col-md-6"><label>IFSC Code:</label><input type="text" class="form-control"></div>
-        </div>
-        <div class="mb-3"><label>PAN Card No.:</label><input type="text" class="form-control"></div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label>City:</label>
+                        <!-- th:field="*{city}" -->
+                        <input type="text" class="form-control" name="city" >
+                    </div>
+                    <div class="col">
+                        <label>Pin Code:</label>
+                        <!-- th:field="*{pincode}" -->
+                        <input type="text" class="form-control" name="pincode">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label en">Residential Address:</label>
+                    <label class="form-label hi">आवासीय पता:</label>
+                    <!-- th:field="*{resaddress}" -->
+                    <textarea class="form-control" rows="2" name="resaddress"></textarea>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <label>City:</label>
+                        <!-- th:field="*{rcity}" -->
+                        <input type="text" class="form-control" name="rcity">
+                    </div>
+                    <div class="col">
+                        <label>Pin Code:</label>
+                        <!-- th:field="*{rpincode}" -->
+                        <input type="text" class="form-control" name="rpincode">
+                    </div>
+                </div>
+
+                <div class="section-title">
+                    <span class="en">Bank Details</span>
+                    <span class="hi">बैंक विवरण</span>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- th:field="*{accountnumber}" -->
+                    <div class="col-md-6"><label>Account No.:</label><input type="text" class="form-control" name="accountnumber"></div>
+                    <!-- th:field="*{bankname}" -->
+                    <div class="col-md-6"><label>Bank:</label><input type="text" class="form-control" name="bankname"></div>
+                </div>
+                <div class="row mb-3">
+                    <!-- th:field="*{branch}" -->
+                    <div class="col-md-6"><label>Branch:</label><input type="text" class="form-control" name="branch"></div>
+                     <!-- th:field="*{ifsc}" -->
+                    <div class="col-md-6"><label>IFSC Code:</label><input type="text" class="form-control" name="ifsc"></div>
+                </div>
+                <!-- th:field="*{pancardnumber}" -->
+                <div class="mb-3"><label>PAN Card No.:</label><input type="text" class="form-control" name="pancardnumber"></div>
 
         <!-- Part 1: Rail/Air/Bus Allowance -->
         <div class="section-title">Part 1: Rail / Air / Bus Allowance</div>
-        <table class="table table-bordered mb-4">
-          <thead class="table-light">
-            <tr>
-              <th>Date (Dep)</th><th>Station</th><th>Time</th>
-              <th>Date (Arr)</th><th>Station</th><th>Time</th>
-              <th>Mode/PNR No.</th><th>Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="date" class="form-control"></td>
-              <td><input type="text" class="form-control"></td>
-              <td><input type="text" class="form-control"></td>
-              <td><input type="date" class="form-control"></td>
-              <td><input type="text" class="form-control"></td>
-              <td><input type="text" class="form-control"></td>
-              <td><input type="text" class="form-control"></td>
-              <td><input type="text" class="form-control"></td>
-            </tr>
-            <!-- Add more rows if needed -->
-          </tbody>
-        </table>
+        <table class="table table-bordered mb-3" id="conveyanceTable">
+    <thead class="table-light">
+      <tr>
+        <th>Date of Departure</th>
+        <th>Place of Departure</th>
+        <th>Time of Departure</th>
+        <th>Date of Arrival</th>
+        <th>Place of Arrival</th>
+        <th>Time of Arrival</th>
+        <th>Mode of Conveyance</th>
+        <th>Details (Class of accommodation & Ticket No./ PNR No.)</th>
+        <th>Amount (₹)</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <tr>
+        <td><input name="datedeparture" type="date" class="form-control" required></td>
+        <td><input name="placedeparture" type="text" class="form-control" required></td>
+        <td><input name="timedeparture" type="text" class="form-control" required></td>
+        <td><input name="datearrival" type="date" class="form-control" required></td>
+        <td><input name="placearrival" type="text" class="form-control" required></td>
+        <td><input name="timearrival" type="text" class="form-control" required></td>
+        <td><input name="part1mode" type="text" class="form-control" required></td>
+        <td><input name="part1amount" type="number" class="form-control" required></td>
+        <td><input name="partdetails" type="text" class="form-control" required></td>
+      </tr>
+      <tr>
+        <td><input name="datedeparture" type="date" class="form-control" required></td>
+        <td><input name="placedeparture" type="text" class="form-control" required></td>
+        <td><input name="timedeparture" type="text" class="form-control" required></td>
+        <td><input name="datearrival" type="date" class="form-control" required></td>
+        <td><input name="placearrival" type="text" class="form-control" required></td>
+        <td><input name="timearrival" type="text" class="form-control" required></td>
+        <td><input name="part1mode" type="text" class="form-control" required></td>
+        <td><input name="part1amount" type="number" class="form-control" required></td>
+        <td><input name="partdetails" type="text" class="form-control" required></td>
+      </tr>
+      <tr>
+        <td><input name="datedeparture" type="date" class="form-control" required></td>
+        <td><input name="placedeparture" type="text" class="form-control" required></td>
+        <td><input name="timedeparture" type="text" class="form-control" required></td>
+        <td><input name="datearrival" type="date" class="form-control" required></td>
+        <td><input name="placearrival" type="text" class="form-control" required></td>
+        <td><input name="timearrival" type="text" class="form-control" required></td>
+        <td><input name="part1mode" type="text" class="form-control" required></td>
+        <td><input name="part1amount" type="number" class="form-control" required></td>
+        <td><input name="partdetails" type="text" class="form-control" required></td>
+      </tr>
+    </tbody>
+  </table>
 
         <!-- Part 2: Road Mileage -->
         <div class="section-title">Part 2: Road Mileage Allowance</div>
-        <table class="table table-bordered mb-4">
-          <thead class="table-light">
-            <tr><th>From</th><th>To</th><th>Mode</th><th>Distance (km)</th><th>Amount</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="text" class="form-control"></td>
-              <td><input type="text" class="form-control"></td>
-              <td><input type="text" class="form-control"></td>
-              <td><input type="text" class="form-control"></td>
-              <td><input type="text" class="form-control"></td>
-            </tr>
-          </tbody>
-        </table>
+        <table class="table table-bordered mb-3" id="conveyanceTable">
+    <thead class="table-light">
+      <tr>
+        <th>Date</th>
+        <th>Place of Departure</th>
+        <th>Place of Arrival</th>
+        <th>Kms</th>
+        <th>Mode of Conveyance</th>
+        <th>Amount (₹)</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <!-- Initial 3 rows -->
+      <tr>
+        <td><input name="date" type="date" class="form-control" required></td>
+        <td><input name="departure" type="text" class="form-control" required></td>
+        <td><input name="arrival" type="text" class="form-control" required></td>
+        <td><input name="kms" type="number" class="form-control" required></td>
+        <td><input name="mode" type="text" class="form-control" required></td>
+        <td><input name="amount" type="number" class="form-control" required></td>
+      </tr>
+      <tr>
+        <td><input name="date" type="date" class="form-control" required></td>
+        <td><input name="departure" type="text" class="form-control" required></td>
+        <td><input name="arrival" type="text" class="form-control" required></td>
+        <td><input name="kms" type="number" class="form-control" required></td>
+        <td><input name="mode" type="text" class="form-control" required></td>
+        <td><input name="amount" type="number" class="form-control" required></td>
+      </tr>
+      <tr>
+        <td><input name="date" type="date" class="form-control" required></td>
+        <td><input name="departure" type="text" class="form-control" required></td>
+        <td><input name="arrival" type="text" class="form-control" required></td>
+        <td><input name="kms" type="number" class="form-control" required></td>
+        <td><input name="mode" type="text" class="form-control" required></td>
+        <td><input name="amount" type="number" class="form-control" required></td>
+      </tr>
+    </tbody>
+  </table>
 
         <!-- Part 3: Daily Allowance -->
         <div class="section-title">Part 3: Daily Allowance</div>
         <div class="row mb-3">
           <div class="col-md-4">
             <label>Number of Days:</label>
-            <input type="number" class="form-control">
+            <input type="number" name="part3noofdays" class="form-control">
           </div>
           <div class="col-md-4">
             <label>Rate per Day (Rs.):</label>
-            <input type="number" class="form-control">
+            <input type="number" name="part3amount" class="form-control">
           </div>
           <div class="col-md-4">
             <label>Total (Rs.):</label>
-            <input type="text" class="form-control">
+            <input type="text" name="" class="form-control" readonly>
           </div>
-        </div>
-
-        <div class="mb-4">
-          <label><strong>Grand Total (Rs.):</strong></label>
-          <input type="text" class="form-control">
         </div>
 
         <!-- Declaration -->
@@ -228,13 +295,12 @@
           <li>No lodging/boarding was provided at Govt. expense.</li>
         </ol>
 
-        <p><strong>Signature of Participant:</strong></p>
+        <!-- <p><strong>Signature of Participant:</strong></p>
 
         <div class="text-muted mb-4">
           <em>Note: Attach cancelled cheque or bank passbook copy for verification.</em>
         </div>
 
-        <!-- Office Use -->
         <div class="section-title">For Official Use Only</div>
         <p>Attendance, TA particulars and entitlements checked and verified.</p>
 
@@ -266,7 +332,7 @@
         <div class="mb-3">
           <strong>Asst. Cashier Signature:</strong><br>
           <strong>Participant Signature with Revenue Stamp:</strong>
-        </div>
+        </div> -->
 
         <div class="mt-4">
           <button type="submit" class="btn btn-success w-100">Submit</button>

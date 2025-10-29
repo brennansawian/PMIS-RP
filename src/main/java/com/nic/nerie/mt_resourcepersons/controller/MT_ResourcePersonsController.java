@@ -646,7 +646,7 @@ public class MT_ResourcePersonsController {
 
         model.addAttribute("programData", programData);
         model.addAttribute("taform", new M_Taform());
-        return "pages/resource-person/taform"; // This should match your Thymeleaf template name
+        return "pages/resource-person/taform";
     }
 
     @PostMapping("/taform")
@@ -728,12 +728,156 @@ public class MT_ResourcePersonsController {
 
         // You can now save the single value fields + loop through the rows
 
-        return "redirect:/success";
+        return "redirect:/nerie/home";
     }
 
     @GetMapping("/nltaform")
-    public String getnltaform() {
+    public String getnltaform(Model model, HttpServletRequest request) {
+        MT_Userlogin user;
+        try {
+            user = mtUserloginService.getUserloginFromAuthentication();
+        } catch (Exception ex) {
+            throw new MyAuthenticationCredentialsNotFoundException(
+                    ExceptionUtil.generateUnAuthenticatedMessage(request.getRequestURI(),
+                            "Map Resource Person, " + request.getMethod()),
+                    "page");
+        }
+
+        // Call the repository method using the logged-in user's email
+        String email = user.getUserid();
+        List<Object[]> programData = mtResourcePersonsService.findRPPrograms(email);
+
+        model.addAttribute("programData", programData);
+        model.addAttribute("taform", new M_Taform());
         return "pages/resource-person/nltaform";
+    }
+
+    @PostMapping("/nontaform")
+    public String submitNonTaform(HttpServletRequest request,
+            @ModelAttribute M_Taform taform,
+            // --- single value fields ---
+            @RequestParam("namerecord") String namerecord,
+            @RequestParam("designation") String designation,
+            @RequestParam("basicpay") double basicpay,
+            @RequestParam("address") String address,
+            @RequestParam("city") String city,
+            @RequestParam("pincode") String pincode,
+            @RequestParam("resaddress") String resaddress,
+            @RequestParam("rcity") String rcity,
+            @RequestParam("rpincode") String rpincode,
+            @RequestParam("accountnumber") String accountnumber,
+            @RequestParam("bankname") String bankname,
+            @RequestParam("branch") String branch,
+            @RequestParam("ifsc") String ifsc,
+            @RequestParam("pancardnumber") String pancardnumber,
+
+            // --- multi value fields (PART 1)---
+            @RequestParam("datedeparture") List<Date> datesofdeparture,
+            @RequestParam("placedeparture") List<String> placesofdeparture,
+            @RequestParam("timedeparture") List<String> timesofdeparture,
+            @RequestParam("datearrival") List<Date> datesofarrival,
+            @RequestParam("placearrival") List<String> placesofarrival,
+            @RequestParam("timearrival") List<String> timesofarrival,
+            //@RequestParam("part1kms") List<Double> part1kms,
+            @RequestParam("part1mode") List<String> part1modes,
+            @RequestParam("part1amount") List<Double> part1amounts,
+             @RequestParam("partdetails") List<String> details,
+
+            // --- multi value fields (PART 2)---
+            @RequestParam("date") List<Date> dates,
+            @RequestParam("departure") List<String> departures,
+            @RequestParam("arrival") List<String> arrivals,
+            @RequestParam("kms") List<Double> kms,
+            @RequestParam("mode") List<String> modes,
+            @RequestParam("amount") List<Double> amounts,
+            
+            // --- multi value fields (PART 3)---
+            @RequestParam("part3amount") Double part3amount,
+             @RequestParam("part3noofdays") Double part3noofdays) {
+
+        MT_Userlogin user;
+        try {
+            user = mtUserloginService.getUserloginFromAuthentication();
+        } catch (Exception ex) {
+            throw new MyAuthenticationCredentialsNotFoundException(
+                    ExceptionUtil.generateUnAuthenticatedMessage(request.getRequestURI(),
+                            "Map Resource Person, " + request.getMethod()),
+                    "page");
+        }
+
+        taform.setNamerecord(namerecord);
+        taform.setDesignation(designation);
+        taform.setBasicpay(basicpay);
+        taform.setAddress(address);
+        taform.setCity(city);
+        taform.setPincode(pincode);
+        taform.setResaddress(resaddress);
+        taform.setRcity(rcity);
+        taform.setRpincode(rpincode);
+        taform.setAccountnumber(accountnumber);
+        taform.setBankname(bankname);
+        taform.setBranch(branch);
+        taform.setIfsc(ifsc);
+        taform.setPancardnumber(pancardnumber);
+        taform.setRpUserlogin(user);
+        taform.setIslocal(false);
+        mTaformService.saveForm(taform);
+
+        // Example: Part 1 ------- iterate table rows
+        for (int i = 0; i < datesofdeparture.size(); i++) {
+            T_ConveyanceCharge cc = new T_ConveyanceCharge();
+            cc.setDateofdeparture(datesofdeparture.get(i));
+            cc.setPlaceofdeparture(placesofdeparture.get(i));
+            cc.setTimeofdeparture(timesofdeparture.get(i));
+            cc.setTimeofarrival(timesofarrival.get(i));
+            cc.setDateofarrival(datesofarrival.get(i));
+            cc.setDetailsoftravel(details.get(i));
+            cc.setAmount(part1amounts.get(i));
+            cc.setKms(kms.get(i));
+            cc.setModeofconveyance(part1modes.get(i));
+            cc.setPlaceofarrival(placesofarrival.get(i));
+            cc.setTaform(taform);
+            cc.setNonlocalpartno("1");
+            // System.out.printf("Row %d -> %s to %s (%s km, %s, ₹%s)%n",
+            //         i + 1,
+            //         departures.get(i),
+            //         arrivals.get(i),
+            //         kms.get(i),
+            //         modes.get(i),
+            //         amounts.get(i));
+            tconveyanceChargeService.saveForm(cc);
+        }
+
+        // Example: Part 2 ------- iterate table rows
+        for (int i = 0; i < dates.size(); i++) {
+            T_ConveyanceCharge cc = new T_ConveyanceCharge();
+            cc.setDate(dates.get(i));
+            cc.setAmount(amounts.get(i));
+            cc.setKms(kms.get(i));
+            cc.setModeofconveyance(modes.get(i));
+            cc.setPlaceofarrival(arrivals.get(i));
+            cc.setPlaceofdeparture(departures.get(i));
+            cc.setTaform(taform);
+            cc.setNonlocalpartno("2");
+
+            System.out.printf("Row %d -> %s to %s (%s km, %s, ₹%s)%n",
+                    i + 1,
+                    departures.get(i),
+                    arrivals.get(i),
+                    kms.get(i),
+                    modes.get(i),
+                    amounts.get(i));
+
+            tconveyanceChargeService.saveForm(cc);
+        }
+        T_ConveyanceCharge cc = new T_ConveyanceCharge();
+
+        cc.setNonlocalpartno("3");
+        cc.setAmount(part3amount);
+        cc.setDetailsoftravel(part3noofdays+" Days");
+        cc.setTaform(taform);
+        tconveyanceChargeService.saveForm(cc);
+        return "redirect:/nerie/home";
     }
 
     @GetMapping("/editprofile")
