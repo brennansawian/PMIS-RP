@@ -188,7 +188,8 @@ public class SecurityConfig {
                                                 // Public Routes
                                                 // Landing Routes
                                                 .requestMatchers(
-                                                                "/nerie/index", "/nerie/about", "/nerie/login",
+                                                                "/nerie/index", "/nerie/about", "/nerie/login", 
+                                                                "/nerie/forgotpassword","/nerie/loginresetpassword",
                                                                 "/nerie/about/blog*", "/captcha/**",
                                                                 "/nerie/participants/**",
                                                                 "/nerie/program-details/getMoreOngoingProgramList",
