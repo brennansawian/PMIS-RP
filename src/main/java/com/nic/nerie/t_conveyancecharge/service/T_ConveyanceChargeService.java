@@ -1,5 +1,7 @@
 package com.nic.nerie.t_conveyancecharge.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,12 @@ public class T_ConveyanceChargeService {
         public T_ConveyanceCharge getById(Long id) {
         return tconveyanceChargeRepository.findById(id).get();
         }
+
+        public List<T_ConveyanceCharge> findByTaform(M_Taform taform) {
+        return tconveyanceChargeRepository.findByTaformOrderByIdAsc(taform);
+        }
+
+        
         
     }
 

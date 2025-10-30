@@ -53,20 +53,7 @@ layout:decorate="~{layouts/resource-person-layout}">
 </head>
 <body>  
   <main layout:fragment="content">
-    <div> 
-      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Form</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Applied</button>
-        </li>
-      </ul>
-    </div>
-    
-    
-    <div class="tab-content" id="pills-tabContent">
-      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+
         <div class="form-wrapper position-relative">
           <!-- Language Selector -->
           <div class="language-selector position-absolute top-0 end-0 mt-3 me-4">
@@ -79,20 +66,17 @@ layout:decorate="~{layouts/resource-person-layout}">
           <!-- Form Container -->
           <div class="container bg-white shadow rounded p-4" style="max-width: 1000px;">
             <h2 class="text-center mb-4 fw-bold text-dark">Honorarium Receipt Form</h2>
-            <form th:action="@{/nerie/resource-persons/savehonorariumform}" th:object="${honorarium}" method="post" id="honorariumForm">
+            <form th:object="${honorariumform}" method="post" id="honorariumForm">
               <div class="row mb-3">
                 <div class="col-md-6">
                   <label class="form-label en">Programme/Workshop/Seminar Title:</label>
                   <label class="form-label hi">कार्यक्रम/कार्यगोष्ठी/संगोष्ठी का नाम:</label>
-                  <select class="form-control" th:field="*{programtitle}" required>
-                    <option value="">-- Select --</option>
-                    <option th:each="program : ${programData}" th:value="${program[2]}" th:text="${program[2]}"></option>
-                  </select>
+                  <input type="text" class="form-control" th:field="*{programtitle}" readonly/>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label en">Venue:</label>
                   <label class="form-label hi">स्थान:</label>
-                  <input type="text" class="form-control" th:field="*{venue}" required/>
+                  <input type="text" class="form-control" th:field="*{venue}" readonly/>
                 </div>
               </div>
               
@@ -100,12 +84,12 @@ layout:decorate="~{layouts/resource-person-layout}">
                 <div class="col-md-6">
                   <label class="form-label en">From Date:</label>
                   <label class="form-label hi">दिनांक से:</label>
-                  <input type="date" class="form-control" th:field="*{fromdate}" required />
+                  <input type="text" class="form-control" th:value="${honorariumform.fromdate}" readonly />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label en">To Date:</label>
                   <label class="form-label hi">दिनांक तक:</label>
-                  <input type="date" class="form-control" th:field="*{todate}" required />
+                  <input type="text" class="form-control" th:value="${honorariumform.todate}" readonly />
                 </div>
               </div>
               
@@ -113,12 +97,12 @@ layout:decorate="~{layouts/resource-person-layout}">
                 <div class="col-md-6">
                   <label class="form-label en">Number of Days:</label>
                   <label class="form-label hi">दिनों की संख्या:</label>
-                  <input type="number" class="form-control"  min="1" th:field="*{numberofdays}" required />
+                  <input type="number" class="form-control"  min="1" th:field="*{numberofdays}" readonly />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label en">Rate per Day (Rs.):</label>
                   <label class="form-label hi">प्रतिदिन की दर (रु.):</label>
-                  <input type="number" class="form-control" min="1" th:field="*{rateperday}" required />
+                  <input type="number" class="form-control" min="1" th:field="*{rateperday}" readonly />
                 </div>
               </div>
               
@@ -131,7 +115,7 @@ layout:decorate="~{layouts/resource-person-layout}">
               <div class="mb-3">
                 <label class="form-label en">Amount in Words:</label>
                 <label class="form-label hi">राशि शब्दों में:</label>
-                <input type="text" class="form-control" th:field="*{amountinwords}" required />
+                <input type="text" class="form-control" th:field="*{amountinwords}" readonly />
               </div>
               
               <div class="section-title">
@@ -143,19 +127,19 @@ layout:decorate="~{layouts/resource-person-layout}">
                 <div class="col-md-6">
                   <label class="form-label en">Name:</label>
                   <label class="form-label hi">नाम:</label>
-                  <input type="text" class="form-control" th:field="*{nameofficial}"required />
+                  <input type="text" class="form-control" th:field="*{nameofficial}"readonly />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label en">Designation:</label>
                   <label class="form-label hi">पदनाम:</label>
-                  <input type="text" class="form-control" th:field="*{designation}"required />
+                  <input type="text" class="form-control" th:field="*{designation}"readonly />
                 </div>
               </div>
               
               <div class="mb-3">
                 <label class="form-label en">Address:</label>
                 <label class="form-label hi">पता:</label>
-                <textarea class="form-control" rows="2" th:field="*{address}" required></textarea>
+                <textarea class="form-control" rows="2" th:field="*{address}" readonly></textarea>
               </div>
               
               <div class="section-title">
@@ -167,12 +151,12 @@ layout:decorate="~{layouts/resource-person-layout}">
                 <div class="col-md-6">
                   <label class="form-label en">Account Number:</label>
                   <label class="form-label hi">खाता नं:</label>
-                  <input type="text" class="form-control" th:field="*{accountnumber}"required />
+                  <input type="text" class="form-control" th:field="*{accountnumber}"readonly />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label en">Bank Name:</label>
                   <label class="form-label hi">बैंक:</label>
-                  <input type="text" class="form-control" th:field="*{bankname}"required />
+                  <input type="text" class="form-control" th:field="*{bankname}"readonly />
                 </div>
               </div>
               
@@ -180,97 +164,34 @@ layout:decorate="~{layouts/resource-person-layout}">
                 <div class="col-md-6">
                   <label class="form-label en">Branch:</label>
                   <label class="form-label hi">शाखा:</label>
-                  <input type="text" class="form-control" th:field="*{branch}"required />
+                  <input type="text" class="form-control" th:field="*{branch}" readonly />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label en">IFSC Code:</label>
                   <label class="form-label hi">आई.एफ.एस.सी. कोड:</label>
-                  <input style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" type="text"
+                  <input style="text-transform: uppercase;"  type="text"
                   inputmode="text" class="form-control" minlength="11" maxlength="11"
-                  pattern ="^[A-Z0-9]{11}$" title="IFSC Code Number must be 11 alphanumeric characters" th:field="*{ifsc}"required />
+                  pattern ="^[A-Z0-9]{11}$" title="IFSC Code Number must be 11 alphanumeric characters" th:field="*{ifsc}"readonly />
                 </div>
               </div>
               
               <div class="mb-3">
                 <label class="form-label en">PAN Card Number:</label>
                 <label class="form-label hi">पैन कार्ड सं.:</label>
-                <input style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" type="text"
+                <input style="text-transform: uppercase;" type="text"
                 inputmode="text" class="form-control" minlength= "10" maxlength="10"
-                pattern ="^[A-Z0-9]{10}$" title="Pan Card Number must be 10 alphanumeric characters" th:field="*{pancardnumber}"required />
-              </div>
-              
-              <div class="note">
-                <span class="en">Note: A cancelled cheque/Bank Passbook photocopy may be enclosed for verification.</span>
-                <span class="hi">नोट: बैंक पासबुक/चैकबुक की खारिज प्रति सत्यापन हेतु संलग्न करें।</span>
-              </div>
-              
-              <div class="mt-4">
-                <button type="submit" class="btn btn-success w-100">
-                  <span class="en">Submit</span>
-                  <span class="hi">जमा करें</span>
-                </button>
+                pattern ="^[A-Z0-9]{10}$" title="Pan Card Number must be 10 alphanumeric characters" th:field="*{pancardnumber}"readonly />
               </div>
             </form>
           </div>
         </div>
-        
-        
         <script>
           function changeLanguage() {
             const selected = document.querySelector('input[name="language"]:checked').value;
             document.querySelectorAll('.en').forEach(el => el.style.display = selected === 'hindi' ? 'none' : 'block');
             document.querySelectorAll('.hi').forEach(el => el.style.display = selected === 'hindi' ? 'block' : 'none');
           }
-          
-          function validateDatesAndDays() {
-            const from = document.getElementById('fromdate').value;
-            const to = document.getElementById('todate').value;
-            
-            if (!from || !to) return true;
-            
-            const fromDate = new Date(from);
-            const toDate = new Date(to);
-            
-            if (toDate < fromDate) {
-              alert("'To Date' cannot be before 'From Date'.");
-              document.getElementById('todate').value = '';
-              document.getElementById('numberofdays').value = '';
-              document.getElementById('totalamount').value = '0.0';
-              return false;
-            }
-            
-            const days = Math.floor((toDate - fromDate) / (1000 * 3600 * 24)) + 1;
-            document.getElementById('numberofdays').value = days;
-            calculateTotal();
-            return true;
-          }
-          
-          function calculateTotal() {
-            const days = parseFloat(document.getElementById('numberofdays').value || 0);
-            const rate = parseFloat(document.getElementById('rateperday').value || 0);
-            const total = days * rate;
-            document.getElementById('totalamount').value = total.toFixed(2);
-          }
-          
-          function validateFormFields() {
-            const fields = [
-            'fromdate', 'todate', 'numberofdays', 'rateperday', 'totalamount',
-            'amountinwords', 'nameofficial', 'designation', 'address',
-            'accountnumber', 'bankname', 'branch', 'ifsc','pancardnumber'
-            ];
-            
-            for (let id of fields) {
-              const field = document.getElementById(id);
-              if (!field || !field.value.trim()) {
-                alert(`Please fill the '${id}' field.`);
-                field.focus();
-                return false;
-              }
-            }
-            
-            return validateDatesAndDays();
-          }
-          
+
           document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('english').addEventListener('change', changeLanguage);
             document.getElementById('hindi').addEventListener('change', changeLanguage);
@@ -281,51 +202,8 @@ layout:decorate="~{layouts/resource-person-layout}">
             document.getElementById('rateperday').addEventListener('input', calculateTotal);
             document.getElementById('numberofdays').addEventListener('input', calculateTotal);
             
-            document.getElementById('honorariumForm').addEventListener('submit', function (e) {
-              e.preventDefault();
-              if (validateFormFields()) {
-                alert('Form submitted successfully!');
-                this.submit();
-              }
-            });
           });
         </script>
-      </div>
-      
-      
-      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-        <h3 class="mb-4">Honorarium Forms List</h3>
-        
-        <table class="table table-bordered table-striped align-middle">
-          <thead class="table-dark">
-            <tr>
-              <th>Program</th>
-              <th>Venue</th>
-              <th>From Date</th>
-              <th>To Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="form : ${HonorariumForms}">
-              <td th:text="${form.program}">Program Name</td>
-              <td th:text="${form.venue}">Venue Name</td>
-              <td th:text="${#temporals.format(form.fromdate, 'dd-MM-yyyy')}">01-01-2025</td>
-              <td th:text="${#temporals.format(form.todate, 'dd-MM-yyyy')}">03-01-2025</td>
-              <td>
-                <a th:href="@{/nerie/resource-persons/honorariumformdetails/{id}(id=${form.id})}" target="_blank">
-                  <button class="btn btn-primary">View Details</button>
-                </a>
-              </td>
-            </tr>
-            <tr th:if="${#lists.isEmpty(HonorariumForms)}">
-              <td colspan="4" class="text-center text-muted">No Honorarium Forms found.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    
   </main>
 </body>
 </html>

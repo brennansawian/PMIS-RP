@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nic.nerie.m_honorarium.dto.HonorariumFormDTO;
 import com.nic.nerie.m_honorarium.model.M_Honorarium;
 import com.nic.nerie.m_honorarium.repository.M_HonorariumRepository;
 
@@ -30,5 +31,8 @@ public class M_HonorariumService {
     // get 1 receipt of the current logged in user
     public M_Honorarium getById(Long id) {
         return mHonorariumRepository.findById(id).get();
+    }
+public List<HonorariumFormDTO> getHonorariumFormsByUser(String usercode) {
+        return mHonorariumRepository.findHonorariumFormsByUser(usercode);
     }
 }
