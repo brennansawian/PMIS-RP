@@ -214,24 +214,16 @@ layout:decorate="~{layouts/resource-person-layout}">
                                     <td><input name="mode" type="text" class="form-control" required></td>
                                     <td><input name="amount" type="number" class="form-control" required></td>
                                 </tr>
-                                <tr>
-                                    <td><input name="date" type="date" class="form-control" required></td>
-                                    <td><input name="departure" type="text" class="form-control" required></td>
-                                    <td><input name="arrival" type="text" class="form-control" required></td>
-                                    <td><input name="kms" type="number" class="form-control" required></td>
-                                    <td><input name="mode" type="text" class="form-control" required></td>
-                                    <td><input name="amount" type="number" class="form-control" required></td>
-                                </tr>
                             </tbody>
                         </table>
                         
                         <div class="mb-3">
-                            <button type="button" id="addRowBtn" class="btn btn-secondary">Add Row</button>
+                            <button type="button" id="addRowBtn" class="btn btn-primary">Add Row</button>
                         </div>
                         
                         <script>
                             const maxRows = 10;
-                            let rowCount = 3;
+                            let rowCount = 2;
                             
                             document.getElementById("addRowBtn").addEventListener("click", () => {
                                 if (rowCount >= maxRows) return;
@@ -245,9 +237,16 @@ layout:decorate="~{layouts/resource-person-layout}">
                             <td><input name="kms" type="number" class="form-control" required></td>
                             <td><input name="mode" type="text" class="form-control" required></td>
                             <td><input name="amount" type="number" class="form-control" required></td>
+                            <td><button type="button" class="btn btn-danger btn-sm deleteRowBtnP2">Delete</button></td>
                             `;
                                 tbody.appendChild(row);
                                 rowCount++;
+
+                                // Attach delete event to this row's delete button
+                        row.querySelector(".deleteRowBtnP2").addEventListener("click", () => {
+                            row.remove();
+                            rowCount--;
+                        });
                             });
                         </script>
                         <div class="mt-4">

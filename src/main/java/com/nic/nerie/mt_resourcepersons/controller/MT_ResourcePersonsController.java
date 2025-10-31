@@ -1,7 +1,6 @@
 package com.nic.nerie.mt_resourcepersons.controller;
 
 import java.security.Principal;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -677,7 +677,7 @@ public class MT_ResourcePersonsController {
     @RequestParam("pancardnumber") String pancardnumber,
     
     // --- multi value fields ---
-    @RequestParam("date") List<Date> dates,
+    @RequestParam("date") List<LocalDate> dates,
     @RequestParam("departure") List<String> departures,
     @RequestParam("arrival") List<String> arrivals,
     @RequestParam("kms") List<Double> kms,
@@ -781,19 +781,22 @@ public class MT_ResourcePersonsController {
     @RequestParam("pancardnumber") String pancardnumber,
     
     // --- multi value fields (PART 1)---
-    @RequestParam("datedeparture") List<Date> datesofdeparture,
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @RequestParam("datedeparture") List<LocalDate> datesofdeparture,
     @RequestParam("placedeparture") List<String> placesofdeparture,
     @RequestParam("timedeparture") List<String> timesofdeparture,
-    @RequestParam("datearrival") List<Date> datesofarrival,
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @RequestParam("datearrival") List<LocalDate> datesofarrival,
     @RequestParam("placearrival") List<String> placesofarrival,
     @RequestParam("timearrival") List<String> timesofarrival,
-    //@RequestParam("part1kms") List<Double> part1kms,
     @RequestParam("part1mode") List<String> part1modes,
     @RequestParam("part1amount") List<Double> part1amounts,
     @RequestParam("partdetails") List<String> details,
     
     // --- multi value fields (PART 2)---
-    @RequestParam("date") List<Date> dates,
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @RequestParam("date") List<LocalDate> dates,
     @RequestParam("departure") List<String> departures,
     @RequestParam("arrival") List<String> arrivals,
     @RequestParam("kms") List<Double> kms,
@@ -803,7 +806,6 @@ public class MT_ResourcePersonsController {
     // --- multi value fields (PART 3)---
     @RequestParam("part3amount") Double part3amount,
     @RequestParam("part3noofdays") Double part3noofdays) {
-        
         MT_Userlogin user;
         try {
             user = mtUserloginService.getUserloginFromAuthentication();
@@ -858,6 +860,7 @@ public class MT_ResourcePersonsController {
         }
         
         // Example: Part 2 ------- iterate table rows
+        System.out.println("Part 2 ------- iterate table rows");
         for (int i = 0; i < dates.size(); i++) {
             T_ConveyanceCharge cc = new T_ConveyanceCharge();
             cc.setDate(dates.get(i));
@@ -869,13 +872,13 @@ public class MT_ResourcePersonsController {
             cc.setTaform(taform);
             cc.setNonlocalpartno("2");
             
-            System.out.printf("Row %d -> %s to %s (%s km, %s, ₹%s)%n",
-            i + 1,
-            departures.get(i),
-            arrivals.get(i),
-            kms.get(i),
-            modes.get(i),
-            amounts.get(i));
+            // System.out.printf("Row %d -> %s to %s (%s km, %s, ₹%s)%n",
+            // i + 1,
+            // departures.get(i),
+            // arrivals.get(i),
+            // kms.get(i),
+            // modes.get(i),
+            // amounts.get(i));
             
             tconveyanceChargeService.saveForm(cc);
         }

@@ -1,6 +1,6 @@
 package com.nic.nerie.t_conveyancecharge.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,8 +27,8 @@ public class T_ConveyanceCharge {
     private Double kms;
     private String modeofconveyance;
     private Double amount;
-    private Date dateofdeparture;
-    private Date dateofarrival;
+    private LocalDate dateofdeparture;
+    private LocalDate dateofarrival;
     private String timeofdeparture;
     private String timeofarrival;
     private String detailsoftravel;
@@ -40,24 +40,24 @@ public class T_ConveyanceCharge {
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date date;
+    private LocalDate  date;
 
     public T_ConveyanceCharge() {
     }
 
-    public Date getDateofdeparture() {
+    public LocalDate  getDateofdeparture() {
         return dateofdeparture;
     }
 
-    public void setDateofdeparture(Date dateofdeparture) {
+    public void setDateofdeparture(LocalDate  dateofdeparture) {
         this.dateofdeparture = dateofdeparture;
     }
 
-    public Date getDateofarrival() {
+    public LocalDate  getDateofarrival() {
         return dateofarrival;
     }
 
-    public void setDateofarrival(Date dateofarrival) {
+    public void setDateofarrival(LocalDate  dateofarrival) {
         this.dateofarrival = dateofarrival;
     }
 
@@ -141,11 +141,11 @@ public class T_ConveyanceCharge {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public LocalDate  getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate  date) {
         this.date = date;
     }
 
