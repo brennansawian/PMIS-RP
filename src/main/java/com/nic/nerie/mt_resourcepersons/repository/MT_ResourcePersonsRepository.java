@@ -15,9 +15,11 @@ public interface MT_ResourcePersonsRepository extends JpaRepository<MT_ResourceP
         @Query("FROM MT_ResourcePersons")
         List<MT_ResourcePersons> findAll();
 
-        @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END " +
-                        "FROM MT_ResourcePersons r WHERE UPPER(r.rpemailid) = :rpemailid")
-        boolean existsByRpemailid(@Param("rpemailid") String rpemailid);
+//        @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END " +
+//                        "FROM MT_ResourcePersons r WHERE UPPER(r.rpemailid) = :rpemailid")
+//        boolean existsByRpemailid(@Param("rpemailid") String rpemailid);
+        boolean existsByRpemailidIgnoreCase(String rpemailid);
+
 
         @Query(value = "SELECT DISTINCT rp.rpslno, rp.rpemailid, rp.rpname, q.qualificationname, rp.rpspecialization, "
                         +

@@ -92,6 +92,7 @@ public class SecurityConfig {
                                                                 "/nerie/program/batch/save",
                                                                 "/nerie/activities/save",
                                                                 "/nerie/resource-persons/create",
+                                                                "/nerie/resource-persons/is-email-available",
                                                                 "/nerie/resource-persons/save",
                                                                 "/nerie/resource-persons/map",
                                                                 "/nerie/resource-persons/list/phase",

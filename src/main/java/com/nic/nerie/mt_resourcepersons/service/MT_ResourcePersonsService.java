@@ -32,7 +32,7 @@ public class MT_ResourcePersonsService {
     @Transactional(readOnly = true)
     public boolean checkEmailAvailability(@NotNull @NotBlank String emailid) {
         try {
-            return !mtResourcePersonsRepository.existsByRpemailid(emailid.trim());
+            return !mtResourcePersonsRepository.existsByRpemailidIgnoreCase(emailid.trim());
         } catch (Exception ex) {
             throw new DataAccessResourceFailureException("Error checking email availability for " + emailid, ex);
         }
