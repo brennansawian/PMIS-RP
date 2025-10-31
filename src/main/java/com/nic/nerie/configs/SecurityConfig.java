@@ -45,10 +45,6 @@ public class SecurityConfig {
                                                                 "/nerie/participant/feedback/write-overall-feedback",
                                                                 "/nerie/participant/feedback/save-overall-feedback")
                                                 .hasAuthority("P")
-                                                // Resource Person
-                                                .requestMatchers(
-                                                                "/nerie/resource-persons/**")
-                                                .hasAuthority("R")
                                                 // Admin
                                                 .requestMatchers(
                                                                 "/nerie/offices/createoffice",
@@ -185,6 +181,10 @@ public class SecurityConfig {
                                                                 "/nerie/participant/feedback/view-overall-feedback",
                                                                 "/nerie/participant/feedback/overall-feedback/list")
                                                 .hasAnyAuthority("U", "P")
+                                             // Resource Person
+                                                .requestMatchers(
+                                                                "/nerie/resource-persons/**")
+                                                .hasAuthority("R")
                                                 // Public Routes
                                                 // Landing Routes
                                                 .requestMatchers(
