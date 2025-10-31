@@ -2,12 +2,14 @@ package com.nic.nerie.m_honorarium.model;
 
 import java.time.LocalDate;
 
+import com.nic.nerie.m_phases.model.M_Phases;
 import com.nic.nerie.mt_userlogin.model.MT_Userlogin;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -18,7 +20,10 @@ public class M_Honorarium {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String programtitle;
+    @ManyToOne
+    @JoinColumn(name="phaseid")
+    private M_Phases phase;
+
     private String venue;
     private LocalDate fromdate;
     private LocalDate todate;
@@ -42,14 +47,6 @@ public class M_Honorarium {
     private MT_Userlogin rpUserlogin;
 
     public M_Honorarium() {
-    }
-
-    public String getProgramtitle() {
-        return programtitle;
-    }
-
-    public void setProgramtitle(String programtitle) {
-        this.programtitle = programtitle;
     }
 
     public String getVenue() {
@@ -187,5 +184,14 @@ public class M_Honorarium {
     public void setPancardnumber(String pancardnumber) {
         this.pancardnumber = pancardnumber;
     }
+
+    public M_Phases getPhase() {
+        return phase;
+    }
+
+    public void setPhase(M_Phases phase) {
+        this.phase = phase;
+    }
+ 
 
 }

@@ -10,7 +10,7 @@ import com.nic.nerie.m_honorarium.model.M_Honorarium;
 
 @Repository
 public interface M_HonorariumRepository extends JpaRepository<M_Honorarium, Long> {
-    @Query("SELECT new com.nic.nerie.m_honorarium.dto.HonorariumFormDTO(h.id,h.programtitle, h.venue, h.fromdate, h.todate) " +
+    @Query("SELECT new com.nic.nerie.m_honorarium.dto.HonorariumFormDTO(h.id,h.phase.programcode.programname, h.venue, h.fromdate, h.todate) " +
            "FROM M_Honorarium h " +
            "WHERE h.rpUserlogin.id = :usercode")
     List<com.nic.nerie.m_honorarium.dto.HonorariumFormDTO> findHonorariumFormsByUser(@Param("usercode") String usercode);

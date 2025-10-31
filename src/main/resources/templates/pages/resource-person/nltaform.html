@@ -83,9 +83,9 @@ layout:decorate="~{layouts/resource-person-layout}">
                 <div class="col-md-6">
                   <label class="form-label en">Programme/Workshop/Seminar Title:</label>
                   <label class="form-label hi">कार्यक्रम/कार्यगोष्ठी/संगोष्ठी का नाम:</label>
-                  <select class="form-control" th:field="*{program}">
+                  <select class="form-control" th:field="*{phase.phaseid}">
                     <option value="">-- Select --</option>
-                    <option th:each="program : ${programData}" th:value="${program[2]}" th:text="${program[2]}"></option>
+                    <option th:each="program : ${programData}" th:value="${program[7]}" th:text="${program[2]}"></option>
                   </select>
                 </div>
                 

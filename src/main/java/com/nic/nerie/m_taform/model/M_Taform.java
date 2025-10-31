@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.nic.nerie.m_phases.model.M_Phases;
 import com.nic.nerie.mt_userlogin.model.MT_Userlogin;
 
 import jakarta.persistence.Entity;
@@ -21,7 +22,10 @@ public class M_Taform {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String program;
+    @ManyToOne
+    @JoinColumn(name="phaseid")
+    private M_Phases phase;
+
     private String venue;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -69,14 +73,6 @@ public class M_Taform {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getProgram() {
-        return program;
-    }
-
-    public void setProgram(String program) {
-        this.program = program;
     }
 
     public String getVenue() {
@@ -223,4 +219,13 @@ public class M_Taform {
         this.rpUserlogin = rpUserlogin;
     }
 
+    public M_Phases getPhase() {
+        return phase;
+    }
+
+    public void setPhase(M_Phases phase) {
+        this.phase = phase;
+    }
+
+    
 }
