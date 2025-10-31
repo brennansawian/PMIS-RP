@@ -90,10 +90,10 @@ $(document).ready(function () {
             data: $("#mtresourcepersonfid").serialize(),
             success: function (data) {
                 const response = data.trim();
-                switch (response) {
-                    case "2":
-                        showModalAndReload("Successfully Saved!!!");
-                        break;
+                if(response.length>2){
+					showModalAndReload(response);                     
+				}else{
+					switch (response) {
                     case "1":
                         showModalAlert("Email id already registered");
                         $("#rpemailid").focus();
@@ -169,7 +169,9 @@ $(document).ready(function () {
                     default:
                         showModalAlert("Save Failed!!!");
                         break;
-                }
+                	}
+				}     
+                
             },
             error: handleAjaxError
         });

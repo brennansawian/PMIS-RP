@@ -432,7 +432,8 @@ public class MT_ResourcePersonsController {
                 
                 // Validation and persisting user entity
                 mtUserloginService.save(newUser);
-                return ResponseEntity.ok("2");
+                String responsesucess="Successfully Saved! Your User ID is "+rpemailid.trim()+" and Your Password is "+newUserPassword;
+                return ResponseEntity.ok(responsesucess);
             } else
             throw new PersistenceException();
         } catch (RuntimeException ex) {
