@@ -94,6 +94,7 @@ public class SecurityConfig {
                                                                 "/nerie/resource-persons/create",
                                                                 "/nerie/resource-persons/save",
                                                                 "/nerie/resource-persons/map",
+                                                                "/nerie/resource-persons/list/phase",
                                                                 "/nerie/resource-persons/map/save",
                                                                 "/nerie/program-materials/manage",
                                                                 "/nerie/program-materials/save",
