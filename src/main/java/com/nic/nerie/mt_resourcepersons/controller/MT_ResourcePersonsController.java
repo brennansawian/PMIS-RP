@@ -720,7 +720,7 @@ public class MT_ResourcePersonsController {
             cc.setKms(kms.get(i));
             cc.setModeofconveyance(modes.get(i));
             cc.setPlaceofarrival(arrivals.get(i));
-            cc.setPlaceofdeparture(arrivals.get(i));
+            cc.setPlaceofdeparture(departures.get(i));
             cc.setTaform(taform);
             
             System.out.printf("Row %d -> %s to %s (%s km, %s, ₹%s)%n",
